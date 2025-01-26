@@ -244,6 +244,24 @@
     <body>
         <script src="/js/darkmode-js.min.js"></script>
         
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #eaeae8  ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
         
             <div class="left-toc-container">
                 <nav id="toc" class="bs-docs-sidebar"></nav>
@@ -392,6 +410,9 @@
                     <span>上一篇：<a href='/2025/01/16/test/'>test</a></span>
                 
 
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/08/25/Lec7-10%20RISC-V/">Lec7-10 RISC-V</a>
+                    </span>
                 
             </div>
     

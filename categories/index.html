@@ -244,6 +244,24 @@
     <body>
         <script src="/js/darkmode-js.min.js"></script>
         
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #eaeae8  ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
         
             <div class="left-toc-container">
                 <nav id="toc" class="bs-docs-sidebar"></nav>
@@ -319,6 +337,11 @@
   
   
       
+        <li class="">
+            <a href="/categories/CS61C">CS61C</a>
+            <span><i>1</i></span>
+        </li>
+    
         <li class="">
             <a href="/categories/%E6%B5%8B%E8%AF%95">测试</a>
             <span><i>1</i></span>
