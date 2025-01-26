@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="list" />
+    <meta name="description" content="Lec14-16 Synchronous Digital Systems" />
     <meta name="hexo-theme-A4" content="v1.9.6" />
     <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
     <title>SMS Derfflinger</title>
@@ -59,7 +59,119 @@
 <link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
     
     
 
@@ -272,8 +384,8 @@
             
             
             
-                <div class="shadow-drop-2-top paper-main">
-                     
+                <div class="shadow-drop-2-bottom paper-main">
+                    
 
 
 <div class="header">
@@ -296,13 +408,7 @@
             
         
             
-                <li><i>
-                    
-                        <u>
-                            <a  href="/list/">文章</a>
-                        </u>
-                    
-                </i></li>
+                <li><a href="/list/">文章</a></li>
             
         
             
@@ -319,212 +425,168 @@
         
     </ul>
 </div> 
-                     <div class="archive-list">
-  <ul class="archive">
-      
-
-      <!--文章先按照时间排好序-->
-      
-
-
-      
-      
-
-      
-
-      
-      
-      
-
-      <!--循环遍历文章数组-->
-      
-
-      <!--排序 置顶 文章-->
-      
-
-      <!--先放 置顶 文章-->
-      
-
-      <!--文章先按照时间排好序-->
-      
-      
-      <!--再放 最近更新 文章-->
-      
-
-      <!--后放 其他 文章-->
-      
         
-        <li>
-          <span class="year-font-color">2025[2]
-             <span class="darkmode-ignore">🍃</span> 
-          </span>
-        </li>
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
         
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;01/16 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/测试/">
-                  测试 
-                </a> | 
-              
-                <a class="archive-title" href="/2025/01/16/test/">test</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;01/16 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title" href="/2025/01/16/hello-world/">Hello World</a>
-            </div>
-          </li>
-        
-      
-        
-        <li>
-          <span class="year-font-color">2024[9]
             
-          </span>
-        </li>
-        
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/15 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/15/Lec36-40/">Lec36-40</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/06 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/06/Lec32-35%20Parallelism/">Lec32-35 Parallelism</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/03 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/">Lec28-31 Virtual Memory, IO</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/03 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/03/Lec24-27%20Caches/">Lec24-27 Caches</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;09/24 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/09/24/Lec21-23%20Pipelining/">Lec21-23 Pipelining</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;09/20 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/09/20/Lec17-20%20CPU%20Data%20Path/">Lec17-20 CPU Data Path</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;09/14 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/09/14/Lec14-16%20Synchronous%20Digital%20Systems/">Lec14-16 Synchronous Digital Systems</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;08/30 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/08/30/Lec11-13%20Instruction%20Formats/">Lec11-13 Instruction Formats</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;08/25 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/08/25/Lec7-10%20RISC-V/">Lec7-10 RISC-V</a>
-            </div>
-          </li>
+                <div class="post-main-title" style="text-align: center;">
+                    Lec14-16 Synchronous Digital Systems
+                </div>
+            
         
       
-  </ul>
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2025-01-26</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：459</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：1分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+        
+        <div class=".article-gallery"><h1 id="Switches"><a href="#Switches" class="headerlink" title="Switches"></a>Switches</h1><ul>
+<li>与门和或门的结构类似于串联电路和并联电路<br><a href="/img/CS61C/asserts/image-26.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-26.png" alt="alt text"></a></li>
+</ul>
+<h1 id="Transistors"><a href="#Transistors" class="headerlink" title="Transistors"></a>Transistors</h1><ul>
+<li><p>N晶体管：当基极（P型）与发射极（N型）之间施加正电压时，电流能够从发射极流向集电极（N型）。基极电流控制集电极和发射极之间的电流大小。通常用于放大电路</p>
+</li>
+<li><p>P晶体管：当基极（N型）与发射极（P型）之间施加负电压时，电流能够从集电极（P型）流向发射极（N型）。基极电流控制集电极和发射极之间的电流大小。</p>
+</li>
+</ul>
+<p><a href="/img/CS61C/asserts/image-27.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-27.png" alt="alt text"></a></p>
+<ul>
+<li><p>非门可以通过晶体管构成<br><a href="/img/CS61C/asserts/image-28.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-28.png" alt="alt text"></a></p>
+</li>
+<li><p>与非门可以通过晶体管构成<br><a href="/img/CS61C/asserts/image-29.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-29.png" alt="alt text"></a></p>
+</li>
+</ul>
+<h1 id="Signals-and-Waveforms"><a href="#Signals-and-Waveforms" class="headerlink" title="Signals and Waveforms"></a>Signals and Waveforms</h1><ul>
+<li>本课程中主要关注组合逻辑和状态机：<ul>
+<li>组合逻辑电路是基于逻辑门和组合电路组件的电路，其输出仅依赖于当前输入状态，而不依赖于之前的状态。例如加法器。</li>
+<li>状态机包括一组状态、状态之间的转换规则，以及根据输入和当前状态决定下一状态的逻辑。例如寄存器。</li>
+</ul>
+</li>
+<li>电路有建立时间和保持时间和延迟，采样最好在保持时间内进行。</li>
+</ul>
+<h1 id="Accumulator"><a href="#Accumulator" class="headerlink" title="Accumulator"></a>Accumulator</h1><ul>
+<li>使用加法器和寄存器实现<br><a href="/img/CS61C/asserts/image-30.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-30.png" alt="alt text"></a></li>
+</ul>
+<h1 id="Register-Details"><a href="#Register-Details" class="headerlink" title="Register Details"></a>Register Details</h1><ul>
+<li>Flip-Flop(触发器)<ul>
+<li>一个n位寄存器实际上是n个并行的1位触发器<br>  <a href="/img/CS61C/asserts/image-31.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-31.png" alt="alt text"></a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Accumulator-Revisited"><a href="#Accumulator-Revisited" class="headerlink" title="Accumulator Revisited"></a>Accumulator Revisited</h1><ul>
+<li>电路有建立时间和保持时间和延迟，采样最好在保持时间内进行。</li>
+<li>设计良好的电路，在时钟上升前后，不会发生不稳定变化<br><a href="/img/CS61C/asserts/image-32.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-32.png" alt="alt text"></a></li>
+<li>黄线应该落在稳定时间内，如果进行超频，黄线之间的间隔会缩短，可能会出错</li>
+<li>寄存器中的值可以是不准确的，只要在时钟上升时是稳定值就行</li>
+</ul>
 </div>
-<!--  --> 
-                     <div class="footer">
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-09-14</span>
+            
+                <span>该篇文章被 Derfflinger</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/Synchronous-Digital/'>
+                            Synchronous Digital
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/CS61C/'>
+                            CS61C
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+                    <span>上一篇：<a href='/2024/09/20/Lec17-20%20CPU%20Data%20Path/'>Lec17-20 CPU Data Path</a></span>
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/08/30/Lec11-13%20Instruction%20Formats/">Lec11-13 Instruction Formats</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
     
         <span> 
              

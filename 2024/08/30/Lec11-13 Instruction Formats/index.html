@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="list" />
+    <meta name="description" content="Lec11-13 Instruction Formats" />
     <meta name="hexo-theme-A4" content="v1.9.6" />
     <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
     <title>SMS Derfflinger</title>
@@ -59,7 +59,119 @@
 <link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
     
     
 
@@ -272,8 +384,8 @@
             
             
             
-                <div class="shadow-drop-2-top paper-main">
-                     
+                <div class="shadow-drop-2-bottom paper-main">
+                    
 
 
 <div class="header">
@@ -296,13 +408,7 @@
             
         
             
-                <li><i>
-                    
-                        <u>
-                            <a  href="/list/">文章</a>
-                        </u>
-                    
-                </i></li>
+                <li><a href="/list/">文章</a></li>
             
         
             
@@ -319,212 +425,194 @@
         
     </ul>
 </div> 
-                     <div class="archive-list">
-  <ul class="archive">
-      
-
-      <!--文章先按照时间排好序-->
-      
-
-
-      
-      
-
-      
-
-      
-      
-      
-
-      <!--循环遍历文章数组-->
-      
-
-      <!--排序 置顶 文章-->
-      
-
-      <!--先放 置顶 文章-->
-      
-
-      <!--文章先按照时间排好序-->
-      
-      
-      <!--再放 最近更新 文章-->
-      
-
-      <!--后放 其他 文章-->
-      
         
-        <li>
-          <span class="year-font-color">2025[2]
-             <span class="darkmode-ignore">🍃</span> 
-          </span>
-        </li>
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
         
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;01/16 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/测试/">
-                  测试 
-                </a> | 
-              
-                <a class="archive-title" href="/2025/01/16/test/">test</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;01/16 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title" href="/2025/01/16/hello-world/">Hello World</a>
-            </div>
-          </li>
-        
-      
-        
-        <li>
-          <span class="year-font-color">2024[9]
             
-          </span>
-        </li>
-        
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/15 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/15/Lec36-40/">Lec36-40</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/06 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/06/Lec32-35%20Parallelism/">Lec32-35 Parallelism</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/03 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/">Lec28-31 Virtual Memory, IO</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;10/03 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/10/03/Lec24-27%20Caches/">Lec24-27 Caches</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;09/24 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/09/24/Lec21-23%20Pipelining/">Lec21-23 Pipelining</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;09/20 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/09/20/Lec17-20%20CPU%20Data%20Path/">Lec17-20 CPU Data Path</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;09/14 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/09/14/Lec14-16%20Synchronous%20Digital%20Systems/">Lec14-16 Synchronous Digital Systems</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;08/30 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/08/30/Lec11-13%20Instruction%20Formats/">Lec11-13 Instruction Formats</a>
-            </div>
-          </li>
-        
-          
-          <li>
-            <span class="archive-date">&nbsp;&nbsp;&nbsp;08/25 
-            </span>
-            <div class="archive-main">
-              
-                <a class="archive-title"  href="/categories/CS61C/">
-                  CS61C 
-                </a> | 
-              
-                <a class="archive-title" href="/2024/08/25/Lec7-10%20RISC-V/">Lec7-10 RISC-V</a>
-            </div>
-          </li>
+                <div class="post-main-title" style="text-align: center;">
+                    Lec11-13 Instruction Formats
+                </div>
+            
         
       
-  </ul>
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2025-01-26</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：324</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：1分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+        
+        <div class=".article-gallery"><h1 id="intro"><a href="#intro" class="headerlink" title="intro"></a>intro</h1><ul>
+<li>电线 -&gt; 二进制编码</li>
+</ul>
+<p><a href="/img/CS61C/asserts/image-8.png" title="format" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-8.png" alt="format"></a></p>
+<h1 id="R-Format"><a href="#R-Format" class="headerlink" title="R-Format"></a>R-Format</h1><ul>
+<li>用于逻辑或算数的寄存器到寄存器的指令</li>
+<li>格式：<br><a href="/img/CS61C/asserts/image-9.png" title="R" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-9.png" alt="R"></a><ul>
+<li>R-format的opcode都为0110011（6位到0位）</li>
+<li>funct7+funct3决定运行哪种指令（例如add）</li>
+</ul>
+</li>
+</ul>
+<p><a href="/img/CS61C/asserts/image-10.png" title="all R" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-10.png" alt="all R"></a></p>
+<h1 id="I-Format"><a href="#I-Format" class="headerlink" title="I-Format"></a>I-Format</h1><ul>
+<li>与寄存器和立即数有关的指令和load<br><a href="/img/CS61C/asserts/image-11.png" title="I" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-11.png" alt="I"></a></li>
+</ul>
+<p><a href="/img/CS61C/asserts/image-12.png" title="all I" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-12.png" alt="all I"></a></p>
+<h2 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h2><ul>
+<li>与I类指令格式相同，opcode不同<br><a href="/img/CS61C/asserts/image-13.png" title="Load" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-13.png" alt="Load"></a></li>
+</ul>
+<h1 id="S-format"><a href="#S-format" class="headerlink" title="S-format"></a>S-format</h1><ul>
+<li>只有store指令<br><a href="/img/CS61C/asserts/image-14.png" title="S" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-14.png" alt="S"></a><br><a href="/img/CS61C/asserts/image-15.png" title="S" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-15.png" alt="S"></a></li>
+</ul>
+<h1 id="B-format"><a href="#B-format" class="headerlink" title="B-format"></a>B-format</h1><ul>
+<li>分支指令</li>
+<li>E.g., beq x1, x2, Label</li>
+<li>branch offset by 2 bytes，PC = PC + immediate * 4</li>
+<li>立即数不必保存最低有效位，因为PC按字节对的倍数增加，立即数最低位始终为0</li>
+</ul>
+<p><a href="/img/CS61C/asserts/image-16.png" title="B" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-16.png" alt="B"></a><br><a href="/img/CS61C/asserts/image-17.png" title="B" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-17.png" alt="B"></a></p>
+<h1 id="U-format-Long-immediates"><a href="#U-format-Long-immediates" class="headerlink" title="U-format Long immediates"></a>U-format Long immediates</h1><ul>
+<li>在跳转位置在正负1024条指令之外时，单条分支指令做不到</li>
+<li>lui：将一个立即数的高20位加载进寄存器<br><a href="/img/CS61C/asserts/image-20.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-20.png" alt="alt text"></a><br><a href="/img/CS61C/asserts/image-18.png" title="lui" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-18.png" alt="lui"></a><br><a href="/img/CS61C/asserts/image-19.png" title="louis" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-19.png" alt="louis"></a></li>
+<li>addi是按符号位扩展的，与lui搭配有时会出错；实际使用时使用li就行</li>
+</ul>
+<h1 id="J-format"><a href="#J-format" class="headerlink" title="J-format"></a>J-format</h1><ul>
+<li>跳转，只有jal，j伪指令也使用jal</li>
+<li>jalr伪指令使用了I-format</li>
+</ul>
+<p><a href="/img/CS61C/asserts/image-21.png" title="J" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-21.png" alt="J"></a></p>
+<h1 id="解释器与编译器"><a href="#解释器与编译器" class="headerlink" title="解释器与编译器"></a>解释器与编译器</h1><ul>
+<li>解释器：<ul>
+<li>速度慢</li>
+<li>编写简单</li>
+<li>可以向后兼容</li>
+</ul>
+</li>
+<li>编译器<ul>
+<li>速度快</li>
+<li>复杂</li>
+</ul>
+</li>
+</ul>
+<h1 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h1><p><a href="/img/CS61C/asserts/image-22.png" title="level" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-22.png" alt="level"></a></p>
+<ul>
+<li>编译器将.c文件编译为.s汇编文件，可能包含伪指令</li>
+</ul>
+<h1 id="assembler"><a href="#assembler" class="headerlink" title="assembler"></a>assembler</h1><ul>
+<li>汇编器将伪指令替换为指令，将.s文件生成为.o目标文件</li>
+</ul>
+<p><a href="/img/CS61C/asserts/image-24.png" title="assembler" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-24.png" alt="assembler"></a><br>替换伪指令：<br><a href="/img/CS61C/asserts/image-25.png" title="替换伪指令" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-25.png" alt="替换伪指令"></a></p>
 </div>
-<!--  --> 
-                     <div class="footer">
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-08-30</span>
+            
+                <span>该篇文章被 Derfflinger</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/Assembly/'>
+                            Assembly
+                        </a>
+                    
+                        <a href='/tags/RISC-V/'>
+                            RISC-V
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/CS61C/'>
+                            CS61C
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+                    <span>上一篇：<a href='/2024/09/14/Lec14-16%20Synchronous%20Digital%20Systems/'>Lec14-16 Synchronous Digital Systems</a></span>
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/08/25/Lec7-10%20RISC-V/">Lec7-10 RISC-V</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
     
         <span> 
              

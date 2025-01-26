@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="Hello World" />
+    <meta name="description" content="Lec24-27 Caches" />
     <meta name="hexo-theme-A4" content="v1.9.6" />
     <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
     <title>SMS Derfflinger</title>
@@ -59,7 +59,119 @@
 <link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
     
     
 
@@ -329,7 +441,7 @@
         
             
                 <div class="post-main-title" style="text-align: center;">
-                    Hello World
+                    Lec24-27 Caches
                 </div>
             
         
@@ -342,19 +454,19 @@
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2025-01-16</span> 
+                    <span>最近更新：2025-01-26</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：75</span>
+                     <span>字数总计：1.1k</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：1分钟</span>
+                    <span>阅读估时：3分钟</span>
                 
                 
                     
@@ -370,32 +482,143 @@
     <div class="post-md">
         
             
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Quick-Start"><span class="post-toc-text">Quick Start</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Create-a-new-post"><span class="post-toc-text">Create a new post</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Run-server"><span class="post-toc-text">Run server</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Generate-static-files"><span class="post-toc-text">Generate static files</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Deploy-to-remote-sites"><span class="post-toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
-            
         
-        <div class=".article-gallery"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <div class=".article-gallery"><h1 id="Binary-Prefix"><a href="#Binary-Prefix" class="headerlink" title="Binary Prefix"></a>Binary Prefix</h1><ul>
+<li>Binary Prefix（二进制前缀）是一种用于表示计算机存储和数据传输中数量的单位，特别是在涉及二进制系统时。它们基于2的幂次方，通常用于描述计算机存储容量、内存大小和文件大小等。<br><a href="/img/CS61C/asserts/Pasted%20image%2020240924163717.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240924163717.png"></a></li>
+<li>在网络传输、硬盘大小中一般使用右侧的10进制，其它的领域一般使用左侧的2进制</li>
+</ul>
+<ol>
+<li><strong>KiB (Kibibyte)</strong>：<ul>
+<li>1 KiB = 2^10 字节 = 1024 字节</li>
+</ul>
+</li>
+<li><strong>MiB (Mebibyte)</strong>：<ul>
+<li>1 MiB = 2^20 字节 = 1024 KiB = 1,048,576 字节</li>
+</ul>
+</li>
+<li><strong>GiB (Gibibyte)</strong>：<ul>
+<li>1 GiB = 2^30 字节 = 1024 MiB = 1,073,741,824 字节</li>
+</ul>
+</li>
+<li><strong>TiB (Tebibyte)</strong>：<ul>
+<li>1 TiB = 2^40 字节 = 1024 GiB = 1,099,511,627,776 字节</li>
+</ul>
+</li>
+<li><strong>PiB (Pebibyte)</strong>：<ul>
+<li>1 PiB = 2^50 字节 = 1024 TiB = 1,125,899,906,842,624 字节</li>
+</ul>
+</li>
+<li><strong>EiB (Exbibyte)</strong>：<ul>
+<li>1 EiB = 2^60 字节 = 1024 PiB = 1,152,921,504,606,846,976 字节</li>
+</ul>
+</li>
+<li><strong>ZiB (Zebibyte)</strong>：<ul>
+<li>1 ZiB = 2^70 字节 = 1024 PiB = 1,180,591,620,717,411,303,424 字节</li>
+</ul>
+</li>
+<li><strong>YiB (Yobibyte)</strong>：<ul>
+<li>1 YiB = 2^80 字节 = 1024 ZiB = 1,208,925,819,614,629,174,706,176 字节</li>
+</ul>
+</li>
+</ol>
+<h1 id="Memory-Hierarchy"><a href="#Memory-Hierarchy" class="headerlink" title="Memory Hierarchy"></a>Memory Hierarchy</h1><ul>
+<li>由于CPU和内存的速度差异太大，产生了缓存的想法<br><a href="/img/CS61C/asserts/Pasted%20image%2020240924165803.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240924165803.png"></a></li>
+<li>缓存是一个临时存储数据的快速存储区域，是一个内存中部分数据的副本，比内存小且快</li>
+</ul>
+<h1 id="Locality-Design-Management"><a href="#Locality-Design-Management" class="headerlink" title="Locality, Design, Management"></a>Locality, Design, Management</h1><ul>
+<li>缓存的工作原理是时间和空间局部性</li>
+<li>时间局部性：刚使用过的东西很有可能很快被再次使用</li>
+<li>空间局部性：大多数时候，访问内存不是完全随机的，如果你在某个位置访问内存，你很可能很快访问它的邻居</li>
+</ul>
+<h1 id="Direct-Mapped-Cache"><a href="#Direct-Mapped-Cache" class="headerlink" title="Direct-Mapped Cache"></a>Direct-Mapped Cache</h1><ul>
+<li>Direct-Mapped Cache（直接映射缓存）是一种缓存存储结构，用于提高计算机系统的数据访问速度。它的基本原理是将主存中的数据块映射到缓存中的特定位置。</li>
+<li>每一个内存地址都对应一个块(block)。<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926140919.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926140919.png"></a></li>
+<li>改变块大小时，一次调用块大小的内存到缓存中<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926141645.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926141645.png"></a></li>
+<li>缓存中的块应该有标签，表明来自内存中的哪个位置<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926142308.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926142308.png"></a></li>
+<li>将内存地址直接拆分成三段，即可表明以上信息<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926142731.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926142731.png"></a></li>
+</ul>
+<h1 id="Direct-Mapped-Cache-Example"><a href="#Direct-Mapped-Cache-Example" class="headerlink" title="Direct-Mapped Cache Example"></a>Direct-Mapped Cache Example</h1><ul>
+<li>如图所示<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926144740.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926144740.png"></a></li>
+</ul>
+<h1 id="Cache-Terminology"><a href="#Cache-Terminology" class="headerlink" title="Cache Terminology"></a>Cache Terminology</h1><ul>
+<li>Cache Temperature：一些非正式缓存形容词<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926145606.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926145606.png"></a></li>
+<li>习惯用$表示缓存</li>
+<li>使用一个有效位来标识当前块是否有效</li>
+</ul>
+<h1 id="Writes-Block-Sizes-Misses"><a href="#Writes-Block-Sizes-Misses" class="headerlink" title="Writes, Block, Sizes, Misses"></a>Writes, Block, Sizes, Misses</h1><ul>
+<li>使用门电路和选择器来具体实现缓存的读操作<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926160044.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926160044.png"></a></li>
+<li>写操作时，分为两种</li>
+</ul>
+<ol>
+<li>写直达（Write-Through）：在写操作时，同时将数据写入缓存和主存。</li>
+<li>写回（Write-Back）：写操作只更新缓存，而不是立即更新主存。只有当缓存行被替换时，才会将数据写回主存。需要使用脏位告知操作系统哪些块是旧的<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926160904.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926160904.png"></a></li>
+</ol>
+<ul>
+<li>块太小会损失空间局部性，太大会损失时间局部性<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926162245.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926162245.png"></a></li>
+</ul>
+<h1 id="Fully-Associative-Cache"><a href="#Fully-Associative-Cache" class="headerlink" title="Fully Associative Cache"></a>Fully Associative Cache</h1><ul>
+<li>可以映射到任何位置</li>
+<li>没有索引(index)部分了，标签(tag)直接表示映射到哪一行<br><a href="/img/CS61C/asserts/Pasted%20image%2020240926162724.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020240926162724.png"></a></li>
+<li>miss的种类<ul>
+<li>冷启动未命中（Cold Miss / Compulsory Miss）：当缓存为空或者刚开始使用时，所有第一次访问的数据都会导致未命中，因为它们尚未被加载到缓存中。</li>
+<li>容量未命中（Capacity Miss）：当缓存的容量不足以存储所有活跃的数据时，导致一部分数据被替换出缓存，从而在后续的访问中产生未命中。</li>
+<li>冲突未命中（Conflict Miss）：在某些映射策略（如直接映射或组相连映射）中，多个数据块被映射到同一个缓存位置。当一个新的数据块替换掉已经存在的数据块时，访问旧数据块将导致未命中。</li>
+</ul>
+</li>
+</ul>
+<h1 id="组相联缓存"><a href="#组相联缓存" class="headerlink" title="组相联缓存"></a>组相联缓存</h1><ul>
+<li>介于直接映射和全相联之间<br><a href="/img/CS61C/asserts/Pasted%20image%2020241003151618.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241003151618.png"></a></li>
+<li>能够处理冲突未命中</li>
+</ul>
+<h1 id="块替换"><a href="#块替换" class="headerlink" title="块替换"></a>块替换</h1><ul>
+<li>直接映射直接踢出即可  </li>
+<li>全相联和组相联在其组内进行N路替换  </li>
+<li>LRU：最近最少使用  <ul>
+<li>需要维护访问的次序</li>
+</ul>
+</li>
+<li>FIFO：先进先出  </li>
+<li>随机</li>
+</ul>
+<h1 id="平均内存访问时间：AMAT"><a href="#平均内存访问时间：AMAT" class="headerlink" title="平均内存访问时间：AMAT"></a>平均内存访问时间：AMAT</h1><p><a href="/img/CS61C/asserts/Pasted%20image%2020241003151721.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241003151721.png"></a></p>
+<ul>
+<li>更大的块意味着更大的失效代价和更小的失效率  </li>
+<li>通过添加二级三级缓存减小失效率和失效代价</li>
+</ul>
 </div>
     </div>
 
     <div class="post-meta">
         <i>
         
-            <span>2025-01-16</span>
+            <span>2024-10-03</span>
+            
+                <span>该篇文章被 Derfflinger</span>
             
             
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/Arch/'>
+                            Arch
+                        </a>
+                    
+                        <a href='/tags/Cache-Mapping/'>
+                            Cache Mapping
+                        </a>
+                    
+                </span>
              
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/CS61C/'>
+                            CS61C
+                        </a>
+                    
+                </span>
+            
         
         </i>
     </div>
@@ -407,11 +630,11 @@
     
             <div class="post-footer-pre-next">
                 
-                    <span>上一篇：<a href='/2025/01/16/test/'>test</a></span>
+                    <span>上一篇：<a href='/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/'>Lec28-31 Virtual Memory, IO</a></span>
                 
 
                 
-                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/10/15/Lec36-40/">Lec36-40</a>
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/09/24/Lec21-23%20Pipelining/">Lec21-23 Pipelining</a>
                     </span>
                 
             </div>

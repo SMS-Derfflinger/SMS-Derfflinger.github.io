@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="Lec32-35 Parallelism" />
+    <meta name="hexo-theme-A4" content="v1.9.6" />
+    <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
+    <title>SMS Derfflinger</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+    
+    <style>
+        :root {
+            --waline-theme-color: #323e74; 
+            --waline-color: #323e74; 
+            --waline-border-color: #323e74; 
+            --waline-white: #323e74; 
+            --waline-bgcolor-light: #f2fafc;  
+        }
+        body {
+            color: #323e74;
+            background: #eaeae8;
+        }
+        .post-md code {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        .post-md pre, .post-md .highlight {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
+            color: #323e74;
+        }
+        pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+            color: #323e74;
+        }
+        .year-font-color {
+            color: #323e74 !important;
+        }
+        .wl-card span.wl-nick {
+            color: #323e74; 
+        }
+        .wl-card .wl-badge {
+            border: 1px solid #323e74;
+            color: #323e74; 
+        }
+        .wl-btn {
+            border: 1px solid #323e74; 
+            color:  #323e74;  
+        }
+        .wl-btn.primary {
+            color: #f2fafc; 
+        }
+        .wl-header label {
+            color: #323e74;
+        }
+        a {
+            color: #7f688d;
+        }
+
+        .post-md a {
+            color: #7f688d;
+        }
+
+        .nav li a {
+            color: #7f688d;
+        }
+
+        .archive-main a:link {
+            color: #7f688d;
+        }
+        .archive-main a:visited {
+            color: #767c7c; 
+        }
+
+        .archive li span {
+            color: #323e74;
+        }
+
+        .post-main-title {
+            color: #323e74;
+        }
+
+        .post-md h1,
+        .post-md h2,
+        .post-md h3,
+        .post-md h4,
+        .post-md h5,
+        .post-md h6 {
+            color: #323e74;
+        }
+
+        [data-waline] p {
+            color: #323e74;
+        }
+        [data-waline] a {
+            color: #323e74;
+        } 
+        .wl-sort li.active {
+            color: #323e74;
+        }
+
+        .wl-card .wl-meta>span {
+            background: #f2fafc;
+        }
+
+        .paper {
+            background: #eaeae8;
+        }
+
+        .index-main {
+            background: #f2fafc;
+        }
+
+        .paper-main {
+            background: #f2fafc;
+        }
+
+        .wl-panel {
+            background: #f2fafc;
+        }
+
+        .archive li:nth-child(odd) {
+            background: #f2fafc;
+            ;
+        }
+
+        .archive li:nth-child(even) {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(odd) td {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(even) td {
+            background: #f2fafc;
+        }
+
+    
+        .progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+        .return-to-last-progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .return-to-last-progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .return-to-last-progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+         .left-toc-container::-webkit-scrollbar-thumb {
+            background-color: #323e74; /* 设置滚动条拖动块的颜色 */
+        }
+
+        .bs-docs-sidebar .nav>.active>a,
+        .bs-docs-sidebar .nav>li>a:hover,
+        .bs-docs-sidebar .nav>li>a:focus {
+            color: #7f688d;
+            border-left-color: #7f688d;
+        }
+        .bs-docs-sidebar .nav>li>a {
+            color:  #323e74;
+        }
+    </style>
+
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #eaeae8  ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+            <div class="left-toc-container">
+                <nav id="toc" class="bs-docs-sidebar"></nav>
+            </div>
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/ryo.png" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">SMS Derfflinger</a> 
+            <span class="description">Just for fun.</span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    Lec32-35 Parallelism
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2025-01-26</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：1.2k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：4分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+        
+        <div class=".article-gallery"><h1 id="Flynn’s-Taxonomy"><a href="#Flynn’s-Taxonomy" class="headerlink" title="Flynn’s Taxonomy"></a>Flynn’s Taxonomy</h1><ul>
+<li>软件的并行性和硬件的并行性往往是独立的，并行软件也可以运行在串行硬件上。</li>
+<li>Flynn’s Taxonomy是对硬件的分类</li>
+</ul>
+<h2 id="1-SISD（Single-Instruction-stream-Single-Data-stream）"><a href="#1-SISD（Single-Instruction-stream-Single-Data-stream）" class="headerlink" title="1. SISD（Single Instruction stream Single Data stream）"></a>1. <strong>SISD（Single Instruction stream Single Data stream）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005165809.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005165809.png"></a></p>
+<ul>
+<li><strong>特点</strong>：单一指令流和单一数据流。</li>
+<li><strong>描述</strong>：传统的串行计算机架构，CPU 逐条执行指令，每次处理一个数据项。</li>
+<li><strong>例子</strong>：经典的个人计算机和许多早期的微处理器。</li>
+</ul>
+<h2 id="2-SIMD（Single-Instruction-stream-Multiple-Data-streams）"><a href="#2-SIMD（Single-Instruction-stream-Multiple-Data-streams）" class="headerlink" title="2. SIMD（Single Instruction stream Multiple Data streams）"></a>2. <strong>SIMD（Single Instruction stream Multiple Data streams）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005165857.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005165857.png"></a></p>
+<ul>
+<li><strong>特点</strong>：单一指令流和多个数据流。</li>
+<li><strong>描述</strong>：同一条指令同时对多个数据元素执行操作，适用于并行处理相同类型的数据。</li>
+<li><strong>应用</strong>：图形处理、科学计算和信号处理等领域。</li>
+<li><strong>例子</strong>：现代的图形处理单元（GPU）和某些向量处理器。</li>
+</ul>
+<h2 id="3-MISD（Multiple-Instruction-streams-Single-Data-stream）"><a href="#3-MISD（Multiple-Instruction-streams-Single-Data-stream）" class="headerlink" title="3. MISD（Multiple Instruction streams Single Data stream）"></a>3. <strong>MISD（Multiple Instruction streams Single Data stream）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005170122.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005170122.png"></a></p>
+<ul>
+<li><strong>特点</strong>：多个指令流和单一数据流。</li>
+<li><strong>描述</strong>：多个处理单元同时执行不同的指令，但操作于同一数据。</li>
+<li><strong>应用</strong>：相对少见，主要用于特定的容错系统或并行处理任务。</li>
+<li><strong>例子</strong>：一些冗余系统和特定的高可靠性计算环境。</li>
+</ul>
+<h2 id="4-MIMD（Multiple-Instruction-streams-Multiple-Data-streams）"><a href="#4-MIMD（Multiple-Instruction-streams-Multiple-Data-streams）" class="headerlink" title="4. MIMD（Multiple Instruction streams Multiple Data streams）"></a>4. <strong>MIMD（Multiple Instruction streams Multiple Data streams）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005165957.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005165957.png"></a></p>
+<ul>
+<li><strong>特点</strong>：多个指令流和多个数据流。</li>
+<li><strong>描述</strong>：多个处理器同时独立执行不同的指令，并处理独立的数据集，能够有效地进行复杂的并行计算。</li>
+<li><strong>应用</strong>：广泛用于多核处理器、超级计算机和分布式计算系统。</li>
+<li><strong>例子</strong>：现代多核 CPU 和大多数服务器架构。</li>
+</ul>
+<ul>
+<li>通常是由多个SIMD组成的</li>
+</ul>
+<h1 id="SIMD-Architecture"><a href="#SIMD-Architecture" class="headerlink" title="SIMD Architecture"></a>SIMD Architecture</h1><ul>
+<li>通常通过将数据放在更宽的寄存器中实现</li>
+</ul>
+<h1 id="Thread-Level-Parallelism"><a href="#Thread-Level-Parallelism" class="headerlink" title="Thread-Level Parallelism"></a>Thread-Level Parallelism</h1><ul>
+<li>线程级并行是一种软件并行<br><a href="/img/CS61C/asserts/Pasted%20image%2020241005201657.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005201657.png"></a></li>
+<li>多核的CPU意味着每个核都拥有自己的完整数据通路和指令流，可以看作是两个计算机<br><a href="/img/CS61C/asserts/Pasted%20image%2020241005202312.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005202312.png"></a></li>
+</ul>
+<h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><ul>
+<li>线程是一个指令流</li>
+<li>在单核CPU中，运行多个线程的方式是时间共享</li>
+<li>硬件线程是指由计算机硬件（尤其是处理器）支持的线程，通常与处理器的核心直接相关。硬件线程可以在同一处理器核心中独立地并行执行。</li>
+<li>软件线程是由程序代码创建和管理的线程，通常在操作系统中实现。软件线程依赖于操作系统的调度机制来管理其生命周期。</li>
+</ul>
+<h1 id="Multithreading"><a href="#Multithreading" class="headerlink" title="Multithreading"></a>Multithreading</h1><ul>
+<li>Hyper-Thread：每个支持超线程的物理核心可以被视为两个逻辑核心。这意味着一个物理核心可以同时执行两个线程。</li>
+</ul>
+<h1 id="OpenMP"><a href="#OpenMP" class="headerlink" title="OpenMP"></a>OpenMP</h1><ul>
+<li><strong>OpenMP</strong>（Open Multi-Processing）是一种用于多平台共享内存多处理编程的应用程序接口（API），主要用于并行编程。它提供了一种简单而灵活的方式来实现并行计算。</li>
+<li>通过<code>#pragma omp parallel for</code>指令，例如：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;omp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> {</span><br><span class="line">	omp_set_num_threads(<span class="number">4</span>);</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="meta">#<span class="keyword">pragma</span> omp parallel for</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {</span><br><span class="line">	   <span class="built_in">printf</span>(<span class="string">"Thread %d is processing iteration %d\n"</span>, omp_get_thread_num(), i);</span><br><span class="line">	}</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建的子线程是乱序执行的</li>
+<li>执行方式：<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006123731.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006123731.png"></a></li>
+<li>竞争条件：在<code>#pragma omp parallel</code>部分中，如果多个线程同时访问一个共享资源并进行读写操作，可能会读到旧值然后写入基于旧值更新的错误新值，导致程序出错</li>
+</ul>
+<h1 id="Hardware-Synchronization"><a href="#Hardware-Synchronization" class="headerlink" title="Hardware Synchronization"></a>Hardware Synchronization</h1><ul>
+<li>在软件层级使用锁或者信号量防止共享资源被多个线程访问</li>
+<li>在硬件层级通过原子操作实现，在一条指令内进行读写操作</li>
+<li>可能出现死锁的情况：<ul>
+<li>两个或多个进程在执行过程中，由于争夺资源而造成的一种相互等待的状态，使得它们都无法继续执行。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Shared-Memory-and-caches"><a href="#Shared-Memory-and-caches" class="headerlink" title="Shared Memory and caches"></a>Shared Memory and caches</h1><p><a href="/img/CS61C/asserts/Pasted%20image%2020241006151157.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006151157.png"></a></p>
+<ul>
+<li>每个处理器都有自己的缓存，所有处理器共享内存，可能会导致缓存一致性问题<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006151508.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006151508.png"></a></li>
+</ul>
+<h1 id="Cache-Coherency"><a href="#Cache-Coherency" class="headerlink" title="Cache Coherency"></a>Cache Coherency</h1><ul>
+<li>在多处理器系统中，多个处理器各自拥有的缓存之间保持数据一致性的机制</li>
+<li>Snoopy协议：<br>  <strong>广播机制</strong>：<br>  - Snoopy 协议利用总线广播机制，当一个处理器对其缓存中的数据进行操作时，它会在系统总线上广播相关的操作信息。这使得其他处理器能够实时获知数据的变化。<br>  <strong>监听（Snooping）</strong>：<br>  - 各个处理器的缓存控制器会“监听”总线上的消息。当一个处理器发出读取或写入请求时，其他处理器可以根据这些信息来更新自己的缓存状态。<br>  <strong>状态</strong>：<br>  <a href="/img/CS61C/asserts/Pasted%20image%2020241006152758.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006152758.png"></a><br>  <a href="/img/CS61C/asserts/Pasted%20image%2020241006152807.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006152807.png"></a><br>  <a href="/img/CS61C/asserts/Pasted%20image%2020241006152711.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006152711.png"></a></li>
+<li><strong>Coherence Misses</strong>：是指由于缓存一致性协议导致的缓存未命中。<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006153705.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006153705.png"></a></li>
+<li>这个块会在两个缓存之间来回传递，会增加延迟</li>
+<li>可以通过减小块大小缓解<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006153801.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006153801.png"></a></li>
+</ul>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2024-10-06</span>
+            
+                <span>该篇文章被 Derfflinger</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/Arch/'>
+                            Arch
+                        </a>
+                    
+                        <a href='/tags/Parallelism/'>
+                            Parallelism
+                        </a>
+                    
+                        <a href='/tags/OpenMP/'>
+                            OpenMP
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/CS61C/'>
+                            CS61C
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+                    <span>上一篇：<a href='/2024/10/15/Lec36-40/'>Lec36-40</a></span>
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/">Lec28-31 Virtual Memory, IO</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+             
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>Attention is all you need.</span>
+            
+                <span class="footer-last-span-right"><i>本站由<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">Hexo</a>驱动｜使用<a target="_blank" rel="noopener" href="https://github.com/HiNinoJay/hexo-theme-A4">Hexo-theme-A4</a>主题</i></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
