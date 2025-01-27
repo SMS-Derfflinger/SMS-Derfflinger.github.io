@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="Lec36-40" />
+    <meta name="description" content="ch1 libOS" />
     <meta name="hexo-theme-A4" content="v1.9.6" />
     <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
     <title>SMS Derfflinger</title>
@@ -441,7 +441,7 @@ mjx-container[display="true"] + br {
         
             
                 <div class="post-main-title" style="text-align: center;">
-                    Lec36-40
+                    ch1 libOS
                 </div>
             
         
@@ -454,19 +454,19 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2025-01-26</span> 
+                    <span>最近更新：2025-01-27</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：537</span>
+                     <span>字数总计：2.5k</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：1分钟</span>
+                    <span>阅读估时：9分钟</span>
                 
                 
                     
@@ -483,42 +483,79 @@ mjx-container[display="true"] + br {
         
             
         
-        <div class=".article-gallery"><h1 id="MapReduce-Spark"><a href="#MapReduce-Spark" class="headerlink" title="MapReduce & Spark"></a>MapReduce &amp; Spark</h1><h2 id="Amdahl’s-Law"><a href="#Amdahl’s-Law" class="headerlink" title="Amdahl’s Law"></a>Amdahl’s Law</h2><ul>
-<li>如果一个程序的某一部分必须串行执行（例如某些依赖关系或者输入输出操作），那么即使其余部分可以完全并行化，加速比也会受到限制。<br><a href="/img/CS61C/asserts/Pasted%20image%2020241010142008.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241010142008.png"></a></li>
+        <div class=".article-gallery"><h1 id="ch1-libOS"><a href="#ch1-libOS" class="headerlink" title="ch1 libOS"></a>ch1 libOS</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本章主要是讲解如何设计和实现建立在裸机上的执行环境，并让应用程序能够在这样的执行环境中运行。</p>
+<p>编译器编译出的应用软件在缺省情况下是要链接标准库，而标准库是依赖于操作系统的，首先需要写出不需要标准库的软件并通过编译。为此，先把一般应用所需要的标准库的组件给去掉，然后再逐步添加不需要操作系统的极少的运行时支持代码，让编译器能够正常编译出不需要标准库的正常程序。</p>
+<h2 id="应用程序执行环境与平台支持"><a href="#应用程序执行环境与平台支持" class="headerlink" title="应用程序执行环境与平台支持"></a>应用程序执行环境与平台支持</h2><p>计算机科学中遇到的所有问题都可通过增减一层抽象来解决。</p>
+<p>抽象的优点在于它让上层以较小的代价获得所需的功能，并同时可以提供一些保护。但抽象同时也是一种限制，会丧失一些应有的灵活性。我们通过应用程序的特征和需求来判断操作系统需要什么程度的抽象和功能。现在的操作系统，如<code>Linux</code>，为了通用性，而实现了大量的功能。但对于非常简单的程序而言，有很多的功能是多余的。</p>
+<blockquote>
+<p>现代编译器工具集（以C或Rust编译器为例）的主要工作流程如下：</p>
+<ol>
+<li>源代码（source code） –&gt; 预处理器（preprocessor） –&gt; 宏展开的源代码</li>
+<li>宏展开的源代码 –&gt; 编译器（compiler） –&gt; 汇编程序</li>
+<li>汇编程序 –&gt; 汇编器（assembler）–&gt; 目标代码（object code）</li>
+<li>目标代码 –&gt; 链接器（linker） –&gt; 可执行文件（executables）</li>
+</ol>
+</blockquote>
+<p>Rust编译器通过<strong>目标三元组</strong> (Target Triplet) 来描述一个软件运行的目标平台。它一般包括 CPU、操作系统和运行时库等信息。</p>
+<p>GNU libc封装了 Linux 系统调用，并提供 POSIX 接口为主的函数库。elf 表示没有标准的运行时库（表明没有任何系统调用的封装支持），但可以生成 ELF 格式的执行程序。</p>
+<p>Rust 有一个对 Rust 语言标准库–std 裁剪过后的 Rust 语言核心库 core。core库不需要任何操作系统支持。</p>
+<h2 id="移除标准库依赖"><a href="#移除标准库依赖" class="headerlink" title="移除标准库依赖"></a>移除标准库依赖</h2><blockquote>
+<p><strong>本地编译与交叉编译</strong><br>下面指的 <strong>平台</strong> 主要由CPU硬件和操作系统这两个要素组成。</p>
+</blockquote>
+<p>本地编译，即在当前开发平台下编译出来的程序，也只是放到这个平台下运行。如在 Linux x86-64 平台上编写代码并编译成可在 Linux x86-64 同样平台上执行的程序。</p>
+<blockquote>
+</blockquote>
+<p>交叉编译，是一个与本地编译相对应的概念，即在一种平台上编译出在另一种平台上运行的程序。程序编译的环境与程序运行的环境不一样。</p>
+<h2 id="内核第一条指令（基础篇）"><a href="#内核第一条指令（基础篇）" class="headerlink" title="内核第一条指令（基础篇）"></a>内核第一条指令（基础篇）</h2><p>（在CS61C里看到过差不多的：[[Lec28-31 Virtual Memory, IO#Operating Systems Basic]]）</p>
+<h3 id="Qemu-启动流程"><a href="#Qemu-启动流程" class="headerlink" title="Qemu 启动流程"></a>Qemu 启动流程</h3><p>在Qemu模拟的<code>virt</code>硬件平台上，物理内存的起始物理地址为<code>0x80000000</code>（risc-v架构常见，x86-64一般为<code>ffff880000000000</code>）。</p>
+<p>计算机加电之后的启动流程可以分成若干个阶段，每个阶段均由一层软件或 <a target="_blank" rel="noopener" href="https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter1/3first-instruction-in-kernel1.html#term-firmware">固件</a> 负责，每一层软件或固件的功能是进行它应当承担的初始化工作，并在此之后跳转到下一层软件或固件的入口地址，也就是将计算机的控制权移交给了下一层软件或固件。Qemu 模拟的启动流程则可以分为三个阶段：第一个阶段由固化在 Qemu 内的一小段汇编程序负责；第二个阶段由 bootloader 负责；第三个阶段则由内核镜像负责。</p>
+<ul>
+<li>第一阶段将文件加载到qemu物理内存中，初始化PC寄存器，其中涉及到一些qemu固定的物理地址。</li>
+<li>第二阶段跳转到bootloader的起始地址，bootloader 负责对计算机进行一些初始化工作，并跳转到下一阶段软件的入口</li>
+<li>第三阶段跳转到内核，控制权被移交给内核</li>
 </ul>
-<h2 id="Request-Level"><a href="#Request-Level" class="headerlink" title="Request-Level"></a>Request-Level</h2><ul>
-<li><p>数据级并行性（Data-Level Parallelism, DLP）是一种并行计算的形式，主要关注在数据处理过程中同时执行相同或不同操作的多个数据元素。</p>
-</li>
-<li><p>Request-Level Parallelism (RLP) 是一种并行计算模型，主要用于处理多个独立请求或任务的场景,其中多个请求可以同时被处理，而不需要相互依赖。<br><a href="/img/CS61C/asserts/Pasted%20image%2020241010142834.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241010142834.png"></a></p>
-</li>
+<h3 id="真实计算机的启动流程"><a href="#真实计算机的启动流程" class="headerlink" title="真实计算机的启动流程"></a>真实计算机的启动流程</h3><ul>
+<li>第一阶段：加电后 CPU 的 PC 寄存器被设置为计算机内部只读存储器（ROM，Read-only Memory）的物理地址，随后 CPU 开始运行 ROM 内的固件，对 CPU 进行一些初始化操作，将后续阶段的 bootloader 的代码、数据从硬盘载入到物理内存，最后跳转到适当的地址将计算机控制权转移给 bootloader 。Qemu 上的固件非常简单，因为它并不需要负责将 bootloader 从硬盘加载到物理内存中，这个任务此前已经由 Qemu 自身完成了。</li>
+<li>第二阶段：bootloader 同样完成一些 CPU 的初始化工作，将操作系统镜像从硬盘加载到物理内存中，最后跳转到适当地址将控制权转移给操作系统。一般情况下 bootloader 需要完成一些数据加载工作，这也就是它名字中 loader 的来源。对应于 Qemu 启动的第二阶段。在 Qemu 中，我们使用的 RustSBI 功能较弱，它并没有能力完成加载的工作，内核镜像实际上是和 bootloader 一起在 Qemu 启动之前加载到物理内存中的。</li>
+<li>第三阶段：控制权被转移给操作系统内核。</li>
 </ul>
-<h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><ul>
-<li><strong>Map 阶段</strong>：在这一阶段，输入数据被分割成多个小块，每个小块由不同的处理单元（通常是不同的机器或线程）并行处理。每个处理单元执行一个用户定义的 Map 函数，将输入数据转换为一组键值对。</li>
-<li><strong>Reduce 阶段</strong>：在这一阶段，所有来自 Map 阶段的键值对根据键进行分组，并由一个或多个 Reduce 函数进行处理，以生成最终的输出结果。</li>
-<li>例如，统计一个文本文件中单词出现的次数<br>“I do I learn” -&gt; (“I”,1), (“do”,1), (“I”,1), (“learn”,1)<br><a href="/img/CS61C/asserts/Pasted%20image%2020241010145019.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241010145019.png"></a></li>
+<p>为了让计算机的启动更加灵活，bootloader 目前可能非常复杂：它可能也分为多个阶段，并且能管理一些硬件资源，从复杂性上它已接近一个传统意义上的操作系统。</p>
+<h3 id="程序内存布局与编译流程"><a href="#程序内存布局与编译流程" class="headerlink" title="程序内存布局与编译流程"></a>程序内存布局与编译流程</h3><p>（CS61C中看到过差不多的：[[Lec11-13 Instruction Formats#compiler]]）</p>
+<p>汇编器输出的每个目标文件都有一个独立的程序内存布局，它描述了目标文件内各段所在的位置。而链接器所做的事情是将所有输入的目标文件整合成一个整体的内存布局。在此期间链接器主要完成两件事情：</p>
+<ul>
+<li>第一件事情是将来自不同目标文件的段在目标内存布局中重新排布。<a href="/img/rCore/asserts/Pasted%20image%2020250126181006.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/rCore/asserts/Pasted%20image%2020250126181006.png"></a></li>
+<li>第二件事情是将符号替换为具体地址。</li>
 </ul>
-<h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><ul>
-<li>Apache Spark 是一个开源的大数据处理框架，旨在快速和通用地处理大规模数据集。它提供了一个高度可扩展的计算模型，并且能在内存中处理数据，使其比传统的基于磁盘的处理系统（如 Hadoop MapReduce）更快。<br><a href="/img/CS61C/asserts/Pasted%20image%2020241010150246.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241010150246.png"></a></li>
+<h2 id="内核第一条指令（实践篇）"><a href="#内核第一条指令（实践篇）" class="headerlink" title="内核第一条指令（实践篇）"></a>内核第一条指令（实践篇）</h2><blockquote>
+<p>如果一个程序全程都使用相对地址而不依赖任何绝对地址，那么只要保持好各段之间的相对位置不发生变化，将程序整体加载到内存中的任意位置程序均可正常运行。在这种情况下， <code>BASE_ADDRESS</code> 可以为任意值，我们可以将程序在内存中随意平移。这种程序被称为<strong>位置无关可执行文件（PIE，Position-independent Executable）</strong>。相对的，如果程序依赖绝对地址，那么它一定有一个确定的内存布局，而且该程序必须被加载到与其内存布局一致的位置才能正常运行。</p>
+</blockquote>
+<blockquote>
+<p><strong>静态链接与动态链接</strong></p>
+<p>静态链接是指程序在编译时就将所有用到的函数库的目标文件链接到可执行文件中，这样会导致可执行文件容量较大，占用硬盘空间；而动态链接是指程序在编译时仅在可执行文件中记录用到哪些函数库和在这些函数库中用到了哪些符号，在操作系统执行该程序准备将可执行文件加载到内存时，操作系统会检查这些被记录的信息，将用到的函数库的代码和数据和程序一并加载到内存，并进行一些重定位工作。</p>
+</blockquote>
+<p>编译得到的可执行文件除了实际会被用到的代码和数据段之外还有一些多余的元数据，需要使用类似如下命令将其丢弃。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rust-objcopy --strip-all target/riscv64gc-unknown-none-elf/release/os -O binary target/riscv64gc-unknown-none-elf/release/os.bin</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>os</code> 目录下通过以下命令启动 Qemu 并加载 RustSBI 和内核镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-riscv64 \</span><br><span class="line">    -machine virt \</span><br><span class="line">    -nographic \</span><br><span class="line">    -bios ../bootloader/rustsbi-qemu.bin \</span><br><span class="line">    -device loader,file=target/riscv64gc-unknown-none-elf/release/os.bin,addr=0x80200000 \</span><br><span class="line">    -s -S</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其中的<code>rustsbi-qemu.bin</code>是一个用 Rust 编写的 <strong>RISC-V Supervisor Binary Interface (SBI)</strong> 实现，相当于操作系统（或运行时环境）与硬件和固件（如引导程序或内核）进行交互的中间层，介于底层硬件和内核之间，内核的底层执行环境。</li>
 </ul>
-<h1 id="Dependability"><a href="#Dependability" class="headerlink" title="Dependability"></a>Dependability</h1><ul>
-<li>如何通过使用冗余组件减轻硬件故障  </li>
-<li>备份磁盘本质上是空间冗余  </li>
-<li>时间冗余：发生暂时故障时重复尝试，有可能成功  </li>
-<li>软错误：硬件没有问题，由于环境干扰之类的外因导致读取错误  </li>
-<li>硬错误：硬件有问题</li>
-</ul>
-<h1 id="GPU-Guest-Lecture"><a href="#GPU-Guest-Lecture" class="headerlink" title="GPU Guest Lecture"></a>GPU Guest Lecture</h1><ul>
-<li>GPU架构<br><a href="/img/CS61C/asserts/Pasted%20image%2020241015104739.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241015104739.png"></a></li>
-<li>GPU工作模式<br><a href="/img/CS61C/asserts/Pasted%20image%2020241015104944.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241015104944.png"></a><br><a href="/img/CS61C/asserts/Pasted%20image%2020241015105103.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241015105103.png"></a></li>
-<li>GPU 并不擅长处理小块的工作，造成这种情况的原因是在设置和启动 GPU 方面存在大量的开销</li>
-</ul>
+<h2 id="为内核支持函数调用"><a href="#为内核支持函数调用" class="headerlink" title="为内核支持函数调用"></a>为内核支持函数调用</h2><p>（函数调用与栈的部分在CS61C里也看到过差不多的：[[Lec7-10 RISC-V#Function Calls]]）</p>
+<p>栈通常是通过指定<strong>内存</strong>中的一块特定区域来实现的，由操作系统来管理。</p>
+<p>C 语言中的指针相当于 Rust 中的裸指针，Rust 编译器没法确认程序员对它的使用是否安全，因此将其划到 unsafe Rust 的领域。</p>
+<h2 id="基于-SBI-服务完成输出和关机"><a href="#基于-SBI-服务完成输出和关机" class="headerlink" title="基于 SBI 服务完成输出和关机"></a>基于 SBI 服务完成输出和关机</h2><p>我们编写的 OS 内核位于 Supervisor 特权级，而 RustSBI 位于 Machine 特权级，也是最高的特权级。和U模式下的系统调用中<code>ecall</code>的使用类似，S模式下也是通过<code>ecall</code>来进入M模式。调用 RustSBI 提供的服务通常像调用函数一样，但底层通过 <code>ecall</code> 指令和特权模式的切换实现。</p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>（不是很明白到底要干什么，现在看到的ch1分支似乎是已经实现好的，参考ch1分支自己试了一下）</p>
+<p>对<code>LOG</code>参数的支持，ch1分支中实现好的Makefile里没有对<code>LOG</code>参数的处理，我感到疑惑，找了一下发现在这里：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/logging.rs:39</span></span><br><span class="line">log::<span class="title function_ invoke__">set_max_level</span>(<span class="keyword">match</span> <span class="built_in">option_env!</span>(<span class="string">"LOG"</span>) {</span><br><span class="line">	<span class="title function_ invoke__">Some</span>(<span class="string">"ERROR"</span>) =&gt; LevelFilter::Error,</span><br><span class="line">	...</span><br><span class="line">	});</span><br></pre></td></tr></table></figure>
+<p>是通过获取环境变量的方式来生成运行时分支执行的方式，因为Makefile中没有用到<code>LOG</code>参数的命令所以没有写出来。</p>
 </div>
     </div>
 
     <div class="post-meta">
         <i>
         
-            <span>2024-10-15</span>
+            <span>2025-01-27</span>
             
                 <span>该篇文章被 Derfflinger</span>
             
@@ -530,12 +567,8 @@ mjx-container[display="true"] + br {
                             System
                         </a>
                     
-                        <a href='/tags/MapReduce/'>
-                            MapReduce
-                        </a>
-                    
-                        <a href='/tags/GPU/'>
-                            GPU
+                        <a href='/tags/libOS/'>
+                            libOS
                         </a>
                     
                 </span>
@@ -544,8 +577,8 @@ mjx-container[display="true"] + br {
                 <span>归为分类:
                     
                     
-                        <a href='/categories/CS61C/'>
-                            CS61C
+                        <a href='/categories/rCore/'>
+                            rCore
                         </a>
                     
                 </span>
@@ -561,11 +594,9 @@ mjx-container[display="true"] + br {
     
             <div class="post-footer-pre-next">
                 
-                    <span>上一篇：<a href='/2025/01/27/ch1%20libOS/'>ch1 libOS</a></span>
-                
 
                 
-                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/10/06/Lec32-35%20Parallelism/">Lec32-35 Parallelism</a>
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/10/15/Lec36-40/">Lec36-40</a>
                     </span>
                 
             </div>
