@@ -506,7 +506,7 @@ mjx-container[display="true"] + br {
 <blockquote>
 </blockquote>
 <p>交叉编译，是一个与本地编译相对应的概念，即在一种平台上编译出在另一种平台上运行的程序。程序编译的环境与程序运行的环境不一样。</p>
-<h2 id="内核第一条指令（基础篇）"><a href="#内核第一条指令（基础篇）" class="headerlink" title="内核第一条指令（基础篇）"></a>内核第一条指令（基础篇）</h2><p>（在CS61C里看到过差不多的：[[Lec28-31 Virtual Memory, IO#Operating Systems Basic]]）</p>
+<h2 id="内核第一条指令（基础篇）"><a href="#内核第一条指令（基础篇）" class="headerlink" title="内核第一条指令（基础篇）"></a>内核第一条指令（基础篇）</h2><p>（在CS61C里看到过差不多的：<a href="https://derfflinger.top/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#OperatingSystemsBasic">Lec28-31 Virtual Memory, IO#Operating Systems Basic</a>）</p>
 <h3 id="Qemu-启动流程"><a href="#Qemu-启动流程" class="headerlink" title="Qemu 启动流程"></a>Qemu 启动流程</h3><p>在Qemu模拟的<code>virt</code>硬件平台上，物理内存的起始物理地址为<code>0x80000000</code>（risc-v架构常见，x86-64一般为<code>ffff880000000000</code>）。</p>
 <p>计算机加电之后的启动流程可以分成若干个阶段，每个阶段均由一层软件或 <a target="_blank" rel="noopener" href="https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter1/3first-instruction-in-kernel1.html#term-firmware">固件</a> 负责，每一层软件或固件的功能是进行它应当承担的初始化工作，并在此之后跳转到下一层软件或固件的入口地址，也就是将计算机的控制权移交给了下一层软件或固件。Qemu 模拟的启动流程则可以分为三个阶段：第一个阶段由固化在 Qemu 内的一小段汇编程序负责；第二个阶段由 bootloader 负责；第三个阶段则由内核镜像负责。</p>
 <ul>
@@ -520,7 +520,7 @@ mjx-container[display="true"] + br {
 <li>第三阶段：控制权被转移给操作系统内核。</li>
 </ul>
 <p>为了让计算机的启动更加灵活，bootloader 目前可能非常复杂：它可能也分为多个阶段，并且能管理一些硬件资源，从复杂性上它已接近一个传统意义上的操作系统。</p>
-<h3 id="程序内存布局与编译流程"><a href="#程序内存布局与编译流程" class="headerlink" title="程序内存布局与编译流程"></a>程序内存布局与编译流程</h3><p>（CS61C中看到过差不多的：[[Lec11-13 Instruction Formats#compiler]]）</p>
+<h3 id="程序内存布局与编译流程"><a href="#程序内存布局与编译流程" class="headerlink" title="程序内存布局与编译流程"></a>程序内存布局与编译流程</h3><p>（CS61C中看到过差不多的：<a href="https://derfflinger.top/2024/08/30/Lec11-13%20Instruction%20Formats/#compiler">Lec11-13 Instruction Formats#compiler</a>）</p>
 <p>汇编器输出的每个目标文件都有一个独立的程序内存布局，它描述了目标文件内各段所在的位置。而链接器所做的事情是将所有输入的目标文件整合成一个整体的内存布局。在此期间链接器主要完成两件事情：</p>
 <ul>
 <li>第一件事情是将来自不同目标文件的段在目标内存布局中重新排布。<a href="/img/rCore/asserts/Pasted%20image%2020250126181006.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/rCore/asserts/Pasted%20image%2020250126181006.png"></a></li>
@@ -541,7 +541,7 @@ mjx-container[display="true"] + br {
 <ul>
 <li>其中的<code>rustsbi-qemu.bin</code>是一个用 Rust 编写的 <strong>RISC-V Supervisor Binary Interface (SBI)</strong> 实现，相当于操作系统（或运行时环境）与硬件和固件（如引导程序或内核）进行交互的中间层，介于底层硬件和内核之间，内核的底层执行环境。</li>
 </ul>
-<h2 id="为内核支持函数调用"><a href="#为内核支持函数调用" class="headerlink" title="为内核支持函数调用"></a>为内核支持函数调用</h2><p>（函数调用与栈的部分在CS61C里也看到过差不多的：[[Lec7-10 RISC-V#Function Calls]]）</p>
+<h2 id="为内核支持函数调用"><a href="#为内核支持函数调用" class="headerlink" title="为内核支持函数调用"></a>为内核支持函数调用</h2><p>（函数调用与栈的部分在CS61C里也看到过差不多的：<a href="https://derfflinger.top/2024/08/25/Lec7-10%20RISC-V/#FunctionCalls">Lec7-10 RISC-V#Function Calls</a>）</p>
 <p>栈通常是通过指定<strong>内存</strong>中的一块特定区域来实现的，由操作系统来管理。</p>
 <p>C 语言中的指针相当于 Rust 中的裸指针，Rust 编译器没法确认程序员对它的使用是否安全，因此将其划到 unsafe Rust 的领域。</p>
 <h2 id="基于-SBI-服务完成输出和关机"><a href="#基于-SBI-服务完成输出和关机" class="headerlink" title="基于 SBI 服务完成输出和关机"></a>基于 SBI 服务完成输出和关机</h2><p>我们编写的 OS 内核位于 Supervisor 特权级，而 RustSBI 位于 Machine 特权级，也是最高的特权级。和U模式下的系统调用中<code>ecall</code>的使用类似，S模式下也是通过<code>ecall</code>来进入M模式。调用 RustSBI 提供的服务通常像调用函数一样，但底层通过 <code>ecall</code> 指令和特权模式的切换实现。</p>
