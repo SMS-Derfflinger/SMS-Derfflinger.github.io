@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="ch2 批处理系统" />
+    <meta name="hexo-theme-A4" content="v1.9.6" />
+    <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
+    <title>SMS Derfflinger</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+    
+    <style>
+        :root {
+            --waline-theme-color: #323e74; 
+            --waline-color: #323e74; 
+            --waline-border-color: #323e74; 
+            --waline-white: #323e74; 
+            --waline-bgcolor-light: #f2fafc;  
+        }
+        body {
+            color: #323e74;
+            background: #eaeae8;
+        }
+        .post-md code {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        .post-md pre, .post-md .highlight {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
+            color: #323e74;
+        }
+        pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+            color: #323e74;
+        }
+        .year-font-color {
+            color: #323e74 !important;
+        }
+        .wl-card span.wl-nick {
+            color: #323e74; 
+        }
+        .wl-card .wl-badge {
+            border: 1px solid #323e74;
+            color: #323e74; 
+        }
+        .wl-btn {
+            border: 1px solid #323e74; 
+            color:  #323e74;  
+        }
+        .wl-btn.primary {
+            color: #f2fafc; 
+        }
+        .wl-header label {
+            color: #323e74;
+        }
+        a {
+            color: #7f688d;
+        }
+
+        .post-md a {
+            color: #7f688d;
+        }
+
+        .nav li a {
+            color: #7f688d;
+        }
+
+        .archive-main a:link {
+            color: #7f688d;
+        }
+        .archive-main a:visited {
+            color: #767c7c; 
+        }
+
+        .archive li span {
+            color: #323e74;
+        }
+
+        .post-main-title {
+            color: #323e74;
+        }
+
+        .post-md h1,
+        .post-md h2,
+        .post-md h3,
+        .post-md h4,
+        .post-md h5,
+        .post-md h6 {
+            color: #323e74;
+        }
+
+        [data-waline] p {
+            color: #323e74;
+        }
+        [data-waline] a {
+            color: #323e74;
+        } 
+        .wl-sort li.active {
+            color: #323e74;
+        }
+
+        .wl-card .wl-meta>span {
+            background: #f2fafc;
+        }
+
+        .paper {
+            background: #eaeae8;
+        }
+
+        .index-main {
+            background: #f2fafc;
+        }
+
+        .paper-main {
+            background: #f2fafc;
+        }
+
+        .wl-panel {
+            background: #f2fafc;
+        }
+
+        .archive li:nth-child(odd) {
+            background: #f2fafc;
+            ;
+        }
+
+        .archive li:nth-child(even) {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(odd) td {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(even) td {
+            background: #f2fafc;
+        }
+
+    
+        .progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+        .return-to-last-progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .return-to-last-progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .return-to-last-progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+         .left-toc-container::-webkit-scrollbar-thumb {
+            background-color: #323e74; /* 设置滚动条拖动块的颜色 */
+        }
+
+        .bs-docs-sidebar .nav>.active>a,
+        .bs-docs-sidebar .nav>li>a:hover,
+        .bs-docs-sidebar .nav>li>a:focus {
+            color: #7f688d;
+            border-left-color: #7f688d;
+        }
+        .bs-docs-sidebar .nav>li>a {
+            color:  #323e74;
+        }
+    </style>
+
+    
+    
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        <script>
+            const options = {
+                bottom: '40px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '42px', // default: 'unset'
+                time: '0.3s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: ' #eaeae8  ',  // default: '#fff'
+                buttonColorDark: '#100f2c',  // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: true, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: true // default: true
+            }
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
+        </script>
+        
+        
+            <div class="left-toc-container">
+                <nav id="toc" class="bs-docs-sidebar"></nav>
+            </div>
+        
+        <div class="paper">
+            
+            
+            
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <img style="
+        width: 56px;
+        height: auto;" alt="^-^" cache-control="max-age=86400" class="header-img" src="/img/ryo.png" width="10%"></img>
+        <div class="header-content">
+            <a class="logo" href="/">SMS Derfflinger</a> 
+            <span class="description">Just for fun.</span> 
+        </div>
+        
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+    </ul>
+</div> 
+        
+                    
+                    
+
+                    
+                    
+                    
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    ch2 批处理系统
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2025-02-21</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：6.1k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：23分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+        
+        <div class=".article-gallery"><h1 id="ch2-批处理系统"><a href="#ch2-批处理系统" class="headerlink" title="ch2 批处理系统"></a>ch2 批处理系统</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本章在前一章的基础上，将多个程序打包到一起输入计算机，支持多个程序的自动加载和运行，对可支持运行一批应用程序的执行环境有一个全面和深入的理解。</p>
+<p>本章相比上一章的libOS，不同点主要有两个：一是操作系统和用户程序运行在不同的特权级上；二是能够连续自动运行不同的程序。</p>
+<p>主要的实现流程为：</p>
+<ol>
+<li>编写应用程序，在用户态运行，通过系统调用来与操作系统交互。</li>
+<li>为操作系统实现系统调用。</li>
+<li>操作系统还需给 Binary 应用分配好对应执行环境所需一系列的资源，包括用户栈和内核栈等。</li>
+<li>为操作系统实现自动加载运行用户程序。</li>
+</ol>
+<h2 id="特权级机制"><a href="#特权级机制" class="headerlink" title="特权级机制"></a>特权级机制</h2><p>应用程序的安全性不能完全信任，可能会破坏硬件环境，引入特权级机制，将应用程序和可信赖的操作系统运行在不同的特权级下，比较安全。</p>
+<p>RISC-V定义了四个主要的特权级别，它们分别为：</p>
+<ol>
+<li><p><strong>用户模式（User Mode, U）</strong>：</p>
+<ul>
+<li>最基本的执行模式，应用程序和用户代码在该模式下运行。</li>
+<li>用户模式的程序无法直接访问硬件资源或执行特权操作（如访问控制寄存器、修改系统状态等）。</li>
+<li>用户程序只能通过系统调用、陷阱等机制请求操作系统内核执行特权操作。</li>
+</ul>
+</li>
+<li><p><strong>超级用户模式（Supervisor Mode, S）</strong>：</p>
+<ul>
+<li>操作系统内核通常运行在超级用户模式下。</li>
+<li>在该模式下，操作系统可以管理硬件、访问所有内存、设置中断、以及执行特权指令等。</li>
+<li>超级用户模式是操作系统内核的基础特权级，可以直接访问内存和外设资源。</li>
+</ul>
+</li>
+<li><p><strong>虚拟机模式（如果启用虚拟化）</strong>：</p>
+<ul>
+<li>虽然RISC-V的标准ISA没有明确提到“虚拟机模式”，但是它支持虚拟化扩展。在启用了虚拟化扩展的情况下，特权级的机制会有所扩展，用于支持虚拟机监控程序（Hypervisor）等虚拟化环境的管理。</li>
+</ul>
+</li>
+<li><p><strong>机器模式（Machine Mode, M）</strong>：</p>
+<ul>
+<li>机器模式是RISC-V的最高特权级，通常由固件或启动程序（如引导加载程序）使用。</li>
+<li>在机器模式下，CPU具有最高的访问权限，可以访问所有硬件资源。</li>
+<li>机器模式通常用于执行最低级别的操作，如设置系统定时器、启动和关闭硬件、处理故障等。</li>
+</ul>
+</li>
+</ol>
+<p>特权级的切换通过RISC-V 提供的机器指令：执行环境调用指令（Execution Environment Call，简称 <code>ecall</code> ）和一类执行环境返回（Execution Environment Return，简称 <code>eret</code> ）指令来完成。对于本章这样的批处理系统，2种特权级就足够了。</p>
+<p>异常（Exception）是RISC-V体系中一种特殊的控制流（即“异常控制流”）。它代表程序在执行时发生了意外的行为或事件，这些事件需要程序中断正常的执行顺序并跳转到某个异常处理程序（例如，操作系统内核的异常处理代码）。</p>
+<p>在RISC-V中，异常控制流与常规的程序控制流（如顺序执行、循环、分支、函数调用等）是不同的。程序在异常发生时会中断正常的执行流程，并转到异常处理代码中。处理完异常后，程序通常会恢复原本的执行流。</p>
+<p>Trap是RISC-V中一种“中断”机制的统称，包括但不限于异常。在RISC-V架构中，异常属于Trap的一种类型。异常通常发生在指令执行过程中，可能是因为程序错误、系统调用、外部硬件中断等事件。这些事件需要操作系统或硬件进行处理，并在处理完成后恢复程序执行。</p>
+<blockquote>
+<p> <strong>断点</strong> (Breakpoint) 和 <strong>执行环境调用</strong> (Environment call) 两种异常（为了与其他非有意为之的异常区分，会把这种有意为之的指令称为 <em>陷入</em> 或 <em>trap</em> 类指令，此处的陷入为操作系统中传统概念）是通过在上层软件中执行一条特定的指令触发的：执行 <code>ebreak</code> 这条指令之后就会触发断点陷入异常；而执行 <code>ecall</code> 这条指令时候则会随着 CPU 当前所处特权级而触发不同的异常。</p>
+</blockquote>
+<p>当一个特权级切换（通常是因为异常或中断）发生时，CPU会中断当前执行的代码，并切换到更高特权级的代码。处理完异常后，CPU需要返回到被中断的程序，继续从原来暂停的位置恢复执行。这种恢复执行的过程在RISC-V中通常会通过<strong>异常返回</strong>（Exception Return）机制来实现。它通过存储和恢复当前执行状态来确保程序能够在正确的地方继续执行。</p>
+<p>当某些操作或请求需要由更高权限的代码处理时，CPU会从较低权限级切换到较高权限级。这时就需要切换执行环境并执行必要的操作。<br><a href="/img/rCore/asserts/Pasted%20image%2020250207160741.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/rCore/asserts/Pasted%20image%2020250207160741.png"></a></p>
+<h2 id="实现应用程序"><a href="#实现应用程序" class="headerlink" title="实现应用程序"></a>实现应用程序</h2><p>本节主要讲解如何设计实现被批处理系统逐个加载并运行的应用程序。假定在用户态下运行。应用程序的设计实现要点是内存布局和设计系统调用。</p>
+<p>在 <code>user/src</code> 目录下，<code>bin</code> 里面有多个用户程序文件，<code>user</code> 目录下的 <code>lib.rs</code> 以及它引用的若干子模块作为 <code>bin</code> 目录下的源程序所依赖的用户库，等价于其他编程语言提供的标准库，定义了用户库的入口点，封装了一些<code>syscall</code>。</p>
+<p>系统调用实际上是汇编指令级别的二进制接口，在具体实现的时候，需要使用内联汇编，在指定的寄存器中放入参数。在 RISC-V 调用规范中，约定寄存器 <code>a0~a6</code> 保存系统调用的参数， <code>a0</code> 保存系统调用的返回值， <code>a7</code> 用来传递 syscall ID。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">syscall</span>(id: <span class="type">usize</span>, args: [<span class="type">usize</span>; <span class="number">3</span>]) <span class="punctuation">-&gt;</span> <span class="type">isize</span> {</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">ret</span>: <span class="type">isize</span>;</span><br><span class="line">    <span class="keyword">unsafe</span> {</span><br><span class="line">        asm!(</span><br><span class="line">            <span class="string">"ecall"</span>,</span><br><span class="line">            <span class="title function_ invoke__">inlateout</span>(<span class="string">"x10"</span>) args[<span class="number">0</span>] =&gt; ret,</span><br><span class="line">            <span class="title function_ invoke__">in</span>(<span class="string">"x11"</span>) args[<span class="number">1</span>],</span><br><span class="line">            <span class="title function_ invoke__">in</span>(<span class="string">"x12"</span>) args[<span class="number">2</span>],</span><br><span class="line">            <span class="title function_ invoke__">in</span>(<span class="string">"x17"</span>) id</span><br><span class="line">	    );</span><br><span class="line">    }</span><br><span class="line">    ret</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>于是用户库中的 <code>sys_write</code> 和 <code>sys_exit</code> 等系统调用只需将 <code>syscall</code> 进行包装即可：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user/src/syscall.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> SYSCALL_WRITE: <span class="type">usize</span> = <span class="number">64</span>;</span><br><span class="line"><span class="keyword">const</span> SYSCALL_EXIT: <span class="type">usize</span> = <span class="number">93</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">sys_write</span>(fd: <span class="type">usize</span>, buffer: &amp;[<span class="type">u8</span>]) <span class="punctuation">-&gt;</span> <span class="type">isize</span> {</span><br><span class="line">    <span class="title function_ invoke__">syscall</span>(SYSCALL_WRITE, [fd, buffer.<span class="title function_ invoke__">as_ptr</span>() <span class="keyword">as</span> <span class="type">usize</span>, buffer.<span class="title function_ invoke__">len</span>()])</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">sys_exit</span>(xstate: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">isize</span> {</span><br><span class="line">    <span class="title function_ invoke__">syscall</span>(SYSCALL_EXIT, [xstate <span class="keyword">as</span> <span class="type">usize</span>, <span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现批处理操作系统"><a href="#实现批处理操作系统" class="headerlink" title="实现批处理操作系统"></a>实现批处理操作系统</h2><blockquote>
+<p>从本节开始我们将着手实现批处理操作系统，应用放置采用“静态绑定”的方式，而操作系统加载应用则采用“动态加载”的方式：</p>
+<ul>
+<li><p>静态绑定：通过一定的编程技巧，把多个应用程序代码和批处理操作系统代码“绑定”在一起。</p>
+</li>
+<li><p>动态加载：基于静态编码留下的“绑定”信息，操作系统可以找到每个应用程序文件二进制代码的起始地址和长度，并能加载到内存中运行。</p>
+</li>
+</ul>
+</blockquote>
+<p>整体的流程为：操作系统初始化栈和上下文，加载应用程序，切换到用户态，应用程序开始运行，可能会调用系统调用获取操作系统的服务，应用程序退出也使用了一种系统调用，其中会加载下一个应用程序。</p>
+<h2 id="实现特权级的切换"><a href="#实现特权级的切换" class="headerlink" title="实现特权级的切换"></a>实现特权级的切换</h2><p>应用程序与操作系统运行在不同的特权级，特权级的切换需要操作系统和硬件设施通过某种合作机制共同完成。</p>
+<p>切换通常是由中断、异常或系统调用引发的。当操作系统需要执行特权操作时，它会通过中断或异常将当前执行的程序从用户模式（U-mode）切换到超级用户模式（S-mode）。在 RISC-V 架构中，关于 Trap 有一条重要的规则：在 Trap 前的特权级不会高于 Trap 后的特权级。因此如果触发 Trap 之后切换到 S 特权级（下称 Trap 到 S），说明 Trap 发生之前 CPU 只能运行在 S/U 特权级。</p>
+<p>RISC-V架构使用控制状态寄存器（CSR，Control and Status Register）来管理特权级别和状态，RISC-V有多个专门的寄存器来处理特权级切换：</p>
+<ul>
+<li><p><strong>sstatus</strong> (Supervisor Status Register)</p>
+<ul>
+<li><code>sstatus</code>寄存器用于保存和管理超级用户模式（S-mode）的状态信息，关于特权级别切换、异常和中断的状态。</li>
+<li><strong>SPP</strong>（Supervisor Previous Privilege）：记录 Trap 发生之前 CPU 处在哪个特权级别。它的值为：<ul>
+<li><code>0</code>：用户模式（U-mode）</li>
+<li><code>1</code>：超级用户模式（S-mode）</li>
+</ul>
+</li>
+<li><strong>SIE</strong>（Supervisor Interrupt Enable）：表示是否允许超级用户模式下的中断。</li>
+<li><strong>SPIE</strong>（Supervisor Previous Interrupt Enable）：表示 Trap 发生之前，超级用户模式下是否允许中断。</li>
+<li><strong>SUM</strong>（Supervisor User Memory Access）：表示是否允许超级用户模式访问用户级别的内存。</li>
+<li><strong>MPRV</strong>（Modify Privilege）：控制是否允许在超级用户模式下修改内存的访问权限。</li>
+</ul>
+<ul>
+<li><strong>用途</strong>：<code>sstatus</code> 寄存器帮助操作系统管理特权级别切换，保存当前的中断启用状态，以及控制超级用户模式下的内存访问。</li>
+</ul>
+</li>
+<li><p><strong>sepc</strong> (Supervisor Exception Program Counter)</p>
+<ul>
+<li><strong>功能</strong>：<code>sepc</code>寄存器保存发生异常或中断时，超级用户模式（S-mode）程序计数器的值，即在 Trap 发生之前正在执行的指令的地址。</li>
+<li><strong>用途</strong>：它使得处理异常时，CPU 可以跳转到正确的异常处理代码。异常处理程序可以读取 <code>sepc</code> 的值来知道是哪条指令导致的异常。</li>
+</ul>
+</li>
+<li><p><strong>scause</strong> (Supervisor Cause Register)</p>
+<ul>
+<li><strong>功能</strong>：<code>scause</code>寄存器用来记录 Trap 发生的原因，它指示是哪种异常或中断触发了 Trap。</li>
+<li><strong>Exception Code</strong>：寄存器的高位部分记录异常的类型，如非法指令、访问权限错误等。异常代码与中断代码由不同的值表示。</li>
+<li><strong>Interrupt Flag</strong>：低位标记表示 Trap 是由中断引发的（为 1），还是由异常引起的（为 0）。</li>
+</ul>
+<ul>
+<li><strong>用途</strong>：<code>scause</code> 寄存器帮助操作系统或异常处理程序识别具体的异常类型，以便采取适当的处理措施。</li>
+</ul>
+</li>
+<li><p><strong>stval</strong> (Supervisor Trap Value Register)</p>
+<ul>
+<li><strong>功能</strong>：<code>stval</code>寄存器保存与 Trap 相关的附加信息。对于不同类型的异常或中断，这个寄存器的含义可能不同。它通常用于存储触发异常的相关数据。</li>
+<li><strong>用途</strong>：</li>
+<li>在访问权限异常（例如，访问非法地址时），<code>stval</code> 可以保存出错的虚拟地址。</li>
+<li>在加载或存储指令异常时，<code>stval</code> 可能保存指令地址。</li>
+<li>对于其他类型的异常，<code>stval</code> 保存错误相关的具体信息。</li>
+</ul>
+</li>
+<li><p><strong>stvec</strong> (Supervisor Trap Vector Register)</p>
+<ul>
+<li><strong>功能</strong>：<code>stvec</code>寄存器指定 Trap 处理程序的入口地址，即当发生异常或中断时，CPU 应该跳转到的地址。</li>
+<li><strong>直接模式</strong>：<code>stvec</code> 直接指定异常处理程序的地址，CPU 在发生 Trap 时会跳转到该地址。</li>
+<li><strong>向量模式</strong>：如果启用了向量模式，<code>stvec</code> 寄存器保存的是 Trap 向量的基地址。在向量模式下，Trap 的类型决定了跳转的具体向量地址。这样可以为不同类型的异常设置不同的处理函数。</li>
+<li><strong>Base Address</strong>：<code>stvec</code> 存储 Trap 处理程序的基本地址。</li>
+<li><strong>Mode</strong>：决定是使用直接模式还是向量模式，通常由 <code>stvec</code> 的最低位控制。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>这些寄存器帮助系统决定从一个模式到另一个模式时，如何保存状态并进行恢复。</li>
+</ul>
+<ol>
+<li>当发生 Trap（如异常或中断）时，CPU 会保存当前的状态（例如，程序计数器、特权级别等）到 <code>sepc</code>、<code>sstatus</code> 和其他寄存器。原寄存器被保存在内核栈中。</li>
+<li>然后，CPU 会根据 <code>stvec</code> 跳转到 Trap 处理程序。</li>
+<li>处理程序可以通过 <code>scause</code> 确定 Trap 的类型，并通过 <code>stval</code> 获取更多的信息。</li>
+<li>处理程序完成后，会恢复原来的状态并继续执行。</li>
+</ol>
+<p>在RISC-V架构中，硬件只完成必须要做的工作，给了操作系统更大的灵活性。</p>
+<h2 id="内核代码"><a href="#内核代码" class="headerlink" title="内核代码"></a>内核代码</h2><p>构建操作系统时，脚本 <code>os/build.rs</code> 生成了一段汇编代码 <code>link_app.S</code>，插入了应用程序的二进制镜像，并且各自有一对全局符号 <code>app_*_start</code>，<code>app_*_end</code> 指示它们的开始和结束位置。</p>
+<h3 id="程序加载"><a href="#程序加载" class="headerlink" title="程序加载"></a>程序加载</h3><p>应用管理器 <code>AppManager</code> 是操作系统的核心组件：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/batch.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">AppManager</span> {</span><br><span class="line">    num_app: <span class="type">usize</span>,</span><br><span class="line">    current_app: <span class="type">usize</span>,</span><br><span class="line">    app_start: [<span class="type">usize</span>; MAX_APP_NUM + <span class="number">1</span>],</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>声明全局变量的时候，采用 <code>static mut</code> 是一种比较简单自然的方法。但是在 Rust 中，任何对于 <code>static mut</code> 变量的访问控制都是 unsafe 的，而我们要在编程中尽量避免使用 unsafe ，这样才能让编译器负责更多的安全性检查。使用<code>UPSafeCell</code> 对于 <code>RefCell</code> 简单进行封装，向编译器做出保证，无需在意任何多核引发的数据竞争/同步问题。虽然 <code>UPSafeCell</code> 是通过 <code>unsafe</code> 实现的，但它的设计尽量减少了 <code>unsafe</code> 的使用，将其封装在受控的范围内，依赖于程序员保证数据访问的安全性。再使用 <code>lazy_static!</code> 宏进行初始化。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/sync/up.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">UPSafeCell</span>&lt;T&gt; {</span><br><span class="line">    <span class="comment">/// inner data</span></span><br><span class="line">    inner: RefCell&lt;T&gt;,</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">unsafe</span> <span class="keyword">impl</span>&lt;T&gt; <span class="built_in">Sync</span> <span class="keyword">for</span> <span class="title class_">UPSafeCell</span>&lt;T&gt; {}</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T&gt; UPSafeCell&lt;T&gt; {</span><br><span class="line">    <span class="comment">/// User is responsible to guarantee that inner struct is only used in</span></span><br><span class="line">    <span class="comment">/// uniprocessor.</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">unsafe</span> <span class="keyword">fn</span> <span class="title function_">new</span>(value: T) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> {</span><br><span class="line">        <span class="keyword">Self</span> {</span><br><span class="line">            inner: RefCell::<span class="title function_ invoke__">new</span>(value),</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/// Exclusive access inner data in UPSafeCell. Panic if the data has been borrowed.</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">exclusive_access</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> RefMut&lt;<span class="symbol">'_</span>, T&gt; {</span><br><span class="line">        <span class="keyword">self</span>.inner.<span class="title function_ invoke__">borrow_mut</span>()</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>在 Rust 中，默认情况下，如果有一个不可变引用（<code>&amp;T</code>），就不能通过它来修改数据。而如果有一个可变引用（<code>&amp;mut T</code>），只能拥有该数据的唯一可变引用。<code>RefCell</code> 打破了这种限制，提供了内部可变性，允许在运行时进行可变借用和不可变借用的检查。</p>
+<p><code>lazy_static!</code> 宏用于创建延迟初始化的静态变量。静态变量（<code>static</code>）在程序生命周期内只有一个实例，并且通常需要在编译时进行初始化。在某些情况下，我们希望静态变量的初始化是在第一次使用时才发生，而不是在程序启动时就完成。这就是 <code>lazy_static!</code> 宏的作用，它提供了懒初始化功能。</p>
+<p>加载程序：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsafe</span> <span class="keyword">fn</span> <span class="title function_">load_app</span>(&amp;<span class="keyword">self</span>, app_id: <span class="type">usize</span>) {</span><br><span class="line">    <span class="keyword">if</span> app_id &gt;= <span class="keyword">self</span>.num_app {</span><br><span class="line">		<span class="built_in">panic!</span>(<span class="string">"All applications completed!"</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"[kernel] Loading app_{}"</span>, app_id);</span><br><span class="line">    <span class="comment">// clear app area</span></span><br><span class="line">    core::slice::<span class="title function_ invoke__">from_raw_parts_mut</span>(</span><br><span class="line">        APP_BASE_ADDRESS <span class="keyword">as</span> *<span class="keyword">mut</span> <span class="type">u8</span>,</span><br><span class="line">        APP_SIZE_LIMIT</span><br><span class="line">    ).<span class="title function_ invoke__">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">app_src</span> = core::slice::<span class="title function_ invoke__">from_raw_parts</span>(</span><br><span class="line">        <span class="keyword">self</span>.app_start[app_id] <span class="keyword">as</span> *<span class="keyword">const</span> <span class="type">u8</span>,</span><br><span class="line">        <span class="keyword">self</span>.app_start[app_id + <span class="number">1</span>] - <span class="keyword">self</span>.app_start[app_id]</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">app_dst</span> = core::slice::<span class="title function_ invoke__">from_raw_parts_mut</span>(</span><br><span class="line">        APP_BASE_ADDRESS <span class="keyword">as</span> *<span class="keyword">mut</span> <span class="type">u8</span>,</span><br><span class="line">        app_src.<span class="title function_ invoke__">len</span>()</span><br><span class="line">    );</span><br><span class="line">    app_dst.<span class="title function_ invoke__">copy_from_slice</span>(app_src);</span><br><span class="line">    <span class="comment">// memory fence about fetching the instruction memory</span></span><br><span class="line">    asm!(<span class="string">"fence.i"</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>负责将参数 <code>app_id</code> 对应的应用程序的二进制镜像加载到物理内存以 <code>0x80400000</code> 起始的位置。清空目标内存区域，准备加载应用程序。计算应用程序的长度，根据源内存的起始地址和长度，创建一个不可变的切片 <code>app_src</code>，表示应用程序的源数据。将 <code>app_src</code> 中的数据复制到 <code>app_dst</code> 中，也就是将应用程序从源内存区域复制到目标内存区域。最后执行一个内存屏障指令，确保在加载应用程序后，处理器能够及时地更新它的指令缓存，避免因为缓存问题导致读取到过时的指令。</p>
+<h3 id="用户栈和内核栈"><a href="#用户栈和内核栈" class="headerlink" title="用户栈和内核栈"></a>用户栈和内核栈</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/batch.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> USER_STACK_SIZE: <span class="type">usize</span> = <span class="number">4096</span> * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> KERNEL_STACK_SIZE: <span class="type">usize</span> = <span class="number">4096</span> * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> MAX_APP_NUM: <span class="type">usize</span> = <span class="number">16</span>;</span><br><span class="line"><span class="keyword">const</span> APP_BASE_ADDRESS: <span class="type">usize</span> = <span class="number">0x80400000</span>;</span><br><span class="line"><span class="keyword">const</span> APP_SIZE_LIMIT: <span class="type">usize</span> = <span class="number">0x20000</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[repr(align(4096))]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">KernelStack</span> {</span><br><span class="line">    data: [<span class="type">u8</span>; KERNEL_STACK_SIZE],</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="meta">#[repr(align(4096))]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">UserStack</span> {</span><br><span class="line">    data: [<span class="type">u8</span>; USER_STACK_SIZE],</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> KERNEL_STACK: KernelStack = KernelStack {</span><br><span class="line">    data: [<span class="number">0</span>; KERNEL_STACK_SIZE],</span><br><span class="line">};</span><br><span class="line"><span class="keyword">static</span> USER_STACK: UserStack = UserStack {</span><br><span class="line">    data: [<span class="number">0</span>; USER_STACK_SIZE],</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>KernelStack</code> 和 <code>UserStack</code>：分别定义了内核和用户栈，每个栈都以 4096 字节对齐，栈的大小是先前定义的常量。<code>data</code> 是一个字节数组，存储栈的数据。</li>
+<li><code>#[repr(align(4096))]</code>：这是一种 Rust 特性，用于指定结构体在内存中的对齐方式，这里设置为 4096 字节对齐。这样做的目的是确保栈内存的对齐符合操作系统的要求。</li>
+<li><code>KERNEL_STACK</code> 和 <code>USER_STACK</code>：这些是全局静态变量，分别保存内核栈和用户栈。它们是不可变的，且只会初始化一次。</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> <span class="title class_">KernelStack</span> {</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">get_sp</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> {</span><br><span class="line">        <span class="keyword">self</span>.data.<span class="title function_ invoke__">as_ptr</span>() <span class="keyword">as</span> <span class="type">usize</span> + KERNEL_STACK_SIZE</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">push_context</span>(&amp;<span class="keyword">self</span>, cx: TrapContext) <span class="punctuation">-&gt;</span> &amp;<span class="symbol">'static</span> <span class="keyword">mut</span> TrapContext {</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">cx_ptr</span> = (<span class="keyword">self</span>.<span class="title function_ invoke__">get_sp</span>() - core::mem::size_of::&lt;TrapContext&gt;()) <span class="keyword">as</span> *<span class="keyword">mut</span> TrapContext;</span><br><span class="line">        <span class="keyword">unsafe</span> {</span><br><span class="line">            *cx_ptr = cx;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">unsafe</span> { cx_ptr.<span class="title function_ invoke__">as_mut</span>().<span class="title function_ invoke__">unwrap</span>() }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">UserStack</span> {</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">get_sp</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> {</span><br><span class="line">        <span class="keyword">self</span>.data.<span class="title function_ invoke__">as_ptr</span>() <span class="keyword">as</span> <span class="type">usize</span> + USER_STACK_SIZE</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>get_sp()</code>：返回当前栈指针（Stack Pointer）。只要返回 <code>data</code> 数组的结尾地址即可。通过获取栈的 <code>data</code> 数组的指针得到起始地址，并加上栈的大小来计算当前栈顶的位置。</li>
+<li><code>push_context()</code>：将一个 <code>TrapContext</code> 推入栈中。这个函数将 <code>TrapContext</code> 结构体推送到栈中，并返回对它的可变引用：<ul>
+<li>计算栈顶的位置，并减去 <code>TrapContext</code> 结构体的大小来获取正确的内存位置。</li>
+<li>将传入的 <code>TrapContext</code> 存储到该位置。</li>
+<li>使用 <code>unsafe</code> 将指针转换为可变引用并返回。这个操作是危险的，因为它绕过了 Rust 的所有权和借用检查。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>TrapContext</code> 结构体如下，包含通用寄存器、<code>sstatus</code> 寄存器和<code>sepc</code> 寄存器</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/trap/context.rs</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#[repr(C)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">TrapContext</span> {</span><br><span class="line">    <span class="keyword">pub</span> x: [<span class="type">usize</span>; <span class="number">32</span>],</span><br><span class="line">    <span class="keyword">pub</span> sstatus: Sstatus,</span><br><span class="line">    <span class="keyword">pub</span> sepc: <span class="type">usize</span>,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="Trap相关"><a href="#Trap相关" class="headerlink" title="Trap相关"></a>Trap相关</h3><p>在<code>main.rs</code> 中，首先调用了<code>trap::init()</code></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/trap/mod.rs</span></span><br><span class="line"></span><br><span class="line">global_asm!(<span class="built_in">include_str!</span>(<span class="string">"trap.S"</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">init</span>() {</span><br><span class="line">    <span class="keyword">extern</span> <span class="string">"C"</span> { <span class="keyword">fn</span> <span class="title function_">__alltraps</span>(); }</span><br><span class="line">    <span class="keyword">unsafe</span> {</span><br><span class="line">        stvec::<span class="title function_ invoke__">write</span>(__alltraps <span class="keyword">as</span> <span class="type">usize</span>, TrapMode::Direct);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol>
+<li>通过 <code>global_asm!</code> 引入汇编文件 <code>trap.S</code>，其中包含异常处理相关的汇编代码。</li>
+<li> <code>init</code> 函数用于初始化 RISC-V CPU 中的 <code>stvec</code> 寄存器。<code>stvec</code> 寄存器的作用是存储异常处理程序的入口地址。</li>
+<li>在 <code>init</code> 函数中，使用 <code>stvec::write</code> 设置 <code>stvec</code> 寄存器为 <code>__alltraps</code> 函数的地址，并指定处理模式为 <strong>Direct</strong>。这样，在发生异常时，CPU 会直接跳转到 <code>__alltraps</code> 来处理所有的异常。</li>
+</ol>
+<ul>
+<li>目的是配置 RISC-V 系统的异常向量表，以便正确地处理硬件或软件异常。</li>
+</ul>
+<p><code>trap.S</code> 中主要包含两部分，<code>__alltraps</code> 和 <code>__restore</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">.altmacro</span><br><span class="line">.macro SAVE_GP n</span><br><span class="line">    sd x\n, \n*8(sp)</span><br><span class="line">.endm</span><br><span class="line">.macro LOAD_GP n</span><br><span class="line">    ld x\n, \n*8(sp)</span><br><span class="line">.endm</span><br><span class="line">    .section .text</span><br><span class="line">    .globl __alltraps</span><br><span class="line">    .globl __restore</span><br><span class="line">    .align 2</span><br><span class="line">__alltraps:</span><br><span class="line">    csrrw sp, sscratch, sp</span><br><span class="line">    # now sp-&gt;kernel stack, sscratch-&gt;user stack</span><br><span class="line">    # allocate a TrapContext on kernel stack</span><br><span class="line">    addi sp, sp, -34*8</span><br><span class="line">    # save general-purpose registers</span><br><span class="line">    sd x1, 1*8(sp)</span><br><span class="line">    # skip sp(x2), we will save it later</span><br><span class="line">    sd x3, 3*8(sp)</span><br><span class="line">    # skip tp(x4), application does not use it</span><br><span class="line">    # save x5~x31</span><br><span class="line">    .set n, 5</span><br><span class="line">    .rept 27</span><br><span class="line">        SAVE_GP %n</span><br><span class="line">        .set n, n+1</span><br><span class="line">    .endr</span><br><span class="line">    # we can use t0/t1/t2 freely, because they were saved on kernel stack</span><br><span class="line">    csrr t0, sstatus</span><br><span class="line">    csrr t1, sepc</span><br><span class="line">    sd t0, 32*8(sp)</span><br><span class="line">    sd t1, 33*8(sp)</span><br><span class="line">    # read user stack from sscratch and save it on the kernel stack</span><br><span class="line">    csrr t2, sscratch</span><br><span class="line">    sd t2, 2*8(sp)</span><br><span class="line">    # set input argument of trap_handler(cx: &amp;mut TrapContext)</span><br><span class="line">    mv a0, sp</span><br><span class="line">    call trap_handler</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这段汇编代码用来处理 RISC-V 系统中的异常处理的核心部分，涉及到保存上下文（包括通用寄存器和堆栈信息），调用一个陷阱处理程序 <code>trap_handler</code> 来处理发生的异常或中断。</li>
+</ul>
+<ul>
+<li><strong><code>SAVE_GP n</code></strong>: 这个宏用于将通用寄存器 <code>x[n]</code> 的值保存到堆栈上。具体地，它会将寄存器 <code>x[n]</code> 的值保存到 <code>sp</code>（堆栈指针）所指向的位置，偏移量是 <code>n*8</code>。</li>
+<li><strong><code>LOAD_GP n</code></strong>: 这个宏用于从堆栈加载通用寄存器 <code>x[n]</code> 的值。它会从 <code>sp</code> 指向的位置加载数据，并恢复到 <code>x[n]</code>。</li>
+<li><strong><code>.align 2</code></strong>: 对齐，保证 <code>__alltraps</code> 的起始地址是 4 字节对齐。</li>
+<li><strong><code>csrrw sp, sscratch, sp</code></strong>: 这条指令将 <code>sp</code> 的值存储到 <code>sscratch</code> 寄存器，并将 <code>sscratch</code> 的值加载到 <code>sp</code>。<code>sp</code> 寄存器现在指向内核栈，<code>sscratch</code> 寄存器保存了用户栈的地址。</li>
+<li><strong><code>.set n, 5</code></strong>: 设置一个变量 <code>n</code> 为 5，这是从 <code>x5</code> 寄存器开始保存的起始寄存器，<strong><code>.rept 27</code></strong>: <code>rept</code> 是一个循环指令，表示重复 27 次。每次迭代会调用 <code>SAVE_GP %n</code> 来保存一个寄存器的值。<code>SAVE_GP</code> 宏会将每个寄存器 <code>x5</code> 到 <code>x31</code> 的值保存到堆栈上。前面的 <code>x1</code> 和 <code>x3</code> 寄存器已经手动保存，跳过 <code>x0</code> 和 <code>tp(x4)</code> 寄存器。</li>
+<li><strong><code>csrr t0, sstatus</code></strong>: 读取 <code>sstatus</code> 寄存器的值（保存当前状态信息）并存储到 <code>t0</code> 寄存器。</li>
+<li><strong><code>csrr t1, sepc</code></strong>: 读取 <code>sepc</code> 寄存器的值（保存程序计数器）并存储到 <code>t1</code> 寄存器。</li>
+<li><strong><code>csrr t2, sscratch</code></strong>: 读取 <code>sscratch</code> 寄存器的值（保存原用户栈指针）并存储到 <code>t2</code> 寄存器。</li>
+</ul>
+<p><code>__restore</code> 作用是完成异常处理后，恢复用户态的状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">__restore:</span><br><span class="line">    # case1: start running app by __restore</span><br><span class="line">    # case2: back to U after handling trap</span><br><span class="line">    mv sp, a0</span><br><span class="line">    # now sp-&gt;kernel stack(after allocated), sscratch-&gt;user stack</span><br><span class="line">    # restore sstatus/sepc</span><br><span class="line">    ld t0, 32*8(sp)</span><br><span class="line">    ld t1, 33*8(sp)</span><br><span class="line">    ld t2, 2*8(sp)</span><br><span class="line">    csrw sstatus, t0</span><br><span class="line">    csrw sepc, t1</span><br><span class="line">    csrw sscratch, t2</span><br><span class="line">    # restore general-purpuse registers except sp/tp</span><br><span class="line">    ld x1, 1*8(sp)</span><br><span class="line">    ld x3, 3*8(sp)</span><br><span class="line">    .set n, 5</span><br><span class="line">    .rept 27</span><br><span class="line">        LOAD_GP %n</span><br><span class="line">        .set n, n+1</span><br><span class="line">    .endr</span><br><span class="line">    # release TrapContext on kernel stack</span><br><span class="line">    addi sp, sp, 34*8</span><br><span class="line">    # now sp-&gt;kernel stack, sscratch-&gt;user stack</span><br><span class="line">    csrrw sp, sscratch, sp</span><br><span class="line">    sret</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>mv sp, a0</code></strong>：将 <code>a0</code>（由 <code>trap_handler</code> 函数传递的参数）中的值赋给 <code>sp</code>（堆栈指针）。<code>a0</code> 之前保存了异常处理过程中分配的内核栈的起始地址。现在，<code>sp</code> 将指向内核栈的位置，后续的操作将基于这个堆栈来恢复上下文。</li>
+</ul>
+<ul>
+<li>恢复 <code>sstatus</code>、<code>sepc</code> 和 <code>sscratch</code>，从堆栈上加载之前保存的值到通用寄存器中，再恢复到对应的CSR寄存器。</li>
+<li>恢复通用寄存器，与保存时类似，使用宏，跳过 <code>x0</code> 和 <code>tp(x4)</code> 寄存器。</li>
+<li><strong><code>csrrw sp, sscratch, sp</code></strong>: 将堆栈指针 <code>sp</code> 的值交换到 <code>sscratch</code> 寄存器中，原先保存的用户栈指针恢复到 <code>sp</code> 中。此时，<code>sp</code> 会指向用户空间栈，这样接下来可以继续执行用户程序。然后返回用户态。</li>
+</ul>
+<p><code>trap_handler</code> 函数用于分发和处理trap：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[no_mangle]</span></span><br><span class="line"><span class="comment">/// handle an interrupt, exception, or system call from user space</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">trap_handler</span>(cx: &amp;<span class="keyword">mut</span> TrapContext) <span class="punctuation">-&gt;</span> &amp;<span class="keyword">mut</span> TrapContext {</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">scause</span> = scause::<span class="title function_ invoke__">read</span>(); <span class="comment">// get trap cause</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">stval</span> = stval::<span class="title function_ invoke__">read</span>(); <span class="comment">// get extra value</span></span><br><span class="line">    <span class="keyword">match</span> scause.<span class="title function_ invoke__">cause</span>() {</span><br><span class="line">        Trap::<span class="title function_ invoke__">Exception</span>(Exception::UserEnvCall) =&gt; {</span><br><span class="line">            cx.sepc += <span class="number">4</span>;</span><br><span class="line">            cx.x[<span class="number">10</span>] = <span class="title function_ invoke__">syscall</span>(cx.x[<span class="number">17</span>], [cx.x[<span class="number">10</span>], cx.x[<span class="number">11</span>], cx.x[<span class="number">12</span>]]) <span class="keyword">as</span> <span class="type">usize</span>;</span><br><span class="line">        }</span><br><span class="line">        Trap::<span class="title function_ invoke__">Exception</span>(Exception::StoreFault) | Trap::<span class="title function_ invoke__">Exception</span>(Exception::StorePageFault) =&gt; {</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"[kernel] PageFault in application, kernel killed it."</span>);</span><br><span class="line">            <span class="title function_ invoke__">run_next_app</span>();</span><br><span class="line">        }</span><br><span class="line">        Trap::<span class="title function_ invoke__">Exception</span>(Exception::IllegalInstruction) =&gt; {</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"[kernel] IllegalInstruction in application, kernel killed it."</span>);</span><br><span class="line">            <span class="title function_ invoke__">run_next_app</span>();</span><br><span class="line">        }</span><br><span class="line">        _ =&gt; {</span><br><span class="line">            <span class="built_in">panic!</span>(</span><br><span class="line">                <span class="string">"Unsupported trap {:?}, stval = {:#x}!"</span>,</span><br><span class="line">                scause.<span class="title function_ invoke__">cause</span>(),</span><br><span class="line">                stval</span><br><span class="line">            );</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    cx</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>使用 <code>match</code> 语句根据 <code>scause</code> 中的具体触发原因（<code>scause.cause()</code>）来选择如何处理不同类型的异常或中断。</p>
+<ul>
+<li>当触发原因是用户环境调用（<code>UserEnvCall</code>）时，表示这是一个系统调用的请求（通常是用户程序请求内核提供某种服务）。<code>sepc</code> 寄存器保存了发生异常时的PC。系统调用会修改 <code>sepc</code> 使得程序跳到内核态代码。此时，<code>sepc</code> 加上 4 是为了跳过系统调用指令（例如 <code>ecall</code> 指令）。调用系统调用处理函数。这里的 <code>syscall</code> 函数是内核中实现的系统调用分发函数，第一个参数是系统调用号（存储在 <code>x[17]</code>），后面是系统调用的参数（存储在 <code>x[10]</code>, <code>x[11]</code>, 和 <code>x[12]</code>）。</li>
+<li>发生访存故障或页面错误时，打印一条错误信息，说明发生了内存故障。内核决定杀死当前应用程序并运行下一个应用程序。</li>
+<li>执行了一个无效的指令时，与上一种情况一样。</li>
+<li>如果不是上述几种情况，内核会触发一个 panic，输出异常类型和相关的额外信息（<code>stval</code>）。</li>
+</ul>
+<p>内核中的系统调用通过 <code>syscall</code> 函数，根据 syscall ID 分发到具体的处理函数，与用户态中对用户态的 <code>syscall</code> 函数的封装类似。</p>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2025-02-13</span>
+            
+                <span>该篇文章被 Derfflinger</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/System/'>
+                            System
+                        </a>
+                    
+                        <a href='/tags/%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F/'>
+                            批处理系统
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/rCore/'>
+                            rCore
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/01/27/ch1%20libOS/">ch1 libOS</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+                                      
+                    
+                    
+                    <div class="footer">
+    
+        <span> 
+             
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>Attention is all you need.</span>
+            
+                <span class="footer-last-span-right"><i>本站由<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">Hexo</a>驱动｜使用<a target="_blank" rel="noopener" href="https://github.com/HiNinoJay/hexo-theme-A4">Hexo-theme-A4</a>主题</i></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->  
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->  
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
