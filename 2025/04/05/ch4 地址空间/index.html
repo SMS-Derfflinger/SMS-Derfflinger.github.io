@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="Lec11-13 Instruction Formats" />
+    <meta name="description" content="ch4 地址空间" />
     <meta name="hexo-theme-A4" content="v1.9.6" />
     <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
     <title>SMS Derfflinger</title>
@@ -441,7 +441,7 @@ mjx-container[display="true"] + br {
         
             
                 <div class="post-main-title" style="text-align: center;">
-                    Lec11-13 Instruction Formats
+                    ch4 地址空间
                 </div>
             
         
@@ -454,19 +454,19 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2025-01-26</span> 
+                    <span>最近更新：2025-04-05</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：324</span>
+                     <span>字数总计：1.8k</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：1分钟</span>
+                    <span>阅读估时：6分钟</span>
                 
                 
                     
@@ -483,74 +483,45 @@ mjx-container[display="true"] + br {
         
             
         
-        <div class=".article-gallery"><h1 id="intro"><a href="#intro" class="headerlink" title="intro"></a>intro</h1><ul>
-<li>电线 -&gt; 二进制编码</li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-8.png" title="format" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-8.png" alt="format"></a></p>
-<h1 id="R-Format"><a href="#R-Format" class="headerlink" title="R-Format"></a>R-Format</h1><ul>
-<li>用于逻辑或算数的寄存器到寄存器的指令</li>
-<li>格式：<br><a href="/img/CS61C/asserts/image-9.png" title="R" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-9.png" alt="R"></a><ul>
-<li>R-format的opcode都为0110011（6位到0位）</li>
-<li>funct7+funct3决定运行哪种指令（例如add）</li>
-</ul>
-</li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-10.png" title="all R" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-10.png" alt="all R"></a></p>
-<h1 id="I-Format"><a href="#I-Format" class="headerlink" title="I-Format"></a>I-Format</h1><ul>
-<li>与寄存器和立即数有关的指令和load<br><a href="/img/CS61C/asserts/image-11.png" title="I" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-11.png" alt="I"></a></li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-12.png" title="all I" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-12.png" alt="all I"></a></p>
-<h2 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h2><ul>
-<li>与I类指令格式相同，opcode不同<br><a href="/img/CS61C/asserts/image-13.png" title="Load" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-13.png" alt="Load"></a></li>
-</ul>
-<h1 id="S-format"><a href="#S-format" class="headerlink" title="S-format"></a>S-format</h1><ul>
-<li>只有store指令<br><a href="/img/CS61C/asserts/image-14.png" title="S" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-14.png" alt="S"></a><br><a href="/img/CS61C/asserts/image-15.png" title="S" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-15.png" alt="S"></a></li>
-</ul>
-<h1 id="B-format"><a href="#B-format" class="headerlink" title="B-format"></a>B-format</h1><ul>
-<li>分支指令</li>
-<li>E.g., beq x1, x2, Label</li>
-<li>branch offset by 2 bytes，PC = PC + immediate * 4</li>
-<li>立即数不必保存最低有效位，因为PC按字节对的倍数增加，立即数最低位始终为0</li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-16.png" title="B" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-16.png" alt="B"></a><br><a href="/img/CS61C/asserts/image-17.png" title="B" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-17.png" alt="B"></a></p>
-<h1 id="U-format-Long-immediates"><a href="#U-format-Long-immediates" class="headerlink" title="U-format Long immediates"></a>U-format Long immediates</h1><ul>
-<li>在跳转位置在正负1024条指令之外时，单条分支指令做不到</li>
-<li>lui：将一个立即数的高20位加载进寄存器<br><a href="/img/CS61C/asserts/image-20.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-20.png" alt="alt text"></a><br><a href="/img/CS61C/asserts/image-18.png" title="lui" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-18.png" alt="lui"></a><br><a href="/img/CS61C/asserts/image-19.png" title="louis" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-19.png" alt="louis"></a></li>
-<li>addi是按符号位扩展的，与lui搭配有时会出错；实际使用时使用li就行</li>
-</ul>
-<h1 id="J-format"><a href="#J-format" class="headerlink" title="J-format"></a>J-format</h1><ul>
-<li>跳转，只有jal，j伪指令也使用jal</li>
-<li>jalr伪指令使用了I-format</li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-21.png" title="J" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-21.png" alt="J"></a></p>
-<h1 id="解释器与编译器"><a href="#解释器与编译器" class="headerlink" title="解释器与编译器"></a>解释器与编译器</h1><ul>
-<li>解释器：<ul>
-<li>速度慢</li>
-<li>编写简单</li>
-<li>可以向后兼容</li>
-</ul>
-</li>
-<li>编译器<ul>
-<li>速度快</li>
-<li>复杂</li>
-</ul>
-</li>
-</ul>
-<h1 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h1><p><a href="/img/CS61C/asserts/image-22.png" title="level" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-22.png" alt="level"></a></p>
+        <div class=".article-gallery"><h1 id="ch4-地址空间"><a href="#ch4-地址空间" class="headerlink" title="ch4 地址空间"></a>ch4 地址空间</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本章将进一步实现虚拟内存机制，主要是为了隔离性。</p>
+<h2 id="Rust中的动态内存分配"><a href="#Rust中的动态内存分配" class="headerlink" title="Rust中的动态内存分配"></a>Rust中的动态内存分配</h2><p>目前为止我们的操作系统中只有静态分配的功能，缺少灵活性，需要进一步实现动态内存分配的能力。这需要操作系统提供堆和与堆相关的一些功能：分配和释放内存的接口、空闲空间管理的算法、建立在堆上的数据结构。</p>
+<p>Rust的标准库中有许多堆数据结构，主要是基于智能指针实现的，智能指针是对堆上数据进行管理的，除了地址以外还有一些其它信息。在智能指针的基础上实现了例如 <code>Vec</code>, <code>BTreeMap</code> 等数据结构。</p>
+<p>要在操作系统中实现上述的功能，需要利用 <code>alloc</code> 库定义的接口来实现基本的动态内存分配器。实现类似C语言中的 <code>malloc</code> 和 <code>free</code> 接口，然后根据 <code>alloc</code> 留好的接口提供全局动态内存分配器。</p>
+<h2 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h2><p><a target="_blank" rel="noopener" href="http://localhost:4000/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#VirtualMemory">Lec28-31 Virtual Memory, IO#Virtual Memory</a>, 和OSTEP的13-16章</p>
+<h2 id="SV39多级页表的硬件机制"><a href="#SV39多级页表的硬件机制" class="headerlink" title="SV39多级页表的硬件机制"></a>SV39多级页表的硬件机制</h2><p>SV39中，通过修改 <code>satp</code> 寄存器启用分页功能，<code>satp</code> 寄存器分为3个字段，<code>MODE</code>, <code>ASID</code>, <code>PPN</code>。</p>
 <ul>
-<li>编译器将.c文件编译为.s汇编文件，可能包含伪指令</li>
+<li><code>MODE</code> 控制CPU使用哪种页表实现，包括直接访问物理地址和启用分页机制。</li>
+<li><code>ASID</code> 表示地址空间标识符，与进程有关。</li>
+<li><code>PPN</code> 存的是根页表所在的物理页号。</li>
 </ul>
-<h1 id="assembler"><a href="#assembler" class="headerlink" title="assembler"></a>assembler</h1><ul>
-<li>汇编器将伪指令替换为指令，将.s文件生成为.o目标文件</li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-24.png" title="assembler" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-24.png" alt="assembler"></a><br>替换伪指令：<br><a href="/img/CS61C/asserts/image-25.png" title="替换伪指令" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-25.png" alt="替换伪指令"></a></p>
+<p>SV39的地址格式中，虚拟地址39位，物理地址56位；虚拟地址中包含27位的虚拟页号和12位的页内偏移；物理地址中包含44位的物理页号和12位的页内偏移。这是因为单个页面的大小为4kb，需要用12位字节地址表示。地址转换是按页为单位进行的，页内偏移部分相同。其中，虚拟地址会被按符号位扩展到64位，只有最低的256GiB（当第 38 位为0时）以及最高的256GiB（当第38位为1时）是可能通过MMU检查的。</p>
+<p>在一个4kb大小的页表中，每8个字节（64位）是一个页表项，用到了54位，包括物理页号、和一些权限位。</p>
+<p>页表可以使用线性表简单实现，但是这样整段虚拟地址对应的页表都要放到内存中，会造成严重的浪费。优化可以采用按需分配，有多少已分配的虚拟页号，就维护多大的映射。可以使用多级页表，类似于一棵多叉树。SV39中采用的是三级页表，具体的查找过程如下：<a href="/img/rCore/asserts/Pasted%20image%2020250329174614.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/rCore/asserts/Pasted%20image%2020250329174614.png"></a><br>PPN用于查找物理页，可能是下一级页表或最终的物理页号；VPN分为3部分，每部分长9位，用于在一个页内查找页表项。最后的PPN和虚拟地址中的偏移段拼在一起就是最终的56位物理地址。</p>
+<p>TLB，即地址转换过程中的缓存<a target="_blank" rel="noopener" href="http://localhost:4000/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#TranslationLookasideBuffers">Lec28-31 Virtual Memory, IO#Translation Lookaside Buffers</a>，在更换根页表后要使用 <code>sfence.vma</code> 指令刷新。</p>
+<h2 id="管理SV39多级页表"><a href="#管理SV39多级页表" class="headerlink" title="管理SV39多级页表"></a>管理SV39多级页表</h2><p>在整块地址空间中，从起始地址到 <code>ekernel</code> 中是恒等映射，因此从 <code>ekernel</code> 到终止物理地址之间的空间，是用于需要存放应用数据或扩展应用的多级页表时分配空闲的物理页帧。</p>
+<p><code>rcore</code> 使用了一种比较简单的栈式物理页帧管理策略：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/mm/frame_allocator.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">StackFrameAllocator</span> {</span><br><span class="line">    current: <span class="type">usize</span>,  <span class="comment">//空闲内存的起始物理页号</span></span><br><span class="line">    end: <span class="type">usize</span>,      <span class="comment">//空闲内存的结束物理页号</span></span><br><span class="line">    recycled: <span class="type">Vec</span>&lt;<span class="type">usize</span>&gt;,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>最终公开的 <code>frame_alloc</code> 接口的返回值类型并不是 <code>FrameAllocator</code> 要求的物理页号 <code>PhysPageNum</code> ，而是将其进一步包装为一个 <code>FrameTracker</code> ，将生命周期绑定到这个变量上。当一个 <code>FrameTracker</code> 生命周期结束被编译器回收的时候，将这个物理页帧会回收到分配器中。</p>
+<p>对页表的管理，建立了一个 <code>PageTable</code> 结构体，其中包含了根页表页的 <code>PPN</code> 和页表所有的节点的物理页帧，然后为它实现了 <code>map</code>, <code>unmap</code>, <code>find_pte_create</code>, <code>find_pte</code> 等函数，原文档写的非常详细。目前的实现为了简单起见，在物理页帧耗尽时只会退出，不会进行换页等复杂操作。</p>
+<h2 id="内核与应用的地址空间"><a href="#内核与应用的地址空间" class="headerlink" title="内核与应用的地址空间"></a>内核与应用的地址空间</h2><p>刚才的 <code>PageTable</code> 数据结构只能维护一个地址转换关系，内核还创建了一个 <code>MapArea</code> 数据结构，用于描述一段连续地址的虚拟内存：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/mm/memory_set.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">MapArea</span> {</span><br><span class="line">    vpn_range: VPNRange,</span><br><span class="line">    data_frames: BTreeMap&lt;VirtPageNum, FrameTracker&gt;,</span><br><span class="line">    map_type: MapType,</span><br><span class="line">    map_perm: MapPermission,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>记录了虚拟页号的范围、物理页帧的集合、映射的类型和这个段的权限，这里的物理页帧是作为数据页的页帧，与上面的页表页的页帧不同，即作为页表页的物理页帧的生命周期绑定在 <code>PageTable</code> 中，作为数据页的物理页帧的生命周期绑定在 <code>MapArea</code> 中。</p>
+<p>然后在这个 <code>MapArea</code> 的基础上，建立了一个 <code>MemorySet</code> 数据结构作为地址空间：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/mm/memory_set.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">MemorySet</span> {</span><br><span class="line">    page_table: PageTable,</span><br><span class="line">    areas: <span class="type">Vec</span>&lt;MapArea&gt;,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>存储了整个页表和这个地址空间中的所有逻辑段，在这个结构体的基础上建立了内核的地址空间和每个应用的地址空间，每个应用的地址空间保存在它的TCB中。</p>
+<p>内核地址空间的高256GB是跳板页和每个应用的内核栈，内核栈之间还有一个保护页防止溢出；低256GB是内核自己的四个逻辑段 <code>.text/.rodata/.data/.bss</code>，还有上面说的空闲空间。</p>
+<p>用户地址空间的高256GB是跳板页和Trap上下文页；低256GB是自己的逻辑段和用户栈。</p>
+<h2 id="基于地址空间的分时多任务"><a href="#基于地址空间的分时多任务" class="headerlink" title="基于地址空间的分时多任务"></a>基于地址空间的分时多任务</h2><p>在操作系统刚刚启动时，还是使用 <code>lazy_staic!</code> 宏包裹一个全局变量 <code>Arc&lt;UPSafeCell&lt;MemorySet&gt;&gt;</code>，用作内核的地址空间，然后填 <code>satp</code> 寄存器，填入当前页表的根节点的PPN，从这一刻开始 SV39 分页模式就被启用了。由于内核的地址空间采用的是恒等映射，因此启用分页模式前后的指令地址是连续的，不会发生问题。</p>
+<p>内核和应用的地址空间，最高的虚拟页面都是一个跳板 <code>Trampoline</code>，跳板的作用是存放 <code>trap.S</code> 的代码，这是因为trap会切换用户态到内核态或相反，这需要更换地址空间，如果后面的指令的虚拟地址对应的物理地址不同，会打断 <code>trap.S</code> 的代码的执行，因此 <code>trap.S</code> 的代码必须在内核地址空间中和应用地址空间中的映射相同，这就是跳板页。<code>trap.S</code> 中的<code>__alltraps</code> 和 <code>__restore</code> 函数也做了改变，增加了修改 <code>satp</code> 寄存器的部分。</p>
+<p>对TCB块做了扩展，把地址空间、trap上下文的PPN，总的字节数也存进去了。</p>
 </div>
     </div>
 
     <div class="post-meta">
         <i>
         
-            <span>2024-08-30</span>
+            <span>2025-04-05</span>
             
                 <span>该篇文章被 Derfflinger</span>
             
@@ -558,12 +529,24 @@ mjx-container[display="true"] + br {
                 <span>打上标签:
                     
                     
-                        <a href='/tags/Assembly/'>
-                            Assembly
-                        </a>
-                    
                         <a href='/tags/RISC-V/'>
                             RISC-V
+                        </a>
+                    
+                        <a href='/tags/System/'>
+                            System
+                        </a>
+                    
+                        <a href='/tags/Virtual-Memory/'>
+                            Virtual-Memory
+                        </a>
+                    
+                        <a href='/tags/OS/'>
+                            OS
+                        </a>
+                    
+                        <a href='/tags/Rust/'>
+                            Rust
                         </a>
                     
                 </span>
@@ -572,8 +555,8 @@ mjx-container[display="true"] + br {
                 <span>归为分类:
                     
                     
-                        <a href='/categories/CS61C/'>
-                            CS61C
+                        <a href='/categories/rCore/'>
+                            rCore
                         </a>
                     
                 </span>
@@ -589,11 +572,9 @@ mjx-container[display="true"] + br {
     
             <div class="post-footer-pre-next">
                 
-                    <span>上一篇：<a href='/2024/09/14/Lec14-16%20Synchronous%20Digital%20Systems/'>Lec14-16 Synchronous Digital Systems</a></span>
-                
 
                 
-                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2024/08/25/Lec7-10%20RISC-V/">Lec7-10 RISC-V</a>
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/03/25/ch3%20%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%88%86%E6%97%B6%E5%A4%9A%E4%BB%BB%E5%8A%A1/">ch3 多道程序与分时多任务</a>
                     </span>
                 
             </div>
