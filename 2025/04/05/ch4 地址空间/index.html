@@ -454,13 +454,13 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2025-04-05</span> 
+                    <span>最近更新：2025-04-12</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：1.8k</span>
+                     <span>字数总计：1.9k</span>
                 
                 
                     
@@ -483,11 +483,14 @@ mjx-container[display="true"] + br {
         
             
         
-        <div class=".article-gallery"><h1 id="ch4-地址空间"><a href="#ch4-地址空间" class="headerlink" title="ch4 地址空间"></a>ch4 地址空间</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本章将进一步实现虚拟内存机制，主要是为了隔离性。</p>
+        <div class=".article-gallery"><h1 id="ch4-地址空间"><a href="#ch4-地址空间" class="headerlink" title="ch4 地址空间"></a>ch4 地址空间</h1><p>本文是参加<a target="_blank" rel="noopener" href="https://opencamp.cn/os2edu/camp/2025spring">2025春夏季开源操作系统训练营</a>时对第二阶段文档第4章做的笔记。</p>
+<p>文档：<a target="_blank" rel="noopener" href="https://learningos.cn/rCore-Camp-Guide-2025S">https://learningos.cn/rCore-Camp-Guide-2025S</a></p>
+<p>完整版文档：<a target="_blank" rel="noopener" href="https://rcore-os.cn/rCore-Tutorial-Book-v3">https://rcore-os.cn/rCore-Tutorial-Book-v3</a></p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本章将进一步实现虚拟内存机制，主要是为了隔离性。</p>
 <h2 id="Rust中的动态内存分配"><a href="#Rust中的动态内存分配" class="headerlink" title="Rust中的动态内存分配"></a>Rust中的动态内存分配</h2><p>目前为止我们的操作系统中只有静态分配的功能，缺少灵活性，需要进一步实现动态内存分配的能力。这需要操作系统提供堆和与堆相关的一些功能：分配和释放内存的接口、空闲空间管理的算法、建立在堆上的数据结构。</p>
 <p>Rust的标准库中有许多堆数据结构，主要是基于智能指针实现的，智能指针是对堆上数据进行管理的，除了地址以外还有一些其它信息。在智能指针的基础上实现了例如 <code>Vec</code>, <code>BTreeMap</code> 等数据结构。</p>
 <p>要在操作系统中实现上述的功能，需要利用 <code>alloc</code> 库定义的接口来实现基本的动态内存分配器。实现类似C语言中的 <code>malloc</code> 和 <code>free</code> 接口，然后根据 <code>alloc</code> 留好的接口提供全局动态内存分配器。</p>
-<h2 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h2><p><a target="_blank" rel="noopener" href="http://localhost:4000/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#VirtualMemory">Lec28-31 Virtual Memory, IO#Virtual Memory</a>, 和OSTEP的13-16章</p>
+<h2 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h2><p><a href="http://derfflinger.top/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#VirtualMemory">Lec28-31 Virtual Memory, IO#Virtual Memory</a>, 和OSTEP的13-16章</p>
 <h2 id="SV39多级页表的硬件机制"><a href="#SV39多级页表的硬件机制" class="headerlink" title="SV39多级页表的硬件机制"></a>SV39多级页表的硬件机制</h2><p>SV39中，通过修改 <code>satp</code> 寄存器启用分页功能，<code>satp</code> 寄存器分为3个字段，<code>MODE</code>, <code>ASID</code>, <code>PPN</code>。</p>
 <ul>
 <li><code>MODE</code> 控制CPU使用哪种页表实现，包括直接访问物理地址和启用分页机制。</li>
@@ -533,16 +536,16 @@ mjx-container[display="true"] + br {
                             RISC-V
                         </a>
                     
+                        <a href='/tags/OS/'>
+                            OS
+                        </a>
+                    
                         <a href='/tags/System/'>
                             System
                         </a>
                     
                         <a href='/tags/Virtual-Memory/'>
                             Virtual-Memory
-                        </a>
-                    
-                        <a href='/tags/OS/'>
-                            OS
                         </a>
                     
                         <a href='/tags/Rust/'>
@@ -571,6 +574,8 @@ mjx-container[display="true"] + br {
             
     
             <div class="post-footer-pre-next">
+                
+                    <span>上一篇：<a href='/2025/04/10/CPU%E8%99%9A%E6%8B%9F%E5%8C%96/'>CPU虚拟化</a></span>
                 
 
                 
