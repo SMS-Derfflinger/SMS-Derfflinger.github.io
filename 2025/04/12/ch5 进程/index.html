@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="ch4 地址空间" />
+    <meta name="description" content="ch5 进程" />
     <meta name="hexo-theme-A4" content="v1.9.6" />
     <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
     <title>SMS Derfflinger</title>
@@ -441,7 +441,7 @@ mjx-container[display="true"] + br {
         
             
                 <div class="post-main-title" style="text-align: center;">
-                    ch4 地址空间
+                    ch5 进程
                 </div>
             
         
@@ -514,7 +514,7 @@ mjx-container[display="true"] + br {
 <p>用户shell的实现使用了 <code>fork</code>, <code>exec</code>, <code>wait</code> 等系统调用，<code>fork</code> 系统调用中，基本上和PCB的创建过程相同，不同点是地址空间是从其它的用户的地址空间复制来的，还有多了维护父子进程关系的部分。复制地址空间的部分在 <code>mm</code> 模块中加入了两个辅助函数。最后，在 <code>fork</code> 系统调用返回时，要将子进程的Trap上下文中用来存放系统调用返回值的a0寄存器修改为0。</p>
 <p><code>exec</code> 系统调用加载一个新的ELF文件替换原来的地址空间并返回，实现起来比较简单，生成一个新的地址空间并替换，再修改一些trap相关的配置即可。在 <code>trap_handler</code> 中，由于 <code>exec</code> 系统调用中地址空间改变，trap上下文失效，在返回后需要重新获取。</p>
 <p>最后是进程退出时的处理，当一个进程调用 <code>sys_exit</code> 系统调用主动退出，或者出错由内核终止之后，会在内核中调用 <code>exit_current_and_run_next</code> 函数，它比前几章增加一个进程的返回值，将进程控制块中的状态修改为 <code>TaskStatus::Zombie</code> 即僵尸进程，将当前进程的所有子进程挂在初始进程 <code>initproc</code> 下面，再将当前进程占用的资源进行早期回收。在任务切换之后，不会再回到僵尸进程继续执行。</p>
-<h2 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h2><p>跟OSTEP中<a href="http://derfflinger.top/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#VirtualMemory">进程调度</a>的部分差不多，没有单独记。</p>
+<h2 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h2><p>跟OSTEP中<a href="https://derfflinger.top/2025/04/10/CPU%E8%99%9A%E6%8B%9F%E5%8C%96/#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6">进程调度</a>的部分差不多，没有单独记。</p>
 </div>
     </div>
 
@@ -529,16 +529,16 @@ mjx-container[display="true"] + br {
                 <span>打上标签:
                     
                     
-                        <a href='/tags/RISC-V/'>
-                            RISC-V
-                        </a>
-                    
                         <a href='/tags/OS/'>
                             OS
                         </a>
                     
                         <a href='/tags/System/'>
                             System
+                        </a>
+                    
+                        <a href='/tags/RISC-V/'>
+                            RISC-V
                         </a>
                     
                         <a href='/tags/Rust/'>
