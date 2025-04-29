@@ -4,7 +4,7 @@
     <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="ch5 进程" />
+    <meta name="description" content="ch7 进程间通信与IO重定向" />
     <meta name="hexo-theme-A4" content="v1.9.6" />
     <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
     <title>SMS Derfflinger</title>
@@ -441,7 +441,7 @@ mjx-container[display="true"] + br {
         
             
                 <div class="post-main-title" style="text-align: center;">
-                    ch5 进程
+                    ch7 进程间通信与IO重定向
                 </div>
             
         
@@ -454,19 +454,19 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2025-04-12</span> 
+                    <span>最近更新：2025-04-29</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：1.5k</span>
+                     <span>字数总计：1.2k</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：5分钟</span>
+                    <span>阅读估时：4分钟</span>
                 
                 
                     
@@ -483,45 +483,40 @@ mjx-container[display="true"] + br {
         
             
         
-        <div class=".article-gallery"><h1 id="ch5-进程"><a href="#ch5-进程" class="headerlink" title="ch5 进程"></a>ch5 进程</h1><p>本文是参加<a target="_blank" rel="noopener" href="https://opencamp.cn/os2edu/camp/2025spring">2025春夏季开源操作系统训练营</a>时对第二阶段文档第5章做的笔记。</p>
+        <div class=".article-gallery"><h1 id="ch7-进程间通信与IO重定向"><a href="#ch7-进程间通信与IO重定向" class="headerlink" title="ch7 进程间通信与IO重定向"></a>ch7 进程间通信与IO重定向</h1><p>本文是参加<a target="_blank" rel="noopener" href="https://opencamp.cn/os2edu/camp/2025spring">2025春夏季开源操作系统训练营</a>时对第二阶段文档第7章做的笔记。</p>
 <p>文档：<a target="_blank" rel="noopener" href="https://learningos.cn/rCore-Camp-Guide-2025S">https://learningos.cn/rCore-Camp-Guide-2025S</a></p>
 <p>完整版文档：<a target="_blank" rel="noopener" href="https://rcore-os.cn/rCore-Tutorial-Book-v3">https://rcore-os.cn/rCore-Tutorial-Book-v3</a></p>
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>之前的章节中，所有的应用都是在内核初始化阶段被一并加载到内存中的，之后也无法对应用的执行进行动态增删。本章增加了一个终端、将任务进一步抽象成进程：任务是正在执行的程序，进程是程序的一次执行过程。</p>
-<h2 id="进程概念及重要系统调用"><a href="#进程概念及重要系统调用" class="headerlink" title="进程概念及重要系统调用"></a>进程概念及重要系统调用</h2><p>任务的概念是正在执行的程序，主角是程序。而相比于任务，进程的含义是在操作系统管理下的程序的一次执行过程。</p>
-<p>相关的系统调用：</p>
-<ul>
-<li><code>fork</code>：创建一个与当前进程完全相同的进程，是当前进程的子进程</li>
-<li><code>waitpid</code>：当前进程等待一个子进程变为僵尸进程，回收其全部资源并收集其返回值</li>
-<li><code>exec</code>：将当前进程的地址空间清空，加载一个特定的可执行文件，返回用户态后开始执行<br><code>user_shell</code> 就是使用以上这几个系统调用实现的。</li>
-</ul>
-<h2 id="进程管理的核心数据结构"><a href="#进程管理的核心数据结构" class="headerlink" title="进程管理的核心数据结构"></a>进程管理的核心数据结构</h2><p>为了加入进程管理，需要增加或修改一些数据结构：</p>
-<p>把链接应用程序的 <code>link_app.S</code> 改为按应用的名字来链接，在加载器中，也把所有应用的名字保存起来。</p>
-<p>为每个进程提供一个唯一的进程标识符，当它的生命周期结束后对应的整数会被编译器自动回收：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/task/pid.rs</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">PidHandle</span>(<span class="keyword">pub</span> <span class="type">usize</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本章将基于文件描述符实现父子进程之间的通信机制——管道。支持进程间的I/O重定向功能，即让一个进程的输出成为另外一个进程的输入。把标准I/O和管道这三种输入输出都统一在 <strong>文件</strong> 这个抽象之中。</p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>在类UNIX操作系统中，一切皆文件，操作系统可以通过文件描述符在当前进程的文件描述符表中找到某个文件，无需关心文件具体的类型，只要知道它一定实现了 <code>File</code> Trait 的 <code>read/write</code> 方法即可。通过基于文件接口的标准输入和输出，一个进程可以根据不同的输入产生对应的输出。</p>
+<p>管道是一种进程间通信机制，通过直接编程或在shell程序的帮助下轻松地把不同进程的输入和输出对接起来。可以将管道看成一个有一定缓冲区大小的字节队列，读和写两端需要通过不同的文件描述符来访问。</p>
+<p>为了实现管道，新增了 <code>sys_pipe</code> 和 <code>sys_close</code> 系统调用，<code>sys_pipe</code> 为当前进程打开一个管道，<code>sys_close</code> 将进程控制块中的文件描述符表对应的一项改为 <code>None</code> 代表它已经空闲；当一个管道的所有读端文件/写端文件都被关闭之后，管道占用的资源会被回收。</p>
+<p>管道的一端被抽象为 <code>Pipe</code>：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/fs/pipe.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Pipe</span> {</span><br><span class="line">    readable: <span class="type">bool</span>,</span><br><span class="line">    writable: <span class="type">bool</span>,</span><br><span class="line">    buffer: Arc&lt;Mutex&lt;PipeRingBuffer&gt;&gt;,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 
-<p>前一章中，每个应用的内核栈按照应用编号从小到大的顺序将它们作为逻辑段从高地址到低地址放在内核地址空间中，且两两之间保留一个guard page，这一章将应用编号改为进程标识符，而且增加了 <code>Drop</code> Trait的实现，当 <code>KernelStack</code> 生命周期结束后，保存它的物理页帧也将会被编译器自动回收。</p>
-<p>内核中一般会将每个进程的执行状态、资源控制等元数据均保存在一个被称为<strong>进程控制块</strong>(PCB, Process Control Block) 的结构中，在内核看来，它就等价于一个进程。在前一章的基础上，把任务控制块 <code>TaskControlBlock</code> 进行一些小改动并让它直接承担PCB的功能：</p>
+<p>PipeRingBuffer 即管道的本体，是一个循环字节队列：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">PipeRingBuffer</span> {</span><br><span class="line">    arr: [<span class="type">u8</span>; RING_BUFFER_SIZE],</span><br><span class="line">    head: <span class="type">usize</span>,</span><br><span class="line">    tail: <span class="type">usize</span>,</span><br><span class="line">    status: RingBufferStatus,</span><br><span class="line">    write_end: <span class="type">Option</span>&lt;Weak&lt;Pipe&gt;&gt;,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>对管道的读写通过对这个循环队列操作即可实现。</p>
+<h2 id="命令行参数与标准-I-O-重定向"><a href="#命令行参数与标准-I-O-重定向" class="headerlink" title="命令行参数与标准 I/O 重定向"></a>命令行参数与标准 I/O 重定向</h2><p>使用 C 语言开发 Linux 应用时，可以使用标准库提供的 <code>argc/argv</code> 来获取命令行参数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span> {</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>为了支持这个功能，需要修改 <code>sys_exec</code> 系统调用，因为命令行参数是 shell 通过 exec 运行子进程实现的。</p>
+<p>在shell程序 <code>user_shell</code> 中，一旦接收到一个回车，就会开始执行。但是现在 <code>line</code> 还可能包含一些命令行参数，因此需要将 <code>line</code> 用空格进行分割，然后将处理后的参数压入用户栈，以下为新增的部分：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/task/task.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">TaskControlBlock</span> {</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">exec</span>(&amp;<span class="keyword">self</span>, elf_data: &amp;[<span class="type">u8</span>], args: <span class="type">Vec</span>&lt;<span class="type">String</span>&gt;) {</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// push arguments on user stack</span></span><br><span class="line">    user_sp -= (args.<span class="title function_ invoke__">len</span>() + <span class="number">1</span>) * core::mem::size_of::&lt;<span class="type">usize</span>&gt;();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">argv_base</span> = user_sp;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">argv</span>: <span class="type">Vec</span>&lt;_&gt; = (<span class="number">0</span>..=args.<span class="title function_ invoke__">len</span>())</span><br><span class="line">	    .<span class="title function_ invoke__">map</span>(|arg| {</span><br><span class="line">		    <span class="title function_ invoke__">translated_refmut</span>(</span><br><span class="line">			    memory_set.<span class="title function_ invoke__">token</span>(),</span><br><span class="line">			    (argv_base + arg * core::mem::size_of::&lt;<span class="type">usize</span>&gt;()) <span class="keyword">as</span> *<span class="keyword">mut</span> <span class="type">usize</span></span><br><span class="line">			    )</span><br><span class="line">			})</span><br><span class="line">			.<span class="title function_ invoke__">collect</span>();</span><br><span class="line">		*argv[args.<span class="title function_ invoke__">len</span>()] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="number">0</span>..args.<span class="title function_ invoke__">len</span>() {</span><br><span class="line">			user_sp -= args[i].<span class="title function_ invoke__">len</span>() + <span class="number">1</span>;</span><br><span class="line">			*argv[i] = user_sp;</span><br><span class="line">			<span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">p</span> = user_sp;</span><br><span class="line">			<span class="keyword">for</span> <span class="variable">c</span> <span class="keyword">in</span> args[i].<span class="title function_ invoke__">as_bytes</span>() {</span><br><span class="line">				*<span class="title function_ invoke__">translated_refmut</span>(memory_set.<span class="title function_ invoke__">token</span>(), p <span class="keyword">as</span> *<span class="keyword">mut</span> <span class="type">u8</span>) = *c;</span><br><span class="line">				p += <span class="number">1</span>;</span><br><span class="line">			}</span><br><span class="line">			*<span class="title function_ invoke__">translated_refmut</span>(memory_set.<span class="title function_ invoke__">token</span>(), p <span class="keyword">as</span> *<span class="keyword">mut</span> <span class="type">u8</span>) = <span class="number">0</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// make the user_sp aligned to 8B</span></span><br><span class="line">		user_sp -= user_sp % core::mem::size_of::&lt;<span class="type">usize</span>&gt;();</span><br><span class="line">		<span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">trap_cx</span> = TrapContext::<span class="title function_ invoke__">app_init_context</span>(</span><br><span class="line">			entry_point,</span><br><span class="line">			user_sp,</span><br><span class="line">			KERNEL_SPACE.<span class="title function_ invoke__">exclusive_access</span>().<span class="title function_ invoke__">token</span>(),</span><br><span class="line">			<span class="keyword">self</span>.kernel_stack.<span class="title function_ invoke__">get_top</span>(),</span><br><span class="line">			trap_handler <span class="keyword">as</span> <span class="type">usize</span>,</span><br><span class="line">		);</span><br><span class="line">		trap_cx.x[<span class="number">10</span>] = args.<span class="title function_ invoke__">len</span>();</span><br><span class="line">		trap_cx.x[<span class="number">11</span>] = argv_base;</span><br><span class="line">		<span class="comment">// **** release current PCB</span></span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <ul>
-<li>增加了 <code>pid</code> 和创建时确定的 <code>KernelStack</code>，是不可变的。</li>
-<li>增加了指向父进程和子进程的指针，<code>parent</code> 使用 <code>Option&lt;Weak&lt;TaskControlBlock&gt;&gt;</code>，<code>children</code> 使用 <code>Vec&lt;Arc&lt;TaskControlBlock&gt;&gt;</code>。</li>
+<li>在用户栈上分配了一个字符串指针数组，数组中的每个元素都指向一个用户栈更低处的命令行参数字符串的起始地址。</li>
+<li>逐个将传入的 <code>args</code> 中的字符串压入到用户栈中，在用户栈上预留空间之后逐字节进行复制。</li>
+<li>将 <code>user_sp</code> 以 8 字节对齐。</li>
+<li>修改 Trap 上下文中的 <code>a0/a1</code> 寄存器，让 <code>a0</code> 表示命令行参数的个数，<code>a1</code> 表示参数的起始地址。</li>
 </ul>
-<p>把任务管理器 <code>TaskManager</code> 中对于CPU的监控职能拆分到 <code>processor</code> 中，<code>TaskManager</code> 仅负责管理所有任务（进程），<code>TaskManager</code> 中使用一个队列来维护任务，任务调度使用简单的FIFO算法，后面的练习中会加入stride算法（也很简单）。</p>
-<p><code>Processor</code> 负责维护CPU的状态，包括当前处理器上正在执行的任务、当前处理器上的 idle 控制流的任务上下文。</p>
-<p>idle控制流是尝试从任务管理器中选出一个任务来在当前 CPU 核上执行。在内核初始化完毕之后，会通过调用 <code>run_tasks</code> 函数来进入 idle 控制流：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">///The main part of process execution and scheduling</span></span><br><span class="line"><span class="comment">///Loop `fetch_task` to get the process that needs to run, and switch the process through `__switch`</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">run_tasks</span>() {</span><br><span class="line">    <span class="keyword">loop</span> {</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">processor</span> = PROCESSOR.<span class="title function_ invoke__">exclusive_access</span>();</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> <span class="variable">Some</span>(task) = <span class="title function_ invoke__">fetch_task</span>() {</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">idle_task_cx_ptr</span> = processor.<span class="title function_ invoke__">get_idle_task_cx_ptr</span>();</span><br><span class="line">            <span class="comment">// access coming task TCB exclusively</span></span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">task_inner</span> = task.<span class="title function_ invoke__">inner_exclusive_access</span>();</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">next_task_cx_ptr</span> = &amp;task_inner.task_cx <span class="keyword">as</span> *<span class="keyword">const</span> TaskContext;</span><br><span class="line">            task_inner.task_status = TaskStatus::Running;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// release coming task_inner manually</span></span><br><span class="line">            <span class="title function_ invoke__">drop</span>(task_inner);</span><br><span class="line">            <span class="comment">// release coming task TCB manually</span></span><br><span class="line">            processor.current = <span class="title function_ invoke__">Some</span>(task);</span><br><span class="line">            <span class="comment">// release processor manually</span></span><br><span class="line">            <span class="title function_ invoke__">drop</span>(processor);</span><br><span class="line">            <span class="keyword">unsafe</span> {</span><br><span class="line">                __switch(idle_task_cx_ptr, next_task_cx_ptr);</span><br><span class="line">            }</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            warn!(<span class="string">"no tasks available in run_tasks"</span>);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-<p>循环调用 <code>fetch_task</code> 直到顺利从任务管理器中取出一个任务，随后通过任务切换的方式来执行。<code>fetch_task</code> 使用了 <code>TaskManager</code> 的任务调度函数。</p>
-<h2 id="进程管理机制的设计实现"><a href="#进程管理机制的设计实现" class="headerlink" title="进程管理机制的设计实现"></a>进程管理机制的设计实现</h2><p>在内核初始化完毕之后，会将初始进程 <code>initproc</code> 的PCB加入任务管理器，它会启动用户shell等待用户操作。PCB的创建过程主要是：从ELF文件中解析地址空间、进行一些trap相关的配置、初始化trap上下文。</p>
-<p>用户shell的实现使用了 <code>fork</code>, <code>exec</code>, <code>wait</code> 等系统调用，<code>fork</code> 系统调用中，基本上和PCB的创建过程相同，不同点是地址空间是从其它的用户的地址空间复制来的，还有多了维护父子进程关系的部分。复制地址空间的部分在 <code>mm</code> 模块中加入了两个辅助函数。最后，在 <code>fork</code> 系统调用返回时，要将子进程的Trap上下文中用来存放系统调用返回值的a0寄存器修改为0。</p>
-<p><code>exec</code> 系统调用加载一个新的ELF文件替换原来的地址空间并返回，实现起来比较简单，生成一个新的地址空间并替换，再修改一些trap相关的配置即可。在 <code>trap_handler</code> 中，由于 <code>exec</code> 系统调用中地址空间改变，trap上下文失效，在返回后需要重新获取。</p>
-<p>最后是进程退出时的处理，当一个进程调用 <code>sys_exit</code> 系统调用主动退出，或者出错由内核终止之后，会在内核中调用 <code>exit_current_and_run_next</code> 函数，它比前几章增加一个进程的返回值，将进程控制块中的状态修改为 <code>TaskStatus::Zombie</code> 即僵尸进程，将当前进程的所有子进程挂在初始进程 <code>initproc</code> 下面，再将当前进程占用的资源进行早期回收。在任务切换之后，不会再回到僵尸进程继续执行。</p>
-<h2 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h2><p>跟OSTEP中<a href="https://derfflinger.top/2025/04/10/CPU%E8%99%9A%E6%8B%9F%E5%8C%96/#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6">进程调度</a>的部分差不多，没有单独记。</p>
+<p>应用第一次进入用户态的时候，放在 Trap 上下文 a0/a1 两个寄存器中的内容可以被用户库中的入口函数 _start 以参数的形式接受。</p>
+<p>I/O 重定向很好解决，修改对应的文件描述符即可，新增了一个系统调用 <code>sys_dup</code>，用于将进程中一个已经打开的文件复制一份，分配到一个新的文件描述符中。在shell程序 <code>user_shell</code> 分割命令行参数的时候，检查是否存在 <code>&lt;</code> 或 <code>&gt;</code>，如果存在的话记录匹配到的输入文件名或输出文件名到字符串 <code>input</code> 或 <code>output</code> 中，然后在 folk 之后再替换对应的文件。</p>
 </div>
     </div>
 
     <div class="post-meta">
         <i>
         
-            <span>2025-04-12</span>
+            <span>2025-04-29</span>
             
                 <span>该篇文章被 Derfflinger</span>
             
@@ -537,16 +532,8 @@ mjx-container[display="true"] + br {
                             System
                         </a>
                     
-                        <a href='/tags/RISC-V/'>
-                            RISC-V
-                        </a>
-                    
                         <a href='/tags/Rust/'>
                             Rust
-                        </a>
-                    
-                        <a href='/tags/Process/'>
-                            Process
                         </a>
                     
                 </span>
@@ -572,11 +559,9 @@ mjx-container[display="true"] + br {
     
             <div class="post-footer-pre-next">
                 
-                    <span>上一篇：<a href='/2025/04/22/ch6%20%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/'>ch6 文件系统</a></span>
-                
 
                 
-                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/04/10/CPU%E8%99%9A%E6%8B%9F%E5%8C%96/">CPU虚拟化</a>
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/04/22/ch6%20%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">ch6 文件系统</a>
                     </span>
                 
             </div>
