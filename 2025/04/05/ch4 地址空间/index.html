@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="ch4 地址空间" />
+    <meta name="hexo-theme-A4" content="v2.0.1" />
+    <link rel="alternate icon" type="image/webp" href="/img/ryo.png">
+    <title>SMS Derfflinger</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+
+         <!--注意：首页既不是post也不是page-->
+        
+
+        
+<link rel="stylesheet" href="/css/ui.css">
+
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+
+    
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/custom.css">
+
+    
+
+    
+
+    <!-- <link rel="stylesheet" href="https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css" /> -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkai@3.0.0/dist/LXGWWenKai-Regular/result.css' /> 
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+
+
+
+    
+    <style>
+        :root {
+            --waline-theme-color: #323e74; 
+            --waline-color: #323e74; 
+            --waline-border-color: #323e74; 
+            --waline-white: #323e74; 
+            --waline-bgcolor-light: #f2fafc;  
+        }
+        body {
+            color: #323e74;
+            background: #eaeae8;
+        }
+        .post-md code {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        .post-md pre, .post-md .highlight {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
+            color: #323e74;
+        }
+        pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+            color: #323e74;
+        }
+        .year-font-color {
+            color: #323e74 !important;
+        }
+        .wl-card span.wl-nick {
+            color: #323e74; 
+        }
+        .wl-card .wl-badge {
+            border: 1px solid #323e74;
+            color: #323e74; 
+        }
+        .wl-btn {
+            border: 1px solid #323e74; 
+            color:  #323e74;  
+        }
+        .wl-btn.primary {
+            color: #f2fafc; 
+        }
+        .wl-header label {
+            color: #323e74;
+        }
+        a {
+            color: #7f688d;
+        }
+
+        .post-md a {
+            color: #7f688d;
+        }
+
+        .nav li a {
+            color: #7f688d;
+        }
+
+        .archive-main a:link {
+            color: #7f688d;
+        }
+        .archive-main a:visited {
+            color: #767c7c; 
+        }
+
+        .archive li span {
+            color: #323e74;
+        }
+
+        .post-main-title {
+            color: #323e74;
+        }
+
+        .post-md h1,
+        .post-md h2,
+        .post-md h3,
+        .post-md h4,
+        .post-md h5,
+        .post-md h6 {
+            color: #323e74;
+        }
+
+        [data-waline] p {
+            color: #323e74;
+        }
+        [data-waline] a {
+            color: #323e74;
+        } 
+        .wl-sort li.active {
+            color: #323e74;
+        }
+
+        .wl-card .wl-meta>span {
+            background: #f2fafc;
+        }
+
+        .paper {
+            background: #eaeae8;
+        }
+
+        .index-main {
+            background: #f2fafc;
+        }
+
+        .paper-main {
+            background: #f2fafc;
+        }
+
+        .wl-panel {
+            background: #f2fafc;
+        }
+
+        .archive li:nth-child(odd) {
+            background: #f2fafc;
+            ;
+        }
+
+        .archive li:nth-child(even) {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(odd) td {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(even) td {
+            background: #f2fafc;
+        }
+
+    
+        .progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+        .return-to-last-progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .return-to-last-progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .return-to-last-progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+         .left-toc-container::-webkit-scrollbar-thumb {
+            background-color: #323e74; /* 设置滚动条拖动块的颜色 */
+        }
+
+        .bs-docs-sidebar .nav>.active>a,
+        .bs-docs-sidebar .nav>li>a:hover,
+        .bs-docs-sidebar .nav>li>a:focus {
+            color: #7f688d;
+            border-left-color: #7f688d;
+        }
+        .bs-docs-sidebar .nav>li>a {
+            color:  #323e74;
+        }
+    </style>
+
+    
+
+
+    <body>
+        
+        <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.80/darkreader.min.js"></script>
+        <script>
+            const drOptions = {
+                brightness: 100,
+                contrast: 95,
+                sepia: 10,
+                darkSchemeTextColor: '#e0e0e0',  // 粉笔白文字
+                darkSchemeBackgroundColor: '#1e1e1e', // 黑板灰背景
+                scrollbarStyle: 'native'
+            };
+
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                DarkReader.enable(drOptions);
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const btn = document.createElement('button');
+                btn.innerText = '🌓';
+                // 按钮样式：仿照你之前的布局，放在右下角
+                btn.style.cssText = `
+                    position: fixed; 
+                    bottom: 40px; 
+                    left: 42px; 
+                    z-index: 9999;
+                    width: 44px; 
+                    height: 44px; 
+                    border-radius: 50%; 
+                    border: 1px solid #ccc;
+                    background: #f7f5ed; 
+                    color: #000;
+                    font-size: 22px; 
+                    cursor: pointer;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+                    transition: transform 0.2s, background-color 0.3s;
+                `;
+                // 根据当前状态初始化按钮颜色
+                if (DarkReader.isEnabled()) {
+                    btn.style.backgroundColor = '#1e1e1e';
+                    btn.style.color = '#fff';
+                }
+                btn.onmouseover = () => btn.style.transform = 'scale(1.1)';
+                btn.onmouseout = () => btn.style.transform = 'scale(1)';
+                document.body.appendChild(btn);
+                // 点击切换逻辑
+                btn.addEventListener('click', () => {
+                    if (DarkReader.isEnabled()) {
+                        DarkReader.disable();
+                        localStorage.setItem('theme', 'light');
+                        btn.style.backgroundColor = '#f7f5ed';
+                        btn.style.color = '#000';
+                    } else {
+                        DarkReader.enable(drOptions);
+                        localStorage.setItem('theme', 'dark');
+                        btn.style.backgroundColor = '#1e1e1e';
+                        btn.style.color = '#fff';
+                    }
+                });
+            });
+        </script>
+        
+        
+            
+                <div class="left-toc-container">
+                    <nav id="toc" class="bs-docs-sidebar"></nav>
+                </div>
+            
+        
+        <div class="paper">
+
+            
+
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <style>
+            .header-img {
+                width: 56px;
+                height: auto;
+                object-fit: cover; /* 保持图片比例 */
+                transition: transform 0.3s ease-in-out; 
+                border-radius: 0; 
+            }
+            
+        </style>
+        <img 
+            alt="^-^" 
+            cache-control="max-age=86400" 
+            class="header-img" 
+            src="/img/ryo.png" 
+        />
+        <div class="header-content">
+            <a class="logo" href="/">SMS Derfflinger</a> 
+            <span class="description">Just for fun.</span> 
+        </div>
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+    </ul>
+</div>
+
+                    
+                    
+
+                    
+                    
+
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    ch4 地址空间
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2026-05-17</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：1.9k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：6分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ch4-%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="post-toc-text">ch4 地址空间</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%BC%95%E8%A8%80"><span class="post-toc-text">引言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Rust%E4%B8%AD%E7%9A%84%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="post-toc-text">Rust中的动态内存分配</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="post-toc-text">地址空间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SV39%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%9C%BA%E5%88%B6"><span class="post-toc-text">SV39多级页表的硬件机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%AE%A1%E7%90%86SV39%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="post-toc-text">管理SV39多级页表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%86%85%E6%A0%B8%E4%B8%8E%E5%BA%94%E7%94%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="post-toc-text">内核与应用的地址空间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%86%E6%97%B6%E5%A4%9A%E4%BB%BB%E5%8A%A1"><span class="post-toc-text">基于地址空间的分时多任务</span></a></li></ol></li></ol>
+            
+        
+        <div class=".article-gallery"><h1 id="ch4-地址空间"><a href="#ch4-地址空间" class="headerlink" title="ch4 地址空间"></a>ch4 地址空间</h1><p>本文是参加<a target="_blank" rel="noopener" href="https://opencamp.cn/os2edu/camp/2025spring">2025春夏季开源操作系统训练营</a>时对第二阶段文档第4章做的笔记。</p>
+<p>文档：<a target="_blank" rel="noopener" href="https://learningos.cn/rCore-Camp-Guide-2025S">https://learningos.cn/rCore-Camp-Guide-2025S</a></p>
+<p>完整版文档：<a target="_blank" rel="noopener" href="https://rcore-os.cn/rCore-Tutorial-Book-v3">https://rcore-os.cn/rCore-Tutorial-Book-v3</a></p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本章将进一步实现虚拟内存机制，主要是为了隔离性。</p>
+<h2 id="Rust中的动态内存分配"><a href="#Rust中的动态内存分配" class="headerlink" title="Rust中的动态内存分配"></a>Rust中的动态内存分配</h2><p>目前为止我们的操作系统中只有静态分配的功能，缺少灵活性，需要进一步实现动态内存分配的能力。这需要操作系统提供堆和与堆相关的一些功能：分配和释放内存的接口、空闲空间管理的算法、建立在堆上的数据结构。</p>
+<p>Rust的标准库中有许多堆数据结构，主要是基于智能指针实现的，智能指针是对堆上数据进行管理的，除了地址以外还有一些其它信息。在智能指针的基础上实现了例如 <code>Vec</code>, <code>BTreeMap</code> 等数据结构。</p>
+<p>要在操作系统中实现上述的功能，需要利用 <code>alloc</code> 库定义的接口来实现基本的动态内存分配器。实现类似C语言中的 <code>malloc</code> 和 <code>free</code> 接口，然后根据 <code>alloc</code> 留好的接口提供全局动态内存分配器。</p>
+<h2 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h2><p><a target="_blank" rel="noopener" href="http://derfflinger.top/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#VirtualMemory">Lec28-31 Virtual Memory, IO#Virtual Memory</a>, 和OSTEP的13-16章</p>
+<h2 id="SV39多级页表的硬件机制"><a href="#SV39多级页表的硬件机制" class="headerlink" title="SV39多级页表的硬件机制"></a>SV39多级页表的硬件机制</h2><p>SV39中，通过修改 <code>satp</code> 寄存器启用分页功能，<code>satp</code> 寄存器分为3个字段，<code>MODE</code>, <code>ASID</code>, <code>PPN</code>。</p>
+<ul>
+<li><code>MODE</code> 控制CPU使用哪种页表实现，包括直接访问物理地址和启用分页机制。</li>
+<li><code>ASID</code> 表示地址空间标识符，与进程有关。</li>
+<li><code>PPN</code> 存的是根页表所在的物理页号。</li>
+</ul>
+<p>SV39的地址格式中，虚拟地址39位，物理地址56位；虚拟地址中包含27位的虚拟页号和12位的页内偏移；物理地址中包含44位的物理页号和12位的页内偏移。这是因为单个页面的大小为4kb，需要用12位字节地址表示。地址转换是按页为单位进行的，页内偏移部分相同。其中，虚拟地址会被按符号位扩展到64位，只有最低的256GiB（当第 38 位为0时）以及最高的256GiB（当第38位为1时）是可能通过MMU检查的。</p>
+<p>在一个4kb大小的页表中，每8个字节（64位）是一个页表项，用到了54位，包括物理页号、和一些权限位。</p>
+<p>页表可以使用线性表简单实现，但是这样整段虚拟地址对应的页表都要放到内存中，会造成严重的浪费。优化可以采用按需分配，有多少已分配的虚拟页号，就维护多大的映射。可以使用多级页表，类似于一棵多叉树。SV39中采用的是三级页表，具体的查找过程如下：<a href="/img/rCore/asserts/Pasted%20image%2020250329174614.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/rCore/asserts/Pasted%20image%2020250329174614.png"></a><br>PPN用于查找物理页，可能是下一级页表或最终的物理页号；VPN分为3部分，每部分长9位，用于在一个页内查找页表项。最后的PPN和虚拟地址中的偏移段拼在一起就是最终的56位物理地址。</p>
+<p>TLB，即地址转换过程中的缓存<a target="_blank" rel="noopener" href="http://localhost:4000/2024/10/03/Lec28-31%20Virtual%20Memory,%20IO/#TranslationLookasideBuffers">Lec28-31 Virtual Memory, IO#Translation Lookaside Buffers</a>，在更换根页表后要使用 <code>sfence.vma</code> 指令刷新。</p>
+<h2 id="管理SV39多级页表"><a href="#管理SV39多级页表" class="headerlink" title="管理SV39多级页表"></a>管理SV39多级页表</h2><p>在整块地址空间中，从起始地址到 <code>ekernel</code> 中是恒等映射，因此从 <code>ekernel</code> 到终止物理地址之间的空间，是用于需要存放应用数据或扩展应用的多级页表时分配空闲的物理页帧。</p>
+<p><code>rcore</code> 使用了一种比较简单的栈式物理页帧管理策略：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/mm/frame_allocator.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">StackFrameAllocator</span> {</span><br><span class="line">    current: <span class="type">usize</span>,  <span class="comment">//空闲内存的起始物理页号</span></span><br><span class="line">    end: <span class="type">usize</span>,      <span class="comment">//空闲内存的结束物理页号</span></span><br><span class="line">    recycled: <span class="type">Vec</span>&lt;<span class="type">usize</span>&gt;,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>最终公开的 <code>frame_alloc</code> 接口的返回值类型并不是 <code>FrameAllocator</code> 要求的物理页号 <code>PhysPageNum</code> ，而是将其进一步包装为一个 <code>FrameTracker</code> ，将生命周期绑定到这个变量上。当一个 <code>FrameTracker</code> 生命周期结束被编译器回收的时候，将这个物理页帧会回收到分配器中。</p>
+<p>对页表的管理，建立了一个 <code>PageTable</code> 结构体，其中包含了根页表页的 <code>PPN</code> 和页表所有的节点的物理页帧，然后为它实现了 <code>map</code>, <code>unmap</code>, <code>find_pte_create</code>, <code>find_pte</code> 等函数，原文档写的非常详细。目前的实现为了简单起见，在物理页帧耗尽时只会退出，不会进行换页等复杂操作。</p>
+<h2 id="内核与应用的地址空间"><a href="#内核与应用的地址空间" class="headerlink" title="内核与应用的地址空间"></a>内核与应用的地址空间</h2><p>刚才的 <code>PageTable</code> 数据结构只能维护一个地址转换关系，内核还创建了一个 <code>MapArea</code> 数据结构，用于描述一段连续地址的虚拟内存：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/mm/memory_set.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">MapArea</span> {</span><br><span class="line">    vpn_range: VPNRange,</span><br><span class="line">    data_frames: BTreeMap&lt;VirtPageNum, FrameTracker&gt;,</span><br><span class="line">    map_type: MapType,</span><br><span class="line">    map_perm: MapPermission,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>记录了虚拟页号的范围、物理页帧的集合、映射的类型和这个段的权限，这里的物理页帧是作为数据页的页帧，与上面的页表页的页帧不同，即作为页表页的物理页帧的生命周期绑定在 <code>PageTable</code> 中，作为数据页的物理页帧的生命周期绑定在 <code>MapArea</code> 中。</p>
+<p>然后在这个 <code>MapArea</code> 的基础上，建立了一个 <code>MemorySet</code> 数据结构作为地址空间：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/mm/memory_set.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">MemorySet</span> {</span><br><span class="line">    page_table: PageTable,</span><br><span class="line">    areas: <span class="type">Vec</span>&lt;MapArea&gt;,</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>存储了整个页表和这个地址空间中的所有逻辑段，在这个结构体的基础上建立了内核的地址空间和每个应用的地址空间，每个应用的地址空间保存在它的TCB中。</p>
+<p>内核地址空间的高256GB是跳板页和每个应用的内核栈，内核栈之间还有一个保护页防止溢出；低256GB是内核自己的四个逻辑段 <code>.text/.rodata/.data/.bss</code>，还有上面说的空闲空间。</p>
+<p>用户地址空间的高256GB是跳板页和Trap上下文页；低256GB是自己的逻辑段和用户栈。</p>
+<h2 id="基于地址空间的分时多任务"><a href="#基于地址空间的分时多任务" class="headerlink" title="基于地址空间的分时多任务"></a>基于地址空间的分时多任务</h2><p>在操作系统刚刚启动时，还是使用 <code>lazy_staic!</code> 宏包裹一个全局变量 <code>Arc&lt;UPSafeCell&lt;MemorySet&gt;&gt;</code>，用作内核的地址空间，然后填 <code>satp</code> 寄存器，填入当前页表的根节点的PPN，从这一刻开始 SV39 分页模式就被启用了。由于内核的地址空间采用的是恒等映射，因此启用分页模式前后的指令地址是连续的，不会发生问题。</p>
+<p>内核和应用的地址空间，最高的虚拟页面都是一个跳板 <code>Trampoline</code>，跳板的作用是存放 <code>trap.S</code> 的代码，这是因为trap会切换用户态到内核态或相反，这需要更换地址空间，如果后面的指令的虚拟地址对应的物理地址不同，会打断 <code>trap.S</code> 的代码的执行，因此 <code>trap.S</code> 的代码必须在内核地址空间中和应用地址空间中的映射相同，这就是跳板页。<code>trap.S</code> 中的<code>__alltraps</code> 和 <code>__restore</code> 函数也做了改变，增加了修改 <code>satp</code> 寄存器的部分。</p>
+<p>对TCB块做了扩展，把地址空间、trap上下文的PPN，总的字节数也存进去了。</p>
+</div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2025-04-05</span>
+            
+                <span>该篇文章被 Derfflinger</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/OS/'>
+                            OS
+                        </a>
+                    
+                        <a href='/tags/System/'>
+                            System
+                        </a>
+                    
+                        <a href='/tags/RISC-V/'>
+                            RISC-V
+                        </a>
+                    
+                        <a href='/tags/Virtual-Memory/'>
+                            Virtual-Memory
+                        </a>
+                    
+                        <a href='/tags/Rust/'>
+                            Rust
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/rCore/'>
+                            rCore
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+                    <span>上一篇：<a href='/2025/04/10/CPU%E8%99%9A%E6%8B%9F%E5%8C%96/'>CPU虚拟化</a></span>
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2025/04/05/%E5%86%85%E5%AD%98%E8%99%9A%E6%8B%9F%E5%8C%96/">内存虚拟化</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+
+                    
+
+                    <div class="footer">
+    
+        <span> 
+             
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span></span>
+            
+                <span class="footer-last-span-right"><i>本站由<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">Hexo</a>驱动｜使用<a target="_blank" rel="noopener" href="https://github.com/HiNinoJay/hexo-theme-A4">Hexo-theme-A4</a>主题</i></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
+<script src="/js/emojiHandler.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        wrapEmojis('.paper');
+    });
+</script>
