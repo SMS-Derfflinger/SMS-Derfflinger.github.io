@@ -526,19 +526,19 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2026-05-17</span> 
+                    <span>最近更新：2026-05-18</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：324</span>
+                     <span>字数总计：647</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：1分钟</span>
+                    <span>阅读估时：2分钟</span>
                 
                 
                     
@@ -557,46 +557,30 @@ mjx-container[display="true"] + br {
                 <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#intro"><span class="post-toc-text">intro</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#R-Format"><span class="post-toc-text">R-Format</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#I-Format"><span class="post-toc-text">I-Format</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Load"><span class="post-toc-text">Load</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#S-format"><span class="post-toc-text">S-format</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#B-format"><span class="post-toc-text">B-format</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#U-format-Long-immediates"><span class="post-toc-text">U-format Long immediates</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#J-format"><span class="post-toc-text">J-format</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%E4%B8%8E%E7%BC%96%E8%AF%91%E5%99%A8"><span class="post-toc-text">解释器与编译器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#compiler"><span class="post-toc-text">compiler</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#assembler"><span class="post-toc-text">assembler</span></a></li></ol>
             
         
-        <div class=".article-gallery"><h1 id="intro"><a href="#intro" class="headerlink" title="intro"></a>intro</h1><ul>
-<li>电线 -&gt; 二进制编码</li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-8.png" title="format" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-8.png" alt="format"></a></p>
+        <div class=".article-gallery"><h1 id="intro"><a href="#intro" class="headerlink" title="intro"></a>intro</h1><p>指令在硬件中以二进制编码形式存在，不同类型的指令有不同的位段划分方式。</p>
 <h1 id="R-Format"><a href="#R-Format" class="headerlink" title="R-Format"></a>R-Format</h1><ul>
-<li>用于逻辑或算数的寄存器到寄存器的指令</li>
-<li>格式：<br><a href="/img/CS61C/asserts/image-9.png" title="R" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-9.png" alt="R"></a><ul>
-<li>R-format的opcode都为0110011（6位到0位）</li>
-<li>funct7+funct3决定运行哪种指令（例如add）</li>
+<li>用于逻辑或算数的寄存器到寄存器的指令。32 位指令划分为：funct7（7 位）| rs2（5 位）| rs1（5 位）| funct3（3 位）| rd（5 位）| opcode（7 位）。opcode 为 0110011，funct7 和 funct3 一起决定具体运算（例如 add 对应 funct7=0000000, funct3=000）。</li>
 </ul>
-</li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-10.png" title="all R" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-10.png" alt="all R"></a></p>
 <h1 id="I-Format"><a href="#I-Format" class="headerlink" title="I-Format"></a>I-Format</h1><ul>
-<li>与寄存器和立即数有关的指令和load<br><a href="/img/CS61C/asserts/image-11.png" title="I" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-11.png" alt="I"></a></li>
+<li>与寄存器和立即数有关的运算指令，格式为：imm[11:0]（12 位）| rs1（5 位）| funct3（3 位）| rd（5 位）| opcode（7 位）。12 位立即数在使用时符号扩展到 32 位。</li>
 </ul>
-<p><a href="/img/CS61C/asserts/image-12.png" title="all I" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-12.png" alt="all I"></a></p>
 <h2 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h2><ul>
-<li>与I类指令格式相同，opcode不同<br><a href="/img/CS61C/asserts/image-13.png" title="Load" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-13.png" alt="Load"></a></li>
+<li>Load 指令与 I 类格式相同（也是立即数 + rs1 → rd），仅 opcode 不同。例如 <code>lw rd, offset(rs1)</code> 中 offset 为 12 位立即数。</li>
 </ul>
 <h1 id="S-format"><a href="#S-format" class="headerlink" title="S-format"></a>S-format</h1><ul>
-<li>只有store指令<br><a href="/img/CS61C/asserts/image-14.png" title="S" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-14.png" alt="S"></a><br><a href="/img/CS61C/asserts/image-15.png" title="S" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-15.png" alt="S"></a></li>
+<li>只有 store 指令。格式为：imm[11:5]（7 位）| rs2（5 位）| rs1（5 位）| funct3（3 位）| imm[4:0]（5 位）| opcode（7 位）。立即数被拆成两段以适应 R 类指令的寄存器字段位置。</li>
 </ul>
 <h1 id="B-format"><a href="#B-format" class="headerlink" title="B-format"></a>B-format</h1><ul>
-<li>分支指令</li>
-<li>E.g., beq x1, x2, Label</li>
-<li>branch offset by 2 bytes，PC = PC + immediate * 4</li>
-<li>立即数不必保存最低有效位，因为PC按字节对的倍数增加，立即数最低位始终为0</li>
+<li>分支指令格式类似于 S 类，但立即数编码不同：imm[12|10:5]（7 位）| rs2（5 位）| rs1（5 位）| funct3（3 位）| imm[4:1|11]（5 位）| opcode（7 位）。分支偏移按 2 字节对齐，立即数最低位始终为 0，实际偏移 = imm × 2。</li>
 </ul>
-<p><a href="/img/CS61C/asserts/image-16.png" title="B" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-16.png" alt="B"></a><br><a href="/img/CS61C/asserts/image-17.png" title="B" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-17.png" alt="B"></a></p>
 <h1 id="U-format-Long-immediates"><a href="#U-format-Long-immediates" class="headerlink" title="U-format Long immediates"></a>U-format Long immediates</h1><ul>
-<li>在跳转位置在正负1024条指令之外时，单条分支指令做不到</li>
-<li>lui：将一个立即数的高20位加载进寄存器<br><a href="/img/CS61C/asserts/image-20.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-20.png" alt="alt text"></a><br><a href="/img/CS61C/asserts/image-18.png" title="lui" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-18.png" alt="lui"></a><br><a href="/img/CS61C/asserts/image-19.png" title="louis" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-19.png" alt="louis"></a></li>
-<li>addi是按符号位扩展的，与lui搭配有时会出错；实际使用时使用li就行</li>
+<li>在跳转位置超过 ±1024 条指令范围时，单条分支指令不够用，需要 lui（Load Upper Immediate）将 20 位立即数放入目标寄存器的高 20 位。格式：imm[31:12]（20 位）| rd（5 位）| opcode（7 位）。lui 配合 addi 可实现 32 位任意立即数加载。</li>
+<li>注意 addi 按符号位扩展，与 lui 搭配时可能出错；实际编码时直接使用 <code>li</code> 伪指令即可，汇编器会自动处理。</li>
 </ul>
 <h1 id="J-format"><a href="#J-format" class="headerlink" title="J-format"></a>J-format</h1><ul>
-<li>跳转，只有jal，j伪指令也使用jal</li>
-<li>jalr伪指令使用了I-format</li>
+<li>J-format 专用于 jal（跳转并链接），j 伪指令也使用 jal 实现。格式：imm[20|10:1|11|19:12]（20 位）| rd（5 位）| opcode（7 位）。20 位立即数按 2 字节对齐，跳转范围为 ±1MB。</li>
+<li>jalr 伪指令使用 I-format，通过 ALU 计算 rs1 + imm 得到跳转目标地址。</li>
 </ul>
-<p><a href="/img/CS61C/asserts/image-21.png" title="J" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-21.png" alt="J"></a></p>
 <h1 id="解释器与编译器"><a href="#解释器与编译器" class="headerlink" title="解释器与编译器"></a>解释器与编译器</h1><ul>
 <li>解释器：<ul>
 <li>速度慢</li>
@@ -610,14 +594,14 @@ mjx-container[display="true"] + br {
 </ul>
 </li>
 </ul>
-<h1 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h1><p><a href="/img/CS61C/asserts/image-22.png" title="level" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-22.png" alt="level"></a></p>
-<ul>
-<li>编译器将.c文件编译为.s汇编文件，可能包含伪指令</li>
+<h1 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h1><ul>
+<li>编译器将 .c 文件编译为 .s 汇编文件，其中可能包含伪指令</li>
+<li>编译器的工作流程：高级语言 → 汇编 → 目标文件 → 可执行文件</li>
 </ul>
 <h1 id="assembler"><a href="#assembler" class="headerlink" title="assembler"></a>assembler</h1><ul>
-<li>汇编器将伪指令替换为指令，将.s文件生成为.o目标文件</li>
+<li>汇编器负责将伪指令替换为真实指令，并将 .s 文件生成为 .o 目标文件</li>
+<li>伪指令替换举例：<code>mv rd, rs</code> → <code>addi rd, rs, 0</code>；<code>li rd, 13</code> → <code>addi rd, x0, 13</code></li>
 </ul>
-<p><a href="/img/CS61C/asserts/image-24.png" title="assembler" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-24.png" alt="assembler"></a><br>替换伪指令：<br><a href="/img/CS61C/asserts/image-25.png" title="替换伪指令" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-25.png" alt="替换伪指令"></a></p>
 </div>
     </div>
 

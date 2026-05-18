@@ -526,19 +526,19 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2026-05-17</span> 
+                    <span>最近更新：2026-05-18</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：1.2k</span>
+                     <span>字数总计：1.1k</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：4分钟</span>
+                    <span>阅读估时：3分钟</span>
                 
                 
                     
@@ -554,87 +554,59 @@ mjx-container[display="true"] + br {
     <div class="post-md">
         
             
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Flynn%E2%80%99s-Taxonomy"><span class="post-toc-text">Flynn’s Taxonomy</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-SISD%EF%BC%88Single-Instruction-stream-Single-Data-stream%EF%BC%89"><span class="post-toc-text">1. SISD（Single Instruction stream Single Data stream）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-SIMD%EF%BC%88Single-Instruction-stream-Multiple-Data-streams%EF%BC%89"><span class="post-toc-text">2. SIMD（Single Instruction stream Multiple Data streams）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-MISD%EF%BC%88Multiple-Instruction-streams-Single-Data-stream%EF%BC%89"><span class="post-toc-text">3. MISD（Multiple Instruction streams Single Data stream）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-MIMD%EF%BC%88Multiple-Instruction-streams-Multiple-Data-streams%EF%BC%89"><span class="post-toc-text">4. MIMD（Multiple Instruction streams Multiple Data streams）</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SIMD-Architecture"><span class="post-toc-text">SIMD Architecture</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Thread-Level-Parallelism"><span class="post-toc-text">Thread-Level Parallelism</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Thread"><span class="post-toc-text">Thread</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Multithreading"><span class="post-toc-text">Multithreading</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#OpenMP"><span class="post-toc-text">OpenMP</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Hardware-Synchronization"><span class="post-toc-text">Hardware Synchronization</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Shared-Memory-and-caches"><span class="post-toc-text">Shared Memory and caches</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Cache-Coherency"><span class="post-toc-text">Cache Coherency</span></a></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Flynn%E2%80%99s-Taxonomy"><span class="post-toc-text">Flynn’s Taxonomy</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SIMD-Architecture"><span class="post-toc-text">SIMD Architecture</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Thread-Level-Parallelism"><span class="post-toc-text">Thread-Level Parallelism</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Thread"><span class="post-toc-text">Thread</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Multithreading"><span class="post-toc-text">Multithreading</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#OpenMP"><span class="post-toc-text">OpenMP</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Hardware-Synchronization"><span class="post-toc-text">Hardware Synchronization</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Shared-Memory-and-Caches"><span class="post-toc-text">Shared Memory and Caches</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Cache-Coherency"><span class="post-toc-text">Cache Coherency</span></a></li></ol>
             
         
         <div class=".article-gallery"><h1 id="Flynn’s-Taxonomy"><a href="#Flynn’s-Taxonomy" class="headerlink" title="Flynn’s Taxonomy"></a>Flynn’s Taxonomy</h1><ul>
-<li>软件的并行性和硬件的并行性往往是独立的，并行软件也可以运行在串行硬件上。</li>
-<li>Flynn’s Taxonomy是对硬件的分类</li>
+<li>软件的并行性与硬件的并行性相互独立——并行软件可以运行在串行硬件上，反之亦然。Flynn 分类法是对硬件的分类，按指令流和数据流分为四类：</li>
 </ul>
-<h2 id="1-SISD（Single-Instruction-stream-Single-Data-stream）"><a href="#1-SISD（Single-Instruction-stream-Single-Data-stream）" class="headerlink" title="1. SISD（Single Instruction stream Single Data stream）"></a>1. <strong>SISD（Single Instruction stream Single Data stream）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005165809.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005165809.png"></a></p>
-<ul>
-<li><strong>特点</strong>：单一指令流和单一数据流。</li>
-<li><strong>描述</strong>：传统的串行计算机架构，CPU 逐条执行指令，每次处理一个数据项。</li>
-<li><strong>例子</strong>：经典的个人计算机和许多早期的微处理器。</li>
-</ul>
-<h2 id="2-SIMD（Single-Instruction-stream-Multiple-Data-streams）"><a href="#2-SIMD（Single-Instruction-stream-Multiple-Data-streams）" class="headerlink" title="2. SIMD（Single Instruction stream Multiple Data streams）"></a>2. <strong>SIMD（Single Instruction stream Multiple Data streams）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005165857.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005165857.png"></a></p>
-<ul>
-<li><strong>特点</strong>：单一指令流和多个数据流。</li>
-<li><strong>描述</strong>：同一条指令同时对多个数据元素执行操作，适用于并行处理相同类型的数据。</li>
-<li><strong>应用</strong>：图形处理、科学计算和信号处理等领域。</li>
-<li><strong>例子</strong>：现代的图形处理单元（GPU）和某些向量处理器。</li>
-</ul>
-<h2 id="3-MISD（Multiple-Instruction-streams-Single-Data-stream）"><a href="#3-MISD（Multiple-Instruction-streams-Single-Data-stream）" class="headerlink" title="3. MISD（Multiple Instruction streams Single Data stream）"></a>3. <strong>MISD（Multiple Instruction streams Single Data stream）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005170122.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005170122.png"></a></p>
-<ul>
-<li><strong>特点</strong>：多个指令流和单一数据流。</li>
-<li><strong>描述</strong>：多个处理单元同时执行不同的指令，但操作于同一数据。</li>
-<li><strong>应用</strong>：相对少见，主要用于特定的容错系统或并行处理任务。</li>
-<li><strong>例子</strong>：一些冗余系统和特定的高可靠性计算环境。</li>
-</ul>
-<h2 id="4-MIMD（Multiple-Instruction-streams-Multiple-Data-streams）"><a href="#4-MIMD（Multiple-Instruction-streams-Multiple-Data-streams）" class="headerlink" title="4. MIMD（Multiple Instruction streams Multiple Data streams）"></a>4. <strong>MIMD（Multiple Instruction streams Multiple Data streams）</strong></h2><p><a href="/img/CS61C/asserts/Pasted%20image%2020241005165957.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005165957.png"></a></p>
-<ul>
-<li><strong>特点</strong>：多个指令流和多个数据流。</li>
-<li><strong>描述</strong>：多个处理器同时独立执行不同的指令，并处理独立的数据集，能够有效地进行复杂的并行计算。</li>
-<li><strong>应用</strong>：广泛用于多核处理器、超级计算机和分布式计算系统。</li>
-<li><strong>例子</strong>：现代多核 CPU 和大多数服务器架构。</li>
-</ul>
-<ul>
-<li>通常是由多个SIMD组成的</li>
-</ul>
+<ol>
+<li><strong>SISD</strong>：单指令流单数据流。传统串行计算机，CPU 逐条执行指令，每次处理一个数据项。</li>
+<li><strong>SIMD</strong>：单指令流多数据流。同一指令同时对多个数据元素操作，适用于图形处理、科学计算。例如 GPU 和向量处理器。</li>
+<li><strong>MISD</strong>：多指令流单数据流。多个处理单元对同一数据执行不同指令。较罕见，主要用于容错系统。</li>
+<li><strong>MIMD</strong>：多指令流多数据流。多处理器独立执行不同指令处理不同数据。现代多核 CPU、分布式系统属于此类。通常由多个 SIMD 组成。</li>
+</ol>
 <h1 id="SIMD-Architecture"><a href="#SIMD-Architecture" class="headerlink" title="SIMD Architecture"></a>SIMD Architecture</h1><ul>
-<li>通常通过将数据放在更宽的寄存器中实现</li>
+<li>通常通过将数据放在更宽的寄存器中实现，例如 x86 的 SSE/AVX 指令集利用 128/256/512 位寄存器一次操作多个数据元素。</li>
 </ul>
 <h1 id="Thread-Level-Parallelism"><a href="#Thread-Level-Parallelism" class="headerlink" title="Thread-Level Parallelism"></a>Thread-Level Parallelism</h1><ul>
-<li>线程级并行是一种软件并行<br><a href="/img/CS61C/asserts/Pasted%20image%2020241005201657.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005201657.png"></a></li>
-<li>多核的CPU意味着每个核都拥有自己的完整数据通路和指令流，可以看作是两个计算机<br><a href="/img/CS61C/asserts/Pasted%20image%2020241005202312.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241005202312.png"></a></li>
+<li>线程级并行是一种软件并行。多核 CPU 意味着每个核都有独立的完整数据通路和指令流，不同核可同时执行不同线程。</li>
 </ul>
 <h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><ul>
-<li>线程是一个指令流</li>
-<li>在单核CPU中，运行多个线程的方式是时间共享</li>
-<li>硬件线程是指由计算机硬件（尤其是处理器）支持的线程，通常与处理器的核心直接相关。硬件线程可以在同一处理器核心中独立地并行执行。</li>
-<li>软件线程是由程序代码创建和管理的线程，通常在操作系统中实现。软件线程依赖于操作系统的调度机制来管理其生命周期。</li>
+<li><strong>硬件线程</strong>：由处理器核心直接支持的线程，每个核心可拥有一或多个硬件线程。</li>
+<li><strong>软件线程</strong>：由程序代码创建和管理的线程，运行在操作系统中，通过调度机制管理其生命周期。单核 CPU 运行多线程的方式是时间共享（时分复用）。</li>
 </ul>
 <h1 id="Multithreading"><a href="#Multithreading" class="headerlink" title="Multithreading"></a>Multithreading</h1><ul>
-<li>Hyper-Thread：每个支持超线程的物理核心可以被视为两个逻辑核心。这意味着一个物理核心可以同时执行两个线程。</li>
+<li>Hyper-Threading（超线程）：每个支持超线程的物理核心对外表现为两个逻辑核心，可以同时执行两个线程。当一个线程因等待数据（如缓存缺失）而停顿时，另一个线程可以继续执行，提高核心利用率。</li>
 </ul>
 <h1 id="OpenMP"><a href="#OpenMP" class="headerlink" title="OpenMP"></a>OpenMP</h1><ul>
-<li><strong>OpenMP</strong>（Open Multi-Processing）是一种用于多平台共享内存多处理编程的应用程序接口（API），主要用于并行编程。它提供了一种简单而灵活的方式来实现并行计算。</li>
-<li>通过<code>#pragma omp parallel for</code>指令，例如：</li>
+<li>OpenMP 是一种用于共享内存多处理编程的 API。通过 <code>#pragma omp parallel for</code> 等指令并行化循环：</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;omp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> {</span><br><span class="line">	omp_set_num_threads(<span class="number">4</span>);</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="meta">#<span class="keyword">pragma</span> omp parallel for</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {</span><br><span class="line">	   <span class="built_in">printf</span>(<span class="string">"Thread %d is processing iteration %d\n"</span>, omp_get_thread_num(), i);</span><br><span class="line">	}</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;omp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> {</span><br><span class="line">    omp_set_num_threads(<span class="number">4</span>);</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="meta">#<span class="keyword">pragma</span> omp parallel for</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">"Thread %d is processing iteration %d\n"</span>, omp_get_thread_num(), i);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <ul>
-<li>创建的子线程是乱序执行的</li>
-<li>执行方式：<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006123731.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006123731.png"></a></li>
-<li>竞争条件：在<code>#pragma omp parallel</code>部分中，如果多个线程同时访问一个共享资源并进行读写操作，可能会读到旧值然后写入基于旧值更新的错误新值，导致程序出错</li>
+<li>创建的子线程是乱序执行的。OpenMP 将循环迭代分配给线程池中的各线程，每个线程独立执行分配的迭代，线程间通过共享内存通信。在 <code>#pragma omp parallel</code> 区域中，若多个线程同时访问共享资源并读写，可能产生竞争条件——读到旧值后写回基于旧值计算的新值，导致数据错误。</li>
 </ul>
 <h1 id="Hardware-Synchronization"><a href="#Hardware-Synchronization" class="headerlink" title="Hardware Synchronization"></a>Hardware Synchronization</h1><ul>
-<li>在软件层级使用锁或者信号量防止共享资源被多个线程访问</li>
-<li>在硬件层级通过原子操作实现，在一条指令内进行读写操作</li>
-<li>可能出现死锁的情况：<ul>
-<li>两个或多个进程在执行过程中，由于争夺资源而造成的一种相互等待的状态，使得它们都无法继续执行。</li>
+<li>软件层面使用锁（mutex）或信号量防止共享资源被多线程同时访问。</li>
+<li>硬件层面通过原子操作实现：在一条指令内完成”读-修改-写”，中间不能被其他处理器打断。例如 RISC-V 的 <code>lr</code>/<code>sc</code>（Load-Reserved / Store-Conditional）指令对。</li>
+<li>死锁：两个或多个线程因争夺资源而相互等待，导致都无法继续执行。</li>
+</ul>
+<h1 id="Shared-Memory-and-Caches"><a href="#Shared-Memory-and-Caches" class="headerlink" title="Shared Memory and Caches"></a>Shared Memory and Caches</h1><ul>
+<li>每个处理器核心拥有自己的私有 L1/L2 缓存，所有核心共享主存。这导致缓存一致性问题：一个核心修改了某地址的数据，其他核心的缓存中该地址的副本就过期了。</li>
+</ul>
+<h1 id="Cache-Coherency"><a href="#Cache-Coherency" class="headerlink" title="Cache Coherency"></a>Cache Coherency</h1><ul>
+<li>缓存一致性是在多处理器系统中保持各私有缓存数据一致的机制。常用实现为 Snoopy 协议：<ul>
+<li>每个缓存控制器”监听”总线上的读写操作。</li>
+<li>当一个处理器写入数据时，广播失效消息（或更新消息），其他缓存将对应行标记为无效（invalidate）或更新为新值。</li>
+<li>常见一致性状态（MSI 协议）：<ul>
+<li><strong>Modified</strong>：该缓存行被修改过，且只在当前缓存中有效。写回前主存中的副本已过时。</li>
+<li><strong>Shared</strong>：该缓存行可能存在于多个缓存中，与主存一致。只读。</li>
+<li><strong>Invalid</strong>：该缓存行无效，不可用。</li>
 </ul>
 </li>
 </ul>
-<h1 id="Shared-Memory-and-caches"><a href="#Shared-Memory-and-caches" class="headerlink" title="Shared Memory and caches"></a>Shared Memory and caches</h1><p><a href="/img/CS61C/asserts/Pasted%20image%2020241006151157.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006151157.png"></a></p>
-<ul>
-<li>每个处理器都有自己的缓存，所有处理器共享内存，可能会导致缓存一致性问题<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006151508.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006151508.png"></a></li>
-</ul>
-<h1 id="Cache-Coherency"><a href="#Cache-Coherency" class="headerlink" title="Cache Coherency"></a>Cache Coherency</h1><ul>
-<li>在多处理器系统中，多个处理器各自拥有的缓存之间保持数据一致性的机制</li>
-<li>Snoopy协议：<br>  <strong>广播机制</strong>：<br>  - Snoopy 协议利用总线广播机制，当一个处理器对其缓存中的数据进行操作时，它会在系统总线上广播相关的操作信息。这使得其他处理器能够实时获知数据的变化。<br>  <strong>监听（Snooping）</strong>：<br>  - 各个处理器的缓存控制器会“监听”总线上的消息。当一个处理器发出读取或写入请求时，其他处理器可以根据这些信息来更新自己的缓存状态。<br>  <strong>状态</strong>：<br>  <a href="/img/CS61C/asserts/Pasted%20image%2020241006152758.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006152758.png"></a><br>  <a href="/img/CS61C/asserts/Pasted%20image%2020241006152807.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006152807.png"></a><br>  <a href="/img/CS61C/asserts/Pasted%20image%2020241006152711.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006152711.png"></a></li>
-<li><strong>Coherence Misses</strong>：是指由于缓存一致性协议导致的缓存未命中。<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006153705.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006153705.png"></a></li>
-<li>这个块会在两个缓存之间来回传递，会增加延迟</li>
-<li>可以通过减小块大小缓解<br><a href="/img/CS61C/asserts/Pasted%20image%2020241006153801.png" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/Pasted%20image%2020241006153801.png"></a></li>
+</li>
+<li><strong>一致性缺失（Coherence Miss）</strong>：因缓存一致性协议导致两个核心交替写入同一缓存行，数据在彼此缓存间来回传递，增加延迟。可通过减小块大小缓解（但块太小又会影响空间局部性）。</li>
 </ul>
 </div>
     </div>

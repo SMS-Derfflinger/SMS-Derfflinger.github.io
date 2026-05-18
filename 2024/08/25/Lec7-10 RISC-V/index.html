@@ -526,19 +526,19 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2026-05-17</span> 
+                    <span>最近更新：2026-05-18</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：948</span>
+                     <span>字数总计：1.4k</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：4分钟</span>
+                    <span>阅读估时：5分钟</span>
                 
                 
                     
@@ -557,9 +557,7 @@ mjx-container[display="true"] + br {
                 <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RISC-V-introduction"><span class="post-toc-text">RISC-V introduction</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Register"><span class="post-toc-text">Register</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#add%E6%8C%87%E4%BB%A4%E5%92%8Csub%E6%8C%87%E4%BB%A4"><span class="post-toc-text">add指令和sub指令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#add"><span class="post-toc-text">add</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#sub"><span class="post-toc-text">sub</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%BF%9B%E8%A1%8C%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E8%BF%90%E7%AE%97"><span class="post-toc-text">进行更复杂的运算</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Immediate"><span class="post-toc-text">Immediate</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Storing-in-Memory"><span class="post-toc-text">Storing in Memory</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Data-transfer-instruction"><span class="post-toc-text">Data transfer instruction</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#load-word"><span class="post-toc-text">load word</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#store-word"><span class="post-toc-text">store word</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#load-byte-and-store-byte"><span class="post-toc-text">load byte and store byte</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Computer-Decision-Making"><span class="post-toc-text">Computer Decision Making</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Logical-instructions"><span class="post-toc-text">Logical instructions</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Assembler-to-Machine-Code"><span class="post-toc-text">Assembler to Machine Code</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Function-Calls"><span class="post-toc-text">Function Calls</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Function-Call-Convention"><span class="post-toc-text">Function Call Convention</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Function-Call-Example"><span class="post-toc-text">Function Call Example</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Nested-Calls-and-Register-Conventions"><span class="post-toc-text">Nested Calls and Register Conventions</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Memory-Allocation"><span class="post-toc-text">Memory Allocation</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#In-conclusion"><span class="post-toc-text">In conclusion</span></a></li></ol>
             
         
-        <div class=".article-gallery"><h1 id="RISC-V-introduction"><a href="#RISC-V-introduction" class="headerlink" title="RISC-V introduction"></a>RISC-V introduction</h1><ul>
-<li>计算机系统抽象层：<br><a href="/img/CS61C/asserts/image.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image.png" alt="alt text"></a></li>
-</ul>
+        <div class=".article-gallery"><h1 id="RISC-V-introduction"><a href="#RISC-V-introduction" class="headerlink" title="RISC-V introduction"></a>RISC-V introduction</h1><p>计算机系统由多个抽象层构成，从上层的高级语言到中间层的汇编/机器语言，再到下层的硬件逻辑和物理电路，每一层都隐藏了下层实现细节。</p>
 <h1 id="Register"><a href="#Register" class="headerlink" title="Register"></a>Register</h1><p>汇编中没有变量，因此指令后的操作数一般是寄存器。</p>
 <p>RISC-V中有32个寄存器（x0-x31），每个都是32位宽</p>
 <ul>
@@ -575,14 +573,9 @@ mjx-container[display="true"] + br {
 </ul>
 <h1 id="Immediate"><a href="#Immediate" class="headerlink" title="Immediate"></a>Immediate</h1><p>指令格式：addi x1, x2, 10<br>对应：<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="10.213ex" height="1.756ex" role="img" focusable="false" viewBox="0 -694 4514 776"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mo" transform="translate(806.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(1862.6,0)"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mo" transform="translate(2513.8,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mn" transform="translate(3514,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></svg></mjx-container></p>
 <p>不需要subi，因为addi中的立即数可以是负数</p>
-<h1 id="Storing-in-Memory"><a href="#Storing-in-Memory" class="headerlink" title="Storing in Memory"></a>Storing in Memory</h1><p>内存中的存储遵守<strong>小端约定</strong>：数据的最低有效字节（Least Significant Byte，LSB）被存储在内存的最低地址处，而最高有效字节（Most Significant Byte，MSB）则存储在内存的最高地址处。<br><a href="/img/CS61C/asserts/image-1.png" title="小端约定" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-1.png" alt="小端约定"></a><br>例：要存储一个16位整数 0x1234：</p>
+<h1 id="Storing-in-Memory"><a href="#Storing-in-Memory" class="headerlink" title="Storing in Memory"></a>Storing in Memory</h1><p>内存中的存储遵守<strong>小端约定</strong>：数据的最低有效字节（Least Significant Byte，LSB）被存储在内存的最低地址处，而最高有效字节（Most Significant Byte，MSB）则存储在内存的最高地址处。以 16 位整数 0x1234 为例，在小端约定中低地址存储 0x34、高地址存储 0x12，大端约定则相反。</p>
 <ul>
-<li><p>在小端约定中，内存的存储方式是：0x34（低地址） 0x12（高地址）。</p>
-</li>
-<li><p>在大端约定中，内存的存储方式是：0x12（低地址） 0x34（高地址）。</p>
-</li>
-<li><p>Memory Hierarchy<br><a href="/img/CS61C/asserts/image-2.png" title="内存层次" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-2.png" alt="内存层次"></a></p>
-</li>
+<li>Memory Hierarchy：<br>内存层次从寄存器、缓存、主存到磁盘，越往上速度越快、容量越小、成本越高。缓存的设计正是为了弥合 CPU 与主存之间的速度差距。</li>
 </ul>
 <h1 id="Data-transfer-instruction"><a href="#Data-transfer-instruction" class="headerlink" title="Data transfer instruction"></a>Data transfer instruction</h1><h2 id="load-word"><a href="#load-word" class="headerlink" title="load word"></a>load word</h2><p>从内存加载至寄存器，数据流是从右到左的</p>
 <ul>
@@ -594,20 +587,21 @@ mjx-container[display="true"] + br {
 </ul>
 <h2 id="load-byte-and-store-byte"><a href="#load-byte-and-store-byte" class="headerlink" title="load byte and store byte"></a>load byte and store byte</h2><p>RISC-V中除了lw、sw（字操作）之外，还提供lb、sb（字节操作）指令</p>
 <h1 id="Computer-Decision-Making"><a href="#Computer-Decision-Making" class="headerlink" title="Computer Decision Making"></a>Computer Decision Making</h1><ul>
-<li>if-statement instruction is beq reg1, reg2, L1<br>means: 如果相等则跳转</li>
-<li>bne reg1, reg2, L1 means:如果不相等则跳转</li>
+<li>汇编语言中没有 if/else 语句，条件判断通过分支指令实现：</li>
+<li>beq reg1, reg2, L1：如果相等则跳转</li>
+<li>bne reg1, reg2, L1：如果不相等则跳转</li>
 <li>branch if less than: blt</li>
 <li>branch if greater than or equal: bge</li>
 <li>unsigned版本：bltu, bgeu</li>
 <li>无条件分支：j lable</li>
 </ul>
-<h1 id="Logical-instructions"><a href="#Logical-instructions" class="headerlink" title="Logical instructions"></a>Logical instructions</h1><p><a href="/img/CS61C/asserts/image-3.png" title="Logical instructions" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-3.png" alt="Logical instructions"></a></p>
+<h1 id="Logical-instructions"><a href="#Logical-instructions" class="headerlink" title="Logical instructions"></a>Logical instructions</h1><p>RISC-V 提供基本的按位逻辑运算指令，包括 and、or、xor 以及对应的立即数版本 andi、ori、xori。此外还有移位指令：</p>
 <ul>
-<li>逻辑左移：sll，立即数：slli<br>slli x11,x12,2 #x11=x12&lt;&lt;2</li>
+<li>逻辑左移：sll，立即数：slli。例如 <code>slli x11,x12,2</code> 表示 <code>x11 = x12 &lt;&lt; 2</code></li>
 <li>逻辑右移与逻辑左移同理</li>
-<li>运算移位：只有右移，最高位用符号位填充，sra，srai</li>
+<li>算术右移：<code>sra</code>/<code>srai</code>，最高位用符号位填充</li>
 </ul>
-<h1 id="Assembler-to-Machine-Code"><a href="#Assembler-to-Machine-Code" class="headerlink" title="Assembler to Machine Code"></a>Assembler to Machine Code</h1><p><a href="/img/CS61C/asserts/image-4.png" title="link" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-4.png" alt="link"></a></p>
+<h1 id="Assembler-to-Machine-Code"><a href="#Assembler-to-Machine-Code" class="headerlink" title="Assembler to Machine Code"></a>Assembler to Machine Code</h1><p>C 代码经过编译器生成汇编文件（.s），再经汇编器转换为目标文件（.o），最后通过链接器生成可执行文件。在这个过程中：</p>
 <ul>
 <li>为寄存器起别名</li>
 <li>伪指令：<ul>
@@ -655,17 +649,127 @@ mjx-container[display="true"] + br {
 <h1 id="Nested-Calls-and-Register-Conventions"><a href="#Nested-Calls-and-Register-Conventions" class="headerlink" title="Nested Calls and Register Conventions"></a>Nested Calls and Register Conventions</h1><ul>
 <li>保存寄存器：s0-s11，被调用者在使用后要恢复原来的值</li>
 <li>临时寄存器：t0-t6，其中的值不必恢复</li>
-<li>Symbolic Register Names<br><a href="/img/CS61C/asserts/image-5.png" title="Symbolic" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-5.png" alt="Symbolic"></a></li>
+<li>完整的寄存器别名如下：</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>ABI 名称</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x0</td>
+<td>zero</td>
+<td>恒为 0</td>
+</tr>
+<tr>
+<td>x1</td>
+<td>ra</td>
+<td>返回地址</td>
+</tr>
+<tr>
+<td>x2</td>
+<td>sp</td>
+<td>栈指针</td>
+</tr>
+<tr>
+<td>x3</td>
+<td>gp</td>
+<td>全局指针</td>
+</tr>
+<tr>
+<td>x4</td>
+<td>tp</td>
+<td>线程指针</td>
+</tr>
+<tr>
+<td>x5-x7</td>
+<td>t0-t2</td>
+<td>临时寄存器（调用者保存）</td>
+</tr>
+<tr>
+<td>x8</td>
+<td>s0/fp</td>
+<td>保存寄存器/帧指针</td>
+</tr>
+<tr>
+<td>x9</td>
+<td>s1</td>
+<td>保存寄存器</td>
+</tr>
+<tr>
+<td>x10-x17</td>
+<td>a0-a7</td>
+<td>函数参数/返回值</td>
+</tr>
+<tr>
+<td>x18-x27</td>
+<td>s2-s11</td>
+<td>保存寄存器</td>
+</tr>
+<tr>
+<td>x28-x31</td>
+<td>t3-t6</td>
+<td>临时寄存器（调用者保存）</td>
+</tr>
+</tbody></table>
 <h1 id="Memory-Allocation"><a href="#Memory-Allocation" class="headerlink" title="Memory Allocation"></a>Memory Allocation</h1><ul>
-<li>使用栈：<br>例：</li>
+<li>使用栈来保存返回地址和临时变量：</li>
 </ul>
+<p>例：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sumSquare</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> {</span><br><span class="line">    <span class="keyword">return</span> mult(x,x)+ y;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <p>RISC-V:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">addi sp,sp,-8 # space on stack</span><br><span class="line">sw ra, 4(sp) # save ret addr</span><br><span class="line">sw a1, 0(sp) # save y</span><br><span class="line">mv a1,a0 # mult(x,x)</span><br><span class="line">jal mult # call mult</span><br><span class="line">lw a1, 0(sp) # restore y</span><br><span class="line">add a0,a0,a1 # mult()+y</span><br><span class="line">lw ra, 4(sp) # get ret addr</span><br><span class="line">addi sp,sp,8 # restore stack</span><br><span class="line">jr ra</span><br></pre></td></tr></table></figure>
-<p><a href="/img/CS61C/asserts/image-6.png" title="C" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-6.png" alt="C"></a></p>
-<h1 id="In-conclusion"><a href="#In-conclusion" class="headerlink" title="In conclusion"></a>In conclusion</h1><p>目前为止的所有指令：<br><a href="/img/CS61C/asserts/image-7.png" title="instruction" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-7.png" alt="instruction"></a></p>
-<p>汇编语言模块到此结束，下一个模块将是机器语言<br><a href="/img/CS61C/asserts/image.png" title="assembly" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image.png" alt="assembly"></a></p>
+<p>栈在 C 程序内存布局中位于最高地址，向下增长；堆从低地址向上增长；中间是静态数据和代码段。</p>
+<h1 id="In-conclusion"><a href="#In-conclusion" class="headerlink" title="In conclusion"></a>In conclusion</h1><p>目前为止的所有指令总结如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>指令</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算术</td>
+<td>add, sub</td>
+<td><code>add x1, x2, x3</code></td>
+<td>寄存器运算</td>
+</tr>
+<tr>
+<td>立即数</td>
+<td>addi</td>
+<td><code>addi x1, x2, 10</code></td>
+<td>含立即数运算</td>
+</tr>
+<tr>
+<td>访存</td>
+<td>lw, sw</td>
+<td><code>lw x10, 12(x15)</code></td>
+<td>字加载/存储</td>
+</tr>
+<tr>
+<td>分支</td>
+<td>beq, bne</td>
+<td><code>beq x1, x2, L1</code></td>
+<td>条件跳转</td>
+</tr>
+<tr>
+<td>跳转</td>
+<td>jal, jalr</td>
+<td><code>jal ra, func</code></td>
+<td>函数调用/返回</td>
+</tr>
+<tr>
+<td>逻辑</td>
+<td>and, or, sll</td>
+<td><code>slli x11, x12, 2</code></td>
+<td>位运算与移位</td>
+</tr>
+</tbody></table>
 </div>
     </div>
 

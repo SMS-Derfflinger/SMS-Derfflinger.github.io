@@ -526,19 +526,19 @@ mjx-container[display="true"] + br {
             <div class="post-head-meta-center">
         
                 
-                    <span>最近更新：2026-05-17</span> 
+                    <span>最近更新：2026-05-18</span> 
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                     <span>字数总计：459</span>
+                     <span>字数总计：601</span>
                 
                 
                     
                         &nbsp; | &nbsp;
                     
-                    <span>阅读估时：1分钟</span>
+                    <span>阅读估时：2分钟</span>
                 
                 
                     
@@ -558,43 +558,33 @@ mjx-container[display="true"] + br {
             
         
         <div class=".article-gallery"><h1 id="Switches"><a href="#Switches" class="headerlink" title="Switches"></a>Switches</h1><ul>
-<li>与门和或门的结构类似于串联电路和并联电路<br><a href="/img/CS61C/asserts/image-26.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-26.png" alt="alt text"></a></li>
+<li>与门和或门的结构类似于串联电路和并联电路：串联开关构成与门（全部闭合才导通），并联开关构成或门（任一闭合即导通）。</li>
 </ul>
 <h1 id="Transistors"><a href="#Transistors" class="headerlink" title="Transistors"></a>Transistors</h1><ul>
-<li><p>N晶体管：当基极（P型）与发射极（N型）之间施加正电压时，电流能够从发射极流向集电极（N型）。基极电流控制集电极和发射极之间的电流大小。通常用于放大电路</p>
+<li><p>N 型晶体管：当基极（P 型）与发射极（N 型）间施加正电压时，电流从发射极流向集电极（N 型）。基极电流控制集电极与发射极之间的电流大小，常用于放大电路。</p>
 </li>
-<li><p>P晶体管：当基极（N型）与发射极（P型）之间施加负电压时，电流能够从集电极（P型）流向发射极（N型）。基极电流控制集电极和发射极之间的电流大小。</p>
+<li><p>P 型晶体管：当基极（N 型）与发射极（P 型）间施加负电压时，电流从集电极（P 型）流向发射极（N 型）。</p>
 </li>
-</ul>
-<p><a href="/img/CS61C/asserts/image-27.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-27.png" alt="alt text"></a></p>
-<ul>
-<li><p>非门可以通过晶体管构成<br><a href="/img/CS61C/asserts/image-28.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-28.png" alt="alt text"></a></p>
-</li>
-<li><p>与非门可以通过晶体管构成<br><a href="/img/CS61C/asserts/image-29.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-29.png" alt="alt text"></a></p>
+<li><p>组合逻辑电路（如非门、与非门）可由晶体管搭建：非门通过一个 N 型和一个 P 型晶体管串联实现（输入高时 N 管导通拉低输出，输入低时 P 管导通拉高输出）。与非门由两个串联的 N 管和两个并联的 P 管构成。</p>
 </li>
 </ul>
 <h1 id="Signals-and-Waveforms"><a href="#Signals-and-Waveforms" class="headerlink" title="Signals and Waveforms"></a>Signals and Waveforms</h1><ul>
 <li>本课程中主要关注组合逻辑和状态机：<ul>
-<li>组合逻辑电路是基于逻辑门和组合电路组件的电路，其输出仅依赖于当前输入状态，而不依赖于之前的状态。例如加法器。</li>
-<li>状态机包括一组状态、状态之间的转换规则，以及根据输入和当前状态决定下一状态的逻辑。例如寄存器。</li>
+<li>组合逻辑电路：输出仅取决于当前输入，不依赖之前状态。例如加法器。</li>
+<li>状态机：包含一组状态、状态间转换规则，以及根据输入和当前状态决定下一状态的逻辑。例如寄存器。</li>
 </ul>
 </li>
-<li>电路有建立时间和保持时间和延迟，采样最好在保持时间内进行。</li>
+<li>电路有建立时间、保持时间和传播延迟。为保证寄存器正确采样，数据必须在时钟沿到来前的建立时间开始稳定，并持续到时钟沿后的保持时间结束。</li>
 </ul>
 <h1 id="Accumulator"><a href="#Accumulator" class="headerlink" title="Accumulator"></a>Accumulator</h1><ul>
-<li>使用加法器和寄存器实现<br><a href="/img/CS61C/asserts/image-30.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-30.png" alt="alt text"></a></li>
+<li>累加器由加法器和寄存器组成：加法器计算当前值与新输入之和，寄存器在时钟沿捕获结果并反馈回加法器输入端，实现持续累加。</li>
 </ul>
 <h1 id="Register-Details"><a href="#Register-Details" class="headerlink" title="Register Details"></a>Register Details</h1><ul>
-<li>Flip-Flop(触发器)<ul>
-<li>一个n位寄存器实际上是n个并行的1位触发器<br>  <a href="/img/CS61C/asserts/image-31.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-31.png" alt="alt text"></a></li>
-</ul>
-</li>
+<li>Flip-Flop（触发器）：一个 n 位寄存器本质上是 n 个并行的 1 位触发器，每个触发器在时钟上升沿捕获输入数据并保持输出直到下一个时钟沿。</li>
 </ul>
 <h1 id="Accumulator-Revisited"><a href="#Accumulator-Revisited" class="headerlink" title="Accumulator Revisited"></a>Accumulator Revisited</h1><ul>
-<li>电路有建立时间和保持时间和延迟，采样最好在保持时间内进行。</li>
-<li>设计良好的电路，在时钟上升前后，不会发生不稳定变化<br><a href="/img/CS61C/asserts/image-32.png" title="alt text" class="gallery-item" style="box-shadow: none;"> <img src="/img/CS61C/asserts/image-32.png" alt="alt text"></a></li>
-<li>黄线应该落在稳定时间内，如果进行超频，黄线之间的间隔会缩短，可能会出错</li>
-<li>寄存器中的值可以是不准确的，只要在时钟上升时是稳定值就行</li>
+<li>设计良好的电路中，信号在时钟上升沿前后处于稳定状态。寄存器中的值在采样时可以是不准确的瞬时值，但只要在时钟上升沿时是稳定值即可正确工作。</li>
+<li>如果进行超频，时钟周期缩短，留给信号稳定采样的窗口变小，可能导致时序违规和错误。</li>
 </ul>
 </div>
     </div>
